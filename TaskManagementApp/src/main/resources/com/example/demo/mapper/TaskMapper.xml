@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.TaskMapper">
+	<resultMap id="BaseResultMap"
+		type="com.example.demo.domain.Task" />
+	<select id="findOne" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM task
+		WHERE id = #{id}
+	</select>
+
+	<select id="findAll"
+		resultType="com.example.demo.domain.Account">
+		SELECT * FROM task
+	</select>
+<!-- カラムの値を一致させておく -->
+	<insert id="save" useGeneratedKeys="true" keyProperty="id">
+		INSERT
+		INTO
+		task
+		(title, content, label, deadline, sendUserId)
+		VALUES
+		(#{title},
+		#{content},
+		#{label},
+		#{deadline},
+		#{send_user_id}
+		)
+	</insert>
+
+	<update id="update">
+		UPDATE
+		user
+		SET
+		id = #{id}, username = #{username},
+		password =
+		#{password}, email = #{email}
+		WHERE
+		id = #{id}
+	</update>
+
+	<delete id="delete">
+		DELETE
+		FROM
+		task
+		WHERE
+		id = #{id}
+	</delete>
+</mapper>
