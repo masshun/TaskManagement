@@ -1,9 +1,87 @@
 package com.example.demo.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import com.example.demo.service.UserDetailsServiceImpl;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Autowired
+	private UserDetailsServiceImpl userDetailsServiceImpl;
+
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	public AuthenticationProvider authProvider() {
+		// データに登録しているユーザーの資格情報(username,password)とユーザーの状態をチェックして認証処理を行う。情報と状態はUserDetails実装クラスから取得
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+		provider.setUserDetailsService(userDetailsServiceImpl);
+		provider.setPasswordEncoder(passwordEncoder());
+		return provider;
+	}
+
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		// 静的リソースの除外
+		// 静的リソースへのアクセスには、セキュリティを適用しない
+		web.ignoring().antMatchers("/static/**", "/css/**");
+	}
+
+	@Override
+	public void configure(HttpSecurity http) throws Exception {
+		// 直リンクの禁止
+		// ログイン不要ページの設定
+		http.authorizeRequests()
+				// webjarsへアクセス許可
+				.antMatchers("/static/**").permitAll()
+				// cssへアクセス許可
+				.antMatchers("/css/**").permitAll()
+				// ログインページ直リンク許可
+				.antMatchers("/login/**").permitAll()
+				// ユーザー登録画面直リンク許可
+				.antMatchers("/signup").permitAll()
+				// それ以外は禁止
+				.anyRequest().fullyAuthenticated();
+
+		// ログイン処理
+		http.formLogin().loginProcessingUrl("/login")
+				// デフォルトのログインページ取得回避 GetMapping("/login")と一致
+				.loginPage("/login").failureUrl("/login")
+				// login input nameと一致
+				.usernameParameter("username").passwordParameter("password")
+				// ログイン成功後、ホーム画面に遷移
+				.defaultSuccessUrl("/", true);
+		http.exceptionHandling().accessDeniedPage("/403");
+
+		// http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+
+		http.logout()
+				// デフォはpost これでgetでリクエストが送れる
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				// sessionの破棄
+				.invalidateHttpSession(true)
+				// 認証の解除
+				.clearAuthentication(true)
+				// postでログアウトする場合の設定
+				.logoutUrl("/logout").logoutSuccessUrl("/login");
+
+		http.sessionManagement().invalidSessionUrl("/")
+				// 同時セッション数を制限
+				.maximumSessions(1);
+		// .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+	}
 }
