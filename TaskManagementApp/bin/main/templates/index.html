@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Spring Sample Demo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Spring Sample</h1>
+	<div>Post Data</div>
+	<br />
+	<form method="post" action="formPost">
+		<span>name: </span> <span th:text="${username}"></span> <br /> <span>mail:
+		</span> <span th:text="${email}"></span> <br />
+	</form>
+	<a href="/">back</a>
+	<form method="post" th:action="@{/logout}">
+		<button class="btn btn-link pull-right navbar-brand" type="submit">
+			ログアウト</button>
+	</form>
+</body>
+</html>
