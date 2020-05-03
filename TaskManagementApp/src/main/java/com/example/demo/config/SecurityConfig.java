@@ -58,13 +58,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest().fullyAuthenticated();
 
 		// ログイン処理
-		http.formLogin().loginProcessingUrl("/login")
+		http.formLogin()
 				// デフォルトのログインページ取得回避 GetMapping("/login")と一致
 				.loginPage("/login").failureUrl("/login")
 				// login input nameと一致
-				.usernameParameter("username").passwordParameter("password")
-				// ログイン成功後、ホーム画面に遷移
-				.defaultSuccessUrl("/", true);
+				.usernameParameter("username").passwordParameter("password");
+		// ログイン成功後、ホーム画面に遷移
+		// .defaultSuccessUrl("/", true);
 		http.exceptionHandling().accessDeniedPage("/403");
 
 		// http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
@@ -79,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				// postでログアウトする場合の設定
 				.logoutUrl("/logout").logoutSuccessUrl("/login");
 
-		http.sessionManagement().invalidSessionUrl("/")
+		http.sessionManagement().invalidSessionUrl("/login")
 				// 同時セッション数を制限
 				.maximumSessions(1);
 		// .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
