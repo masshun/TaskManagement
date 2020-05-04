@@ -20,4 +20,15 @@ public class TaskService {
 		return taskMapper.findAll(userId);
 	}
 
+	public List<Task> findReceivedTask(int userId) {
+		return taskMapper.findReceivedTask(userId);
+	}
+
+	public Task findOne(int id) {
+		return taskMapper.findOne(id);
+	}
+
+	public boolean updateCompleted(Task task) {
+		return taskMapper.updateCompleted(task);
+	}
 }

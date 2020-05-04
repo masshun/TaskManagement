@@ -10,11 +10,15 @@ import com.example.demo.domain.Task;
 public interface TaskMapper {
 	List<Task> findAll(int userId);
 
-//	Task findOne(int userId);
+	List<Task> findReceivedTask(int userId);
 
-	void save(Task dateCal);
+	Task findOne(int id);
 
-	boolean update(Task dateCal);
+	boolean updateCompleted(Task task);
+
+	void save(Task task);
+
+	boolean update(Task task);
 
 	boolean delete(int id);
 

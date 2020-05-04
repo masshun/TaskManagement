@@ -5,8 +5,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<h1>Spring Sample</h1>
-	<div>Post Data</div>
 	<br />
 	<form method="post" action="formPost">
 		<span>name: </span> <span th:text="${username}"></span> <br /> <span>userId:
@@ -17,6 +15,7 @@
 		<button class="btn btn-link pull-right navbar-brand" type="submit">
 			ログアウト</button>
 	</form>
+	<h3>頼みごと一覧</h3>
 	<table>
 		<thead class="thead-dark">
 			<tr>
@@ -37,6 +36,8 @@
 			</tr>
 		</tbody>
 	</table>
+	<a href="#" th:href="@{/received}"
+		class="btn btn-primary btn-sm" role="button" aria-pressed="true">頼まれたこと</a>
 
 </body>
 </html>

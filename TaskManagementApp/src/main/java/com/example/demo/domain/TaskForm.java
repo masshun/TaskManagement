@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 import lombok.Data;
 
 @Data
-public class Task implements Serializable {
+public class TaskForm implements Serializable {
 	/**
 	* 
 	*/
@@ -19,5 +19,6 @@ public class Task implements Serializable {
 	private String label;
 	private int sendUserId;
 	private Timestamp deadline;
+
 	private boolean completed;
 }
