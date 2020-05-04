@@ -9,7 +9,7 @@
 	<div>Post Data</div>
 	<br />
 	<form method="post" action="formPost">
-		<span>name: </span> <span th:text="${username}"></span> <br /> <span>mail:
+		<span>name: </span> <span th:text="${username}"></span> <br /> <span>userId:
 		</span> <span th:text="${id}"></span> <br />
 	</form>
 	<a href="/">back</a>
@@ -17,5 +17,26 @@
 		<button class="btn btn-link pull-right navbar-brand" type="submit">
 			ログアウト</button>
 	</form>
+	<table>
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">タイトル</th>
+				<th scope="col">内容</th>
+				<th scope="col">ラベル</th>
+				<th scope="col">送り先のID</th>
+				<th scope="col">期限</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="obj : ${task}">
+				<td th:text="${obj.title}"></td>
+				<td th:text="${obj.content}"></td>
+				<td th:text="${obj.label}"></td>
+				<td th:text="${obj.sendUserId}"></td>
+				<td th:text="${obj.deadline}"></td>
+			</tr>
+		</tbody>
+	</table>
+
 </body>
 </html>

@@ -8,9 +8,9 @@ import com.example.demo.domain.Task;
 
 @Mapper
 public interface TaskMapper {
-	List<Task> findAll();
+	List<Task> findAll(int userId);
 
-	Task findOne(int id);
+//	Task findOne(int userId);
 
 	void save(Task dateCal);
 

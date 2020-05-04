@@ -2,20 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.TaskMapper">
 	<resultMap id="BaseResultMap"
-		type="com.example.demo.domain.Task" />
-	<select id="findOne" parameterType="java.lang.String"
+		type="com.example.demo.domain.Task" >
+		<id column="id" property="id" />
+		<result column="user_id" property="userId" />
+		<result column="send_user_id" property="sendUserId" />	
+	</resultMap>
+	<select id="findAll"
 		resultMap="BaseResultMap">
 		SELECT
 		*
 		FROM task
-		WHERE id = #{id}
+		WHERE user_id = #{userId}
 	</select>
 
-	<select id="findAll"
-		resultType="com.example.demo.domain.Account">
-		SELECT * FROM task
-	</select>
-<!-- カラムの値を一致させておく -->
 	<insert id="save" useGeneratedKeys="true" keyProperty="id">
 		INSERT
 		INTO
