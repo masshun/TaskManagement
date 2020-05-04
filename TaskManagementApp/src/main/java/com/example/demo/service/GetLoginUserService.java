@@ -25,4 +25,5 @@ public class GetLoginUserService {
 		String name = p.getName();
 		return name;
 	}
+
 }
