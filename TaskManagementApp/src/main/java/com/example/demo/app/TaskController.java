@@ -8,6 +8,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.domain.AccountForm;
 import com.example.demo.domain.Task;
+import com.example.demo.domain.TaskForm;
 import com.example.demo.service.GetLoginUserService;
 import com.example.demo.service.TaskService;
 
@@ -45,19 +48,21 @@ public class TaskController {
 		String username = loginUser.getLoginUsername(p);
 		model.addAttribute("username", username);
 		model.addAttribute("id", userId);
-		model.addAttribute("task", taskService.findAll(userId));
-		List<Task> task = taskService.findCompletedTasks(userId);
-		if (task.size() == 0) {
-			model.addAttribute("nonTask", "完了したタスクはありません");
-		} else {
-			model.addAttribute("taskNotice", task);
-		}
-
 		return "index";
 	}
 
-	@GetMapping("/received")
-	public String receiveTask(Model model, Principal p) {
+	@GetMapping("/requestedTask")
+	public String requestedTask(Model model, Principal p) {
+		int userId = loginUser.getLoginUserId(p);
+		List<Task> inProgress = taskService.findInProgressTask(userId);
+		List<Task> completed = taskService.findCompletedTask(userId);
+		model.addAttribute("inProgress", inProgress);
+		model.addAttribute("completed", completed);
+		return "requestedTask";
+	}
+
+	@GetMapping("/receivedTask")
+	public String receivedTask(Model model, Principal p) {
 		int userId = loginUser.getLoginUserId(p);
 		List<Task> task = taskService.findReceivedTask(userId);
 
@@ -83,5 +88,28 @@ public class TaskController {
 		taskService.updateCompleted(task);
 		redirectAttributes.addFlashAttribute("successed", "頼みごとが完了しました");
 		return "redirect:/";
+	}
+
+	@GetMapping("/createTask")
+	public String createTask(TaskForm taskForm, Model model, Principal p) {
+		int userId = loginUser.getLoginUserId(p);
+		// デフォルトは進行中
+		model.addAttribute("userId", userId);
+		model.addAttribute("taskForm", taskForm);
+		return "createTask";
+	}
+
+	@PostMapping("/create")
+	public String createTask(@ModelAttribute @Validated TaskForm taskForm, BindingResult result, Model model,
+			RedirectAttributes redirectAttributes) {
+		if (!result.hasErrors()) {
+			taskForm.setCompleted(false);
+			taskService.save(taskForm);
+			redirectAttributes.addFlashAttribute("successed", "登録が完了しました");
+			return "redirect:/";
+		} else {
+			model.addAttribute("failed", "入力値に誤りがあります");
+			return "createTask";
+		}
 	}
 }

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.Account;
-import com.example.demo.mapper.AccountMapper;
+import com.example.demo.repository.AccountMapper;
 
 @Service
 public class GetLoginUserService {

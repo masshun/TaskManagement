@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>頼みごと一覧</h1>
+	<br />
+	<h3>進行中の頼みごと</h3>
+	<table>
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">タイトル</th>
+				<th scope="col">内容</th>
+				<th scope="col">ラベル</th>
+				<th scope="col">送り先のID</th>
+				<th scope="col">期限</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="obj : ${inProgress}">
+				<td th:text="${obj.title}"></td>
+				<td th:text="${obj.content}"></td>
+				<td th:text="${obj.label}"></td>
+				<td th:text="${obj.sendUserId}"></td>
+				<td th:text="${obj.deadline}"></td>
+			</tr>
+		</tbody>
+	</table>
+	<br />
+	<h3>完了した頼みごと</h3>
+	<table>
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">タイトル</th>
+				<th scope="col">内容</th>
+				<th scope="col">ラベル</th>
+				<th scope="col">送り先のID</th>
+				<th scope="col">期限</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="obj : ${completed}">
+				<td th:text="${obj.title}"></td>
+				<td th:text="${obj.content}"></td>
+				<td th:text="${obj.label}"></td>
+				<td th:text="${obj.sendUserId}"></td>
+				<td th:text="${obj.deadline}"></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.domain.Account;
-import com.example.demo.mapper.AccountMapper;
-import com.example.demo.mapper.UserDetailsImpl;
+import com.example.demo.repository.AccountMapper;
+import com.example.demo.repository.UserDetailsImpl;
 
 @Service
 @Transactional

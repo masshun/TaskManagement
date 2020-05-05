@@ -1,4 +1,4 @@
-package com.example.demo.mapper;
+package com.example.demo.repository;
 
 import java.util.Collection;
 import java.util.Collections;

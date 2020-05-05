@@ -1,10 +1,11 @@
-package com.example.demo.mapper;
+package com.example.demo.repository;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.domain.Task;
+import com.example.demo.domain.TaskForm;
 
 @Mapper
 public interface TaskMapper {
@@ -12,13 +13,15 @@ public interface TaskMapper {
 
 	List<Task> findReceivedTask(int userId);
 
-	Task findOne(int id);
+	List<Task> findCompletedTask(int userId);
 
-	List<Task> findCompletedTasks(int userId);
+	List<Task> findInProgressTask(int userId);
+
+	Task findOne(int id);
 
 	boolean updateCompleted(Task task);
 
-	void save(Task task);
+	boolean save(TaskForm form);
 
 	boolean update(Task task);
 

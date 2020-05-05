@@ -1,11 +1,17 @@
 package com.example.demo.domain;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
-import lombok.Data;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 
-@Data
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class TaskForm implements Serializable {
 	/**
 	* 
@@ -18,7 +24,14 @@ public class TaskForm implements Serializable {
 	private String content;
 	private String label;
 	private int sendUserId;
-	private Timestamp deadline;
-
+	private String deadline;
 	private boolean completed;
+
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		dateFormat.setLenient(false);
+		binder.registerCustomEditor(TaskForm.class, deadline, new CustomDateEditor(dateFormat, false));
+	}
+
 }

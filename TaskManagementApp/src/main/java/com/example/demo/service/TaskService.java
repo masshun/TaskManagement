@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.domain.Task;
-import com.example.demo.mapper.TaskMapper;
+import com.example.demo.domain.TaskForm;
+import com.example.demo.repository.TaskMapper;
 
 @Service
 @Transactional
@@ -28,11 +29,27 @@ public class TaskService {
 		return taskMapper.findOne(id);
 	}
 
+	public List<Task> findCompletedTask(int userId) {
+		return taskMapper.findCompletedTask(userId);
+
+	}
+
+	public List<Task> findInProgressTask(int userId) {
+		return taskMapper.findInProgressTask(userId);
+	}
+
 	public boolean updateCompleted(Task task) {
 		return taskMapper.updateCompleted(task);
 	}
 
-	public List<Task> findCompletedTasks(int userId) {
-		return taskMapper.findCompletedTasks(userId);
+	public boolean save(TaskForm form) {
+		boolean result = taskMapper.save(form);
+		if (result) {
+			return true;
+		} else {
+			// Exceptionの実装
+			return false;
+		}
 	}
+
 }

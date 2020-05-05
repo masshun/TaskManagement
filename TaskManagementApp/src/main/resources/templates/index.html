@@ -7,15 +7,7 @@
 	rel="stylesheet">
 </head>
 <body>
-	<h3 th:block th:each="o : ${taskNotice}">
-		<i th:unless="${#lists.isEmpty(o.title)}" class="fas fa-bell"
-			style="color: red;"></i>
-	</h3>
-
-	<h3>
-		<i th:if="${nonTask}" class="fas fa-bell"></i>
-	</h3>
-
+<h3 th:text="${successed}"></h3>
 	<form method="post" action="formPost">
 		<span>name: </span> <span th:text="${username}"></span> <br /> <span>userId:
 		</span> <span th:text="${id}"></span> <br />
@@ -25,29 +17,12 @@
 		<button class="btn btn-link pull-right navbar-brand" type="submit">
 			ログアウト</button>
 	</form>
-	<h3>頼みごと一覧</h3>
-	<table>
-		<thead class="thead-dark">
-			<tr>
-				<th scope="col">タイトル</th>
-				<th scope="col">内容</th>
-				<th scope="col">ラベル</th>
-				<th scope="col">送り先のID</th>
-				<th scope="col">期限</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="obj : ${task}">
-				<td th:text="${obj.title}"></td>
-				<td th:text="${obj.content}"></td>
-				<td th:text="${obj.label}"></td>
-				<td th:text="${obj.sendUserId}"></td>
-				<td th:text="${obj.deadline}"></td>
-			</tr>
-		</tbody>
-	</table>
-	<a href="#" th:href="@{/received}" class="btn btn-primary btn-sm"
+	<a href="#" th:href="@{/createTask}" class="btn btn-primary btn-sm"
+		role="button" aria-pressed="true">頼みごとの作成</a>
+	<a href="#" th:href="@{/receivedTask}" class="btn btn-primary btn-sm"
 		role="button" aria-pressed="true">頼まれたこと</a>
+	<a href="#" th:href="@{/requestedTask}" class="btn btn-primary btn-sm"
+		role="button" aria-pressed="true">頼みごと</a>
 
 </body>
 </html>
