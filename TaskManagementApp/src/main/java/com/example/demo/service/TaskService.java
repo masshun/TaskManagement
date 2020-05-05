@@ -31,4 +31,8 @@ public class TaskService {
 	public boolean updateCompleted(Task task) {
 		return taskMapper.updateCompleted(task);
 	}
+
+	public List<Task> findCompletedTasks(int userId) {
+		return taskMapper.findCompletedTasks(userId);
+	}
 }

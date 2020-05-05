@@ -14,6 +14,8 @@ public interface TaskMapper {
 
 	Task findOne(int id);
 
+	List<Task> findCompletedTasks(int userId);
+
 	boolean updateCompleted(Task task);
 
 	void save(Task task);

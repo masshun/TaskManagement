@@ -15,10 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.demo.domain.Account;
 import com.example.demo.domain.AccountForm;
 import com.example.demo.domain.Task;
-import com.example.demo.mapper.AccountMapper;
+import com.example.demo.service.GetLoginUserService;
 import com.example.demo.service.TaskService;
 
 @Controller
@@ -26,30 +25,36 @@ import com.example.demo.service.TaskService;
 public class TaskController {
 
 	@Autowired
-	AccountMapper accountMapper;
+	GetLoginUserService loginUser;
 
 	@Autowired
 	TaskService taskService;
 
+	private Map<String, Boolean> completed;
+
+	private Map<String, Boolean> initCompleted() {
+		Map<String, Boolean> radio = new LinkedHashMap<>();
+		radio.put("進行中", false);
+		radio.put("完了!", true);
+		return radio;
+	}
+
 	@GetMapping
 	public String index(Model model, Principal p) {
-		String username = p.getName();
-		Account ac = accountMapper.findByUsername(username);
-		int userId = ac.getId();
-		List<Task> task = taskService.findAll(userId);
-
+		int userId = loginUser.getLoginUserId(p);
+		String username = loginUser.getLoginUsername(p);
+		System.out.println(taskService.findCompletedTasks(userId));
 		model.addAttribute("username", username);
 		model.addAttribute("id", userId);
-		model.addAttribute("task", task);
+		model.addAttribute("task", taskService.findAll(userId));
+		model.addAttribute("taskNotice", taskService.findCompletedTasks(userId));
 
 		return "index";
 	}
 
 	@GetMapping("/received")
 	public String receiveTask(Model model, Principal p) {
-		String username = p.getName();
-		Account ac = accountMapper.findByUsername(username);
-		int userId = ac.getId();
+		int userId = loginUser.getLoginUserId(p);
 		List<Task> task = taskService.findReceivedTask(userId);
 
 		model.addAttribute("receivedTask", task);
@@ -65,15 +70,6 @@ public class TaskController {
 		model.addAttribute("form", form);
 		model.addAttribute("task", task);
 		return "readTask";
-	}
-
-	private Map<String, Boolean> completed;
-
-	private Map<String, Boolean> initCompleted() {
-		Map<String, Boolean> radio = new LinkedHashMap<>();
-		radio.put("進行中", false);
-		radio.put("完了!", true);
-		return radio;
 	}
 
 	@PostMapping("/readTask/{id}")

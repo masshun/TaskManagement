@@ -3,9 +3,12 @@
 <head>
 <title>Spring Sample Demo</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 </head>
 <body>
-	<br />
+<th:block th:each="o : ${taskNotice}">
+<h3><i th:unless="${#lists.isEmpty(o.title)}" class="fas fa-bell" style="color:red;"></i></h3>
+	<p th:text="${o.title}"></p></th:block>
 	<form method="post" action="formPost">
 		<span>name: </span> <span th:text="${username}"></span> <br /> <span>userId:
 		</span> <span th:text="${id}"></span> <br />

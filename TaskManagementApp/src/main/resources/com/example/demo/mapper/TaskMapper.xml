@@ -23,6 +23,17 @@
 		send_user_id =
 		#{userId}
 	</select>
+	
+	<select id="findCompletedTasks" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM task
+		WHERE
+		user_id =
+		#{userId}
+		AND
+		completed = 1
+	</select>
 
 	<select id="findOne" resultMap="BaseResultMap">
 		SELECT
