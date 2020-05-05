@@ -43,11 +43,15 @@ public class TaskController {
 	public String index(Model model, Principal p) {
 		int userId = loginUser.getLoginUserId(p);
 		String username = loginUser.getLoginUsername(p);
-		System.out.println(taskService.findCompletedTasks(userId));
 		model.addAttribute("username", username);
 		model.addAttribute("id", userId);
 		model.addAttribute("task", taskService.findAll(userId));
-		model.addAttribute("taskNotice", taskService.findCompletedTasks(userId));
+		List<Task> task = taskService.findCompletedTasks(userId);
+		if (task.size() == 0) {
+			model.addAttribute("nonTask", "完了したタスクはありません");
+		} else {
+			model.addAttribute("taskNotice", task);
+		}
 
 		return "index";
 	}
