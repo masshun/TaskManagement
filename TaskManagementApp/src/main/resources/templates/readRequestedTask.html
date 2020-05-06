@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>頼みごとの詳細</h1>
+	<table>
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">タイトル</th>
+				<th scope="col">内容</th>
+				<th scope="col">ラベル</th>
+				<th scope="col">送信元のID</th>
+				<th scope="col">期限</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td th:text="${task.title}"></td>
+				<td th:text="${task.content}"></td>
+				<td th:text="${task.label}"></td>
+				<td th:text="${task.userId}"></td>
+				<td th:text="${task.deadline}"></td>
+			</tr>
+		</tbody>
+	</table>
+	<a th:href="@{/}">戻る</a>
+</body>
+</html>

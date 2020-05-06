@@ -7,6 +7,14 @@
 		<result column="user_id" property="userId" />
 		<result column="send_user_id" property="sendUserId" />
 	</resultMap>
+
+	<resultMap id="FindOneResultMap"
+		type="com.example.demo.domain.TaskForm">
+		<id column="id" property="id" />
+		<result column="user_id" property="userId" />
+		<result column="send_user_id" property="sendUserId" />
+	</resultMap>
+
 	<select id="findAll" resultMap="BaseResultMap">
 		SELECT
 		*
@@ -24,7 +32,7 @@
 		#{userId}
 	</select>
 
-	<select id="findOne" resultMap="BaseResultMap">
+	<select id="findOne" resultMap="FindOneResultMap">
 		SELECT
 		*
 		FROM task
@@ -58,7 +66,8 @@
 		INSERT
 		INTO
 		task
-		(title, user_id, content, label, deadline, send_user_id, completed)
+		(title, user_id, content, label, deadline, send_user_id,
+		completed)
 		VALUES
 		(#{title},
 		#{userId},
@@ -74,9 +83,10 @@
 		UPDATE
 		task
 		SET
-		id = #{id}, username = #{username},
-		password =
-		#{password}, email = #{email}
+		id = #{id}, user_id = #{userId}, content
+		= #{content}, label = #{label}, deadline = #{deadline}, send_user_id =
+		#{sendUserId},
+		completed = #{completed}
 		WHERE
 		id = #{id}
 	</update>
@@ -85,6 +95,14 @@
 		UPDATE
 		task
 		SET
+		id = #{id},
+		user_id = #{userId},
+		title =
+		#{title},
+		label = #{label},
+		content = #{content},
+		deadline = #{deadline},
+		send_user_id = #{sendUserId},
 		completed = #{completed}
 		WHERE
 		id = #{id}

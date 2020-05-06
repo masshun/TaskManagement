@@ -72,7 +72,8 @@ public class TaskController {
 
 	@GetMapping("/readTask/{id}")
 	public String readTask(@PathVariable int id, Model model, AccountForm form) {
-		Task task = taskService.findOne(id);
+		TaskForm task = taskService.findOne(id);
+
 		completed = initCompleted();
 
 		model.addAttribute("completed", completed);
@@ -111,5 +112,37 @@ public class TaskController {
 			model.addAttribute("failed", "入力値に誤りがあります");
 			return "createTask";
 		}
+	}
+
+	@GetMapping("readRequestedTask/{id}")
+	public String readTask(@PathVariable int id, Model model) {
+		TaskForm taskForm = taskService.findOne(id);
+		model.addAttribute("taskForm", taskForm);
+		return "readRequestedTask";
+	}
+
+	@GetMapping("/edit/{id}")
+	public String editTask(@PathVariable int id, Model model) {
+		TaskForm taskForm = taskService.findOne(id);
+		model.addAttribute("taskForm", taskForm);
+		return "editTask";
+	}
+
+	@PostMapping("/edit/{id}")
+	public String postTask(@PathVariable int id, @ModelAttribute @Validated TaskForm taskForm, Model model,
+			RedirectAttributes redirectAttributes, Principal p) {
+		taskForm.setId(id);
+		taskForm.setUserId(loginUser.getLoginUserId(p));
+		// 削除しない限りタスクを完了扱いにはしない
+		taskForm.setCompleted(false);
+		taskService.update(taskForm);
+		redirectAttributes.addFlashAttribute("successed", "更新が完了しました");
+		return "redirect:/";
+	}
+
+	@PostMapping("/delete/{id}")
+	public String deleteTask(@PathVariable int id, Model model) {
+		taskService.delete(id);
+		return "redirect:/";
 	}
 }

@@ -25,7 +25,7 @@ public class TaskService {
 		return taskMapper.findReceivedTask(userId);
 	}
 
-	public Task findOne(int id) {
+	public TaskForm findOne(int id) {
 		return taskMapper.findOne(id);
 	}
 
@@ -50,6 +50,24 @@ public class TaskService {
 			// Exceptionの実装
 			return false;
 		}
+	}
+
+	public boolean update(TaskForm taskForm) {
+		boolean result = taskMapper.update(taskForm);
+		if (result) {
+			return true;
+		} else {
+			// Exceptionの実装
+			return false;
+		}
+	}
+
+	public boolean delete(int id) {
+		boolean result = taskMapper.delete(id);
+		if (!result) {
+			// exception
+		}
+		return true;
 	}
 
 }

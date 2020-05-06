@@ -17,13 +17,13 @@ public interface TaskMapper {
 
 	List<Task> findInProgressTask(int userId);
 
-	Task findOne(int id);
+	TaskForm findOne(int id);
 
 	boolean updateCompleted(Task task);
 
 	boolean save(TaskForm form);
 
-	boolean update(Task task);
+	boolean update(TaskForm taskForm);
 
 	boolean delete(int id);
 

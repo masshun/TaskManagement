@@ -16,6 +16,9 @@
 				<th scope="col">ラベル</th>
 				<th scope="col">送り先のID</th>
 				<th scope="col">期限</th>
+				<th scope="col">詳細</th>
+				<th scope="col">編集</th>
+				<th scope="col">削除</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -25,6 +28,17 @@
 				<td th:text="${obj.label}"></td>
 				<td th:text="${obj.sendUserId}"></td>
 				<td th:text="${obj.deadline}"></td>
+				<td><a href="#"
+					th:href="@{/readRequestedTask/{id}(id=${obj.id})}"
+					class="btn btn-primary btn-sm" role="button" aria-pressed="true">詳細</a></td>
+				<td><a href="#" th:href="@{/edit/{id}(id=${obj.id})}"
+					class="btn btn-primary btn-sm" role="button" aria-pressed="true">編集</a>
+				</td>
+				<td><form method="post"
+						th:action="@{/delete/{id}(id=${obj.id})}">
+						<button class="btn btn-link pull-right navbar-brand" type="submit">
+							削除</button>
+					</form></td>
 			</tr>
 		</tbody>
 	</table>
@@ -38,6 +52,7 @@
 				<th scope="col">ラベル</th>
 				<th scope="col">送り先のID</th>
 				<th scope="col">期限</th>
+				<th scope="col">詳細</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -47,8 +62,14 @@
 				<td th:text="${obj.label}"></td>
 				<td th:text="${obj.sendUserId}"></td>
 				<td th:text="${obj.deadline}"></td>
+				<td><a href="#"
+					th:href="@{/readRequestedTask/{id}(id=${obj.id})}"
+					class="btn btn-primary btn-sm" role="button" aria-pressed="true">詳細</a></td>
 			</tr>
 		</tbody>
 	</table>
+	<!-- <form method="post" th:action="@{/delete/{id}(id=${obj.id})}">
+		<button type="submit" class="btn btn-danger ml-2">削除</button>
+	</form>-->
 </body>
 </html>
