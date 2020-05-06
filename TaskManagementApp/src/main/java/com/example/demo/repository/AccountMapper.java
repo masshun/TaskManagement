@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.domain.Account;
+import com.example.demo.domain.AccountForm;
 
 @Mapper
 public interface AccountMapper {
@@ -12,7 +13,7 @@ public interface AccountMapper {
 
 	Account findByUsername(String username);
 
-	boolean save(Account account);
+	boolean save(AccountForm accountForm);
 
 	boolean update(Account account);
 

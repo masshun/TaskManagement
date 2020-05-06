@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		<h1>ユーザー登録画面</h1>
+		<h3 th:text="${error}" style="color: red;"></h3>
+	</div>
+	<form method="post" th:action="@{/signup}" th:object="${accountForm}">
+		<table class="table table-bordered table-hover">
+			<tr>
+				<th class="active col-sm-3">ユーザー名</th>
+				<td>
+					<div class="form-group">
+						<input name="username" type="text" class="form-control"> <span
+							th:if="${#fields.hasErrors('username')}" th:errors="*{username}">error!</span>
+					</div>
+				</td>
+			</tr>
+
+			<tr>
+				<th class="active">パスワード</th>
+				<td>
+					<div class="form-group">
+						<input name="password" type="password" class="form-control">
+						<span th:if="${#fields.hasErrors('password')}"
+							th:errors="*{password}">error!</span>
+					</div>
+				</td>
+			</tr>
+
+			<tr>
+				<th class="active">メールアドレス</th>
+				<td>
+					<div class="form-group">
+						<input name="email" type="email" class="form-control">
+						<span th:if="${#fields.hasErrors('email')}"
+							th:errors="*{email}">error!</span>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<button class="btn btn-primary" type="submit">ユーザー登録</button>
+		<a href="#" th:href="@{/login}" class="btn btn-primary btn-sm"
+			role="button" aria-pressed="true">ログインページに戻る</a>
+	</form>
+</body>
+</html>
