@@ -79,7 +79,7 @@ public class TaskController {
 		model.addAttribute("completed", completed);
 		model.addAttribute("form", form);
 		model.addAttribute("task", task);
-		return "readTask";
+		return "readReceivedTask";
 	}
 
 	@PostMapping("/readTask/{id}")
@@ -122,14 +122,14 @@ public class TaskController {
 	}
 
 	@GetMapping("/edit/{id}")
-	public String editTask(@PathVariable int id, Model model) {
+	public String editRequiredTask(@PathVariable int id, Model model) {
 		TaskForm taskForm = taskService.findOne(id);
 		model.addAttribute("taskForm", taskForm);
-		return "editTask";
+		return "editRequiredTask";
 	}
 
 	@PostMapping("/edit/{id}")
-	public String postTask(@PathVariable int id, @ModelAttribute @Validated TaskForm taskForm, Model model,
+	public String editRequiredTask(@PathVariable int id, @ModelAttribute @Validated TaskForm taskForm, Model model,
 			RedirectAttributes redirectAttributes, Principal p) {
 		taskForm.setId(id);
 		taskForm.setUserId(loginUser.getLoginUserId(p));
@@ -141,8 +141,9 @@ public class TaskController {
 	}
 
 	@PostMapping("/delete/{id}")
-	public String deleteTask(@PathVariable int id, Model model) {
+	public String deleteRequiredTask(@PathVariable int id, Model model, RedirectAttributes redirectAttributes) {
 		taskService.delete(id);
+		redirectAttributes.addFlashAttribute("successed", "削除が完了しました");
 		return "redirect:/";
 	}
 }
