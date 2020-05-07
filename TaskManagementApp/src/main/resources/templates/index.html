@@ -7,7 +7,8 @@
 	rel="stylesheet">
 </head>
 <body>
-<h3 th:text="${successed}"></h3>
+	<h3 th:text="${successed}"></h3>
+	<h3 th:text="${result}"></h3>
 	<form method="post" action="formPost">
 		<span>name: </span> <span th:text="${username}"></span> <br /> <span>userId:
 		</span> <span th:text="${id}"></span> <br />
@@ -23,6 +24,6 @@
 		role="button" aria-pressed="true">頼まれたこと</a>
 	<a href="#" th:href="@{/requestedTask}" class="btn btn-primary btn-sm"
 		role="button" aria-pressed="true">頼みごと</a>
-
+	<a th:href="@{/delete(id=*{id})}">hoge</a>
 </body>
 </html>

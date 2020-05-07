@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		// 直リンクの禁止
+		// Webリソース直リンクの禁止
 		// ログイン不要ページの設定
 		http.authorizeRequests()
 				// webjarsへアクセス許可
@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				// ログインページ直リンク許可
 				.antMatchers("/login/**").permitAll()
 				// ユーザー登録画面直リンク許可
-				.antMatchers("/signup").permitAll()
+				.antMatchers("/signup").permitAll().antMatchers("/validate").permitAll()
 				// それ以外は禁止
 				.anyRequest().fullyAuthenticated();
 
