@@ -10,17 +10,17 @@
 		<p th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
 			th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
 			style="color: red;">ログインエラーメッセージ</p>
-		<label for="username">ユーザー名</label> <input type="text"
-			name="username" id="username" /> <br /> <label for="password">パスワード</label>
-		<input type="password" name="password" id="password" />  <input
+		<label for="username">ユーザー名</label> <input type="text" name="username"
+			id="username" /> <br /> <label for="password">パスワード</label> <input
+			type="password" name="password" id="password" /> <input
 			type="hidden" th:name="${_csrf.parameterName}"
 			th:value="${_csrf.token}">
 		<button class="btn btn-primary" type="submit">ログイン</button>
-		<!--           <div class="form-group form-check">
-              <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" name="remenberMe" id="rememberMe"/>忘れないで！
-              </label>
-          </div> -->
+		<div class="form-group form-check">
+			<label class="form-check-label" for="remember-me"></label> <input
+				class="form-check-input" type="checkbox" name="remember-me"
+				id="rememberMe" />Remember Me!
+		</div>
 	</form>
 	<a th:href="@{/signup}">ユーザー新規登録はこちら</a>
 </body>

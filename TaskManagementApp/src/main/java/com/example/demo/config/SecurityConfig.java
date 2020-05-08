@@ -12,7 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.example.demo.service.UserDetailsServiceImpl;
+import com.example.demo.service.userService.UserDetailsServiceImpl;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -83,5 +83,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				// 同時セッション数を制限
 				.maximumSessions(1);
 		// .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+		// 自動ログイン機能 デフォルトは２週間
+		http.rememberMe().rememberMeParameter("remember-me");
 	}
 }
