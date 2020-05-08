@@ -85,6 +85,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 		// 自動ログイン機能 デフォルトは２週間
-		http.rememberMe().rememberMeParameter("remember-me");
+		http.rememberMe().rememberMeParameter("remember-me")
+				// アプリ再起動後もCookieを維持する
+				.key("TaskManagementKey");
 	}
 }
