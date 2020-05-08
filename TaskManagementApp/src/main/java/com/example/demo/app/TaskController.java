@@ -20,8 +20,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.demo.domain.AccountForm;
 import com.example.demo.domain.Task;
 import com.example.demo.domain.TaskForm;
-import com.example.demo.service.GetLoginUserService;
-import com.example.demo.service.TaskService;
+import com.example.demo.service.taskService.CreateTaskService;
+import com.example.demo.service.taskService.TaskService;
+import com.example.demo.service.userService.GetLoginUserService;
 
 @Controller
 @RequestMapping("/")
@@ -29,6 +30,9 @@ public class TaskController {
 
 	@Autowired
 	GetLoginUserService loginUser;
+
+	@Autowired
+	CreateTaskService createTaskService;
 
 	@Autowired
 	TaskService taskService;
@@ -45,7 +49,7 @@ public class TaskController {
 	@GetMapping
 	public String index(Model model, Principal p) {
 		int userId = loginUser.getLoginUserId(p);
-		String username = loginUser.getLoginUsername(p);
+		String username = p.getName();
 		model.addAttribute("username", username);
 		model.addAttribute("id", userId);
 		return "index";
@@ -102,10 +106,12 @@ public class TaskController {
 
 	@PostMapping("/create")
 	public String createTask(@ModelAttribute @Validated TaskForm taskForm, BindingResult result, Model model,
-			RedirectAttributes redirectAttributes) {
+			RedirectAttributes redirectAttributes, Principal p) {
 		if (!result.hasErrors()) {
 			taskForm.setCompleted(false);
 			taskService.save(taskForm);
+
+			createTaskService.sendNoticeByMail(taskForm, p);
 			redirectAttributes.addFlashAttribute("successed", "登録が完了しました");
 			return "redirect:/";
 		} else {

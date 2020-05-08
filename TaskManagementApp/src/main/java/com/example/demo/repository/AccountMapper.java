@@ -13,6 +13,8 @@ public interface AccountMapper {
 
 	Account findByUsername(String username);
 
+	Account findByUserId(int id);
+
 	boolean save(AccountForm accountForm);
 
 	boolean update(Account account);

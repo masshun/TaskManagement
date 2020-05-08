@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.service.userService;
 
 import java.util.UUID;
 
@@ -40,11 +40,14 @@ public class RegisterUserService {
 	}
 
 	public String registerMail(AccountForm form, ConfirmationToken confirmationToken, String username) {
+		// メールのフィールドは別に作る
 		String IPadnPort = "localhost:9996";
 		String from = "xxx@@gmail.com";
 		String title = "新規登録 アカウント確認のお願い";
 		String content = username + "さん" + "\n" + "\n" + "以下のリンクにアクセスしてアカウントを認証してください" + "\n" + "http://" + IPadnPort
 				+ "/validate" + "?id=" + confirmationToken;
+
+		// 別に作る
 		try {
 			SimpleMailMessage msg = new SimpleMailMessage();
 			msg.setFrom(from);

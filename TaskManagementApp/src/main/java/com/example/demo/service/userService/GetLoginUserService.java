@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.service.userService;
 
 import java.security.Principal;
 
@@ -19,11 +19,6 @@ public class GetLoginUserService {
 		Account ac = accountMapper.findByUsername(username);
 		int userId = ac.getId();
 		return userId;
-	}
-
-	public String getLoginUsername(Principal p) {
-		String name = p.getName();
-		return name;
 	}
 
 }

@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.domain.AccountForm;
 import com.example.demo.domain.ConfirmationToken;
-import com.example.demo.service.RegisterUserService;
+import com.example.demo.service.userService.RegisterUserService;
 
 @Controller
 @Transactional
