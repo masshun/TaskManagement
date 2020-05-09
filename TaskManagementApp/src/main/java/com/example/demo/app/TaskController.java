@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.demo.domain.AccountForm;
 import com.example.demo.domain.Task;
 import com.example.demo.domain.TaskForm;
-import com.example.demo.service.taskService.CreateTaskService;
+import com.example.demo.service.taskService.TaskNoticeService;
 import com.example.demo.service.taskService.TaskService;
 import com.example.demo.service.userService.GetLoginUserService;
 
@@ -32,7 +32,7 @@ public class TaskController {
 	GetLoginUserService loginUser;
 
 	@Autowired
-	CreateTaskService createTaskService;
+	TaskNoticeService taskNoticeService;
 
 	@Autowired
 	TaskService taskService;
@@ -69,8 +69,12 @@ public class TaskController {
 	public String receivedTask(Model model, Principal p) {
 		int userId = loginUser.getLoginUserId(p);
 		List<Task> task = taskService.findReceivedTask(userId);
-
-		model.addAttribute("receivedTask", task);
+		boolean result = task.stream().anyMatch(s -> s.isCompleted());
+		if (result) {
+			model.addAttribute("none", "進行中の頼みごとはありません");
+		} else {
+			model.addAttribute("receivedTask", task);
+		}
 		return "received";
 	}
 
@@ -79,7 +83,6 @@ public class TaskController {
 		TaskForm task = taskService.findOne(id);
 
 		completed = initCompleted();
-
 		model.addAttribute("completed", completed);
 		model.addAttribute("form", form);
 		model.addAttribute("task", task);
@@ -87,10 +90,20 @@ public class TaskController {
 	}
 
 	@PostMapping("/readTask/{id}")
-	public String postCompleted(@PathVariable int id, @ModelAttribute Task task,
-			RedirectAttributes redirectAttributes) {
+	public String postCompleted(@PathVariable int id, @ModelAttribute Task task, RedirectAttributes redirectAttributes,
+			Principal p) {
 		task.setId(id);
+		if (!task.isCompleted()) {
+			redirectAttributes.addFlashAttribute("failed", "すでに進行中になっています");
+			return "redirect:/";
+		}
+
 		taskService.updateCompleted(task);
+
+		// 送り主にメール通知をする
+		int userId = task.getUserId();
+		TaskForm form = taskService.findOne(userId);
+		taskNoticeService.sendCompletedNoticeByMail(form, p);
 		redirectAttributes.addFlashAttribute("successed", "頼みごとが完了しました");
 		return "redirect:/";
 	}
@@ -111,7 +124,7 @@ public class TaskController {
 			taskForm.setCompleted(false);
 			taskService.save(taskForm);
 
-			createTaskService.sendNoticeByMail(taskForm, p);
+			taskNoticeService.sendNoticeByMail(taskForm, p);
 			redirectAttributes.addFlashAttribute("successed", "登録が完了しました");
 			return "redirect:/";
 		} else {
@@ -120,7 +133,7 @@ public class TaskController {
 		}
 	}
 
-	@GetMapping("readRequestedTask/{id}")
+	@GetMapping("/readRequestedTask/{id}")
 	public String readTask(@PathVariable int id, Model model) {
 		TaskForm taskForm = taskService.findOne(id);
 		model.addAttribute("taskForm", taskForm);

@@ -17,12 +17,12 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td th:text="${task.title}"></td>
-				<td th:text="${task.content}"></td>
-				<td th:text="${task.label}"></td>
-				<td th:text="${task.userId}"></td>
-				<td th:text="${task.deadline}"></td>
+			<tr th:object="${taskForm}">
+				<td th:text="${taskForm.title}"></td>
+				<td th:text="${taskForm.content}"></td>
+				<td th:text="${taskForm.label}"></td>
+				<td th:text="${taskForm.userId}"></td>
+				<td th:text="${taskForm.deadline}"></td>
 			</tr>
 		</tbody>
 	</table>
