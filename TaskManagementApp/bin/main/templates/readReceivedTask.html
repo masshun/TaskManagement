@@ -33,6 +33,7 @@
 			<input type="radio" name="completed" th:text="${item.key}"
 				th:value="${item.value}" th:checked="${item.key == '進行中'}">
 		</div>
+		<input type="hidden" name="userId" th:value="${task.userId}">
 		<button type="submit" class="btn btn-primary ml-2">更新</button>
 	</form>
 	<a href="#" th:href="@{/}" class="btn btn-primary btn-sm" role="button"

@@ -83,8 +83,10 @@
 		UPDATE
 		task
 		SET
-		id = #{id}, user_id = #{userId}, content
-		= #{content}, label = #{label}, deadline = #{deadline}, send_user_id =
+		id = #{id}, user_id = #{userId}, title =
+		#{title}, content
+		= #{content}, label = #{label}, deadline =
+		#{deadline}, send_user_id =
 		#{sendUserId},
 		completed = #{completed}
 		WHERE
@@ -96,14 +98,8 @@
 		task
 		SET
 		id = #{id},
-		user_id = #{userId},
-		title =
-		#{title},
-		label = #{label},
-		content = #{content},
-		deadline = #{deadline},
-		send_user_id = #{sendUserId},
-		completed = #{completed}
+		completed =
+		#{completed}
 		WHERE
 		id = #{id}
 	</update>

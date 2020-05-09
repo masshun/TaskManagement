@@ -13,13 +13,13 @@ public class GetAddresseeService {
 	AccountMapper accountMapper;
 
 	// userdetailsserviceを経由する
-	public String getAdresseeById(int id) {
+	public String getAddresseeById(int id) {
 		Account ac = accountMapper.findByUserId(id);
 		String adressee = ac.getUsername();
 		return adressee;
 	}
 
-	public String getAdreseeMailById(int id) {
+	public String getAddreseeMailById(int id) {
 		Account ac = accountMapper.findByUserId(id);
 		String email = ac.getEmail();
 		return email;
