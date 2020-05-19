@@ -1,4 +1,4 @@
-package com.example.demo.app;
+package com.example.demo.controller;
 
 import java.security.Principal;
 import java.util.LinkedHashMap;
@@ -22,14 +22,14 @@ import com.example.demo.domain.Task;
 import com.example.demo.domain.TaskForm;
 import com.example.demo.service.taskService.TaskNoticeService;
 import com.example.demo.service.taskService.TaskService;
-import com.example.demo.service.userService.GetLoginUserService;
+import com.example.demo.service.userService.GetUserInfoService;
 
 @Controller
 @RequestMapping("/")
 public class TaskController {
 
 	@Autowired
-	GetLoginUserService loginUser;
+	GetUserInfoService user;
 
 	@Autowired
 	TaskNoticeService taskNoticeService;
@@ -37,18 +37,18 @@ public class TaskController {
 	@Autowired
 	TaskService taskService;
 
-	private Map<String, Boolean> completed;
+	private Map<String, Boolean> status;
 
-	private Map<String, Boolean> initCompleted() {
+	private Map<String, Boolean> initStatus() {
 		Map<String, Boolean> radio = new LinkedHashMap<>();
-		radio.put("進行中", false);
+		radio.put("未完", false);
 		radio.put("完了!", true);
 		return radio;
 	}
 
 	@GetMapping
 	public String index(Model model, Principal p) {
-		int userId = loginUser.getLoginUserId(p);
+		int userId = user.getLoginUserId(p);
 		String username = p.getName();
 		model.addAttribute("username", username);
 		model.addAttribute("id", userId);
@@ -57,43 +57,44 @@ public class TaskController {
 
 	@GetMapping("/requestedTask")
 	public String requestedTask(Model model, Principal p) {
-		int userId = loginUser.getLoginUserId(p);
+		int userId = user.getLoginUserId(p);
+		// TODO DBアクセスを減らす
 		List<Task> inProgress = taskService.findInProgressTask(userId);
 		List<Task> completed = taskService.findCompletedTask(userId);
 		model.addAttribute("inProgress", inProgress);
 		model.addAttribute("completed", completed);
-		return "requestedTask";
+		return "task/requestedTask";
 	}
 
 	@GetMapping("/receivedTask")
 	public String receivedTask(Model model, Principal p) {
-		int userId = loginUser.getLoginUserId(p);
+		int userId = user.getLoginUserId(p);
 		List<Task> task = taskService.findReceivedTask(userId);
-		boolean result = task.stream().anyMatch(s -> s.isCompleted());
+		boolean result = task.stream().anyMatch(s -> "未完".equals(s.getStatus()));
 		if (result) {
-			model.addAttribute("none", "進行中の頼みごとはありません");
+			model.addAttribute("none", "完了した頼みごとはありません");
 		} else {
 			model.addAttribute("receivedTask", task);
 		}
-		return "received";
+		return "task/received";
 	}
 
 	@GetMapping("/readTask/{id}")
 	public String readTask(@PathVariable int id, Model model, AccountForm form) {
 		TaskForm task = taskService.findOne(id);
 
-		completed = initCompleted();
-		model.addAttribute("completed", completed);
+		status = initStatus();
+		model.addAttribute("status", status);
 		model.addAttribute("form", form);
 		model.addAttribute("task", task);
-		return "readReceivedTask";
+		return "task/readReceivedTask";
 	}
 
 	@PostMapping("/readTask/{id}")
 	public String postCompleted(@PathVariable int id, @ModelAttribute Task task, RedirectAttributes redirectAttributes,
 			Principal p) {
 		task.setId(id);
-		if (!task.isCompleted()) {
+		if (task.getStatus().equals("未完")) {
 			redirectAttributes.addFlashAttribute("failed", "すでに進行中になっています");
 			return "redirect:/";
 		}
@@ -110,18 +111,18 @@ public class TaskController {
 
 	@GetMapping("/createTask")
 	public String createTask(TaskForm taskForm, Model model, Principal p) {
-		int userId = loginUser.getLoginUserId(p);
+		int userId = user.getLoginUserId(p);
 		// デフォルトは進行中
 		model.addAttribute("userId", userId);
 		model.addAttribute("taskForm", taskForm);
-		return "createTask";
+		return "task/createTask";
 	}
 
 	@PostMapping("/create")
 	public String createTask(@ModelAttribute @Validated TaskForm taskForm, BindingResult result, Model model,
 			RedirectAttributes redirectAttributes, Principal p) {
 		if (!result.hasErrors()) {
-			taskForm.setCompleted(false);
+			taskForm.setStatus("未完");
 			taskService.save(taskForm);
 
 			taskNoticeService.sendNoticeByMail(taskForm, p);
@@ -129,7 +130,7 @@ public class TaskController {
 			return "redirect:/";
 		} else {
 			model.addAttribute("failed", "入力値に誤りがあります");
-			return "createTask";
+			return "task/createTask";
 		}
 	}
 
@@ -137,23 +138,23 @@ public class TaskController {
 	public String readTask(@PathVariable int id, Model model) {
 		TaskForm taskForm = taskService.findOne(id);
 		model.addAttribute("taskForm", taskForm);
-		return "readRequestedTask";
+		return "task/readRequestedTask";
 	}
 
 	@GetMapping("/edit/{id}")
 	public String editRequiredTask(@PathVariable int id, Model model) {
 		TaskForm taskForm = taskService.findOne(id);
 		model.addAttribute("taskForm", taskForm);
-		return "editRequiredTask";
+		return "task/editRequiredTask";
 	}
 
 	@PostMapping("/edit/{id}")
 	public String editRequiredTask(@PathVariable int id, @ModelAttribute @Validated TaskForm taskForm, Model model,
 			RedirectAttributes redirectAttributes, Principal p) {
 		taskForm.setId(id);
-		taskForm.setUserId(loginUser.getLoginUserId(p));
+		taskForm.setUserId(user.getLoginUserId(p));
 		// 削除しない限りタスクを完了扱いにはしない
-		taskForm.setCompleted(false);
+		taskForm.setStatus("未完");
 		taskService.update(taskForm);
 		redirectAttributes.addFlashAttribute("successed", "更新が完了しました");
 		return "redirect:/";

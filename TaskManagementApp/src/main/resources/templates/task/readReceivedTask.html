@@ -29,8 +29,8 @@
 	<!-- 頼まれたタスク内容の大半は変更できないようにする -->
 	<form method="post" th:object="${task}"
 		th:action="@{/readTask/{id}(id=${task.id})}">
-		<div th:each="item : ${completed}" th:object="${completed}">
-			<input type="radio" name="completed" th:text="${item.key}"
+		<div th:each="item : ${status}" th:object="${status}">
+			<input type="radio" name="status" th:text="${item.key}"
 				th:value="${item.value}" th:checked="${item.key == '進行中'}">
 		</div>
 		<input type="hidden" name="userId" th:value="${task.userId}">

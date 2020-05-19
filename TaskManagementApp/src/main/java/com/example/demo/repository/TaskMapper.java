@@ -9,7 +9,9 @@ import com.example.demo.domain.TaskForm;
 
 @Mapper
 public interface TaskMapper {
-	List<Task> findAll(int userId);
+	List<Task> findAllByUserId(int userId);
+
+	List<Task> findAll();
 
 	List<Task> findReceivedTask(int userId);
 

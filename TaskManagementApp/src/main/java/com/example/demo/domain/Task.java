@@ -17,7 +17,7 @@ public class Task implements Serializable {
 	private String title;
 	private String content;
 	private String label;
-	private int sendUserId;
+	private int userAddresseeId;
 	private Timestamp deadline;
-	private boolean completed;
+	private String status;
 }

@@ -26,7 +26,7 @@
 				<td th:text="${obj.title}"></td>
 				<td th:text="${obj.content}"></td>
 				<td th:text="${obj.label}"></td>
-				<td th:text="${obj.sendUserId}"></td>
+				<td th:text="${obj.userAddresseeId}"></td>
 				<td th:text="${obj.deadline}"></td>
 				<td><a href="#"
 					th:href="@{/readRequestedTask/{id}(id=${obj.id})}"
@@ -68,8 +68,5 @@
 			</tr>
 		</tbody>
 	</table>
-	<!-- <form method="post" th:action="@{/delete/{id}(id=${obj.id})}">
-		<button type="submit" class="btn btn-danger ml-2">削除</button>
-	</form>-->
 </body>
 </html>

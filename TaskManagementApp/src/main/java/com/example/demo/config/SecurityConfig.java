@@ -67,8 +67,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// .defaultSuccessUrl("/", true);
 		http.exceptionHandling().accessDeniedPage("/403");
 
-		// http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-
 		http.logout()
 				// デフォはpost これでgetでリクエストが送れる
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
@@ -82,7 +80,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.sessionManagement().invalidSessionUrl("/login")
 				// 同時セッション数を制限
 				.maximumSessions(1);
-		// .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 		// 自動ログイン機能 デフォルトは２週間
 		http.rememberMe().rememberMeParameter("remember-me")

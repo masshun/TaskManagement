@@ -17,8 +17,12 @@ public class TaskService {
 	@Autowired
 	TaskMapper taskMapper;
 
-	public List<Task> findAll(int userId) {
-		return taskMapper.findAll(userId);
+	public List<Task> findAllByUserId(int userId) {
+		return taskMapper.findAllByUserId(userId);
+	}
+
+	public List<Task> findAll() {
+		return taskMapper.findAll();
 	}
 
 	public List<Task> findReceivedTask(int userId) {

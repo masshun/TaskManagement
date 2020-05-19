@@ -9,10 +9,23 @@ import com.example.demo.domain.Account;
 import com.example.demo.repository.AccountMapper;
 
 @Service
-public class GetLoginUserService {
+public class GetUserInfoService {
 
 	@Autowired
 	AccountMapper accountMapper;
+
+	// userdetailsserviceを経由する
+	public String getAddresseeById(int id) {
+		Account ac = accountMapper.findByUserId(id);
+		String adressee = ac.getUsername();
+		return adressee;
+	}
+
+	public String getAddreseeMailById(int id) {
+		Account ac = accountMapper.findByUserId(id);
+		String email = ac.getEmail();
+		return email;
+	}
 
 	public int getLoginUserId(Principal p) {
 		String username = p.getName();
@@ -20,5 +33,4 @@ public class GetLoginUserService {
 		int userId = ac.getId();
 		return userId;
 	}
-
 }

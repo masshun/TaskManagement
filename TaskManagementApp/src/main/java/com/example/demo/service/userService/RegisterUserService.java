@@ -35,19 +35,20 @@ public class RegisterUserService {
 		String confirmationToken = UUID.randomUUID().toString();
 
 		ConfirmationToken token = new ConfirmationToken(passwordEncoder.encode(password), confirmationToken, form);
+		// TODO sessionに入れるtokenがあるかどうか & session例外
 		httpSession.setAttribute("hoge", token);
 		return token;
 	}
 
 	public String registerMail(AccountForm form, ConfirmationToken confirmationToken, String username) {
-		// メールのフィールドは別に作る
+		// TODO メールのフィールドは別に作る
 		String IPadnPort = "localhost:9996";
 		String from = "xxx@@gmail.com";
 		String title = "新規登録 アカウント確認のお願い";
 		String content = username + "さん" + "\n" + "\n" + "以下のリンクにアクセスしてアカウントを認証してください" + "\n" + "http://" + IPadnPort
-				+ "/validate" + "?id=" + confirmationToken;
+				+ "/signup/validate" + "?id=" + confirmationToken;
 
-		// 別に作る
+		// TODO 別に作る
 		try {
 			SimpleMailMessage msg = new SimpleMailMessage();
 			msg.setFrom(from);
@@ -57,7 +58,7 @@ public class RegisterUserService {
 			javaMailSender.send(msg);
 		} catch (Exception e) {
 			e.printStackTrace();
-			// failed to send
+			// TODO failed to send
 
 		}
 		return "送信しました";

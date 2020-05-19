@@ -8,27 +8,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.TaskForm;
-import com.example.demo.service.mailService.SendingMailService;
-import com.example.demo.service.userService.GetAddresseeService;
+import com.example.demo.service.mailService.SendMailService;
+import com.example.demo.service.userService.GetUserInfoService;
 
 @Service
 public class TaskNoticeService {
 
 	@Autowired
-	GetAddresseeService getAddressee;
+	GetUserInfoService getAddressee;
 
 	@Autowired
-	SendingMailService sendingService;
+	SendMailService sendingService;
 
 	public boolean sendNoticeByMail(TaskForm taskForm, Principal p) {
-		// あとでフィールドは別に作って呼び出す リレーションに変更しておく
+		// TODO あとでフィールドは別に作って呼び出す リレーションに変更しておく
 		String sender = p.getName();
-		int id = taskForm.getSendUserId();
+		int id = taskForm.getUserAddresseeId();
 		String addressee = getAddressee.getAddresseeById(id);
 		String email = getAddressee.getAddreseeMailById(id);
 		String taskTitle = taskForm.getTitle();
 
-		// ここもあとでフィールドは別に作って呼び出す
+		// TODO ここもあとでフィールドは別に作って呼び出す
 		String IPadnPort = "localhost:9996";
 		String from = "xxxx@@gmail.com";
 		String title = sender + "さん「" + taskTitle + "」";

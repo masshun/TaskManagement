@@ -23,9 +23,9 @@ public class TaskForm implements Serializable {
 	private String title;
 	private String content;
 	private String label;
-	private int sendUserId;
+	private int userAddresseeId;
 	private String deadline;
-	private boolean completed;
+	private String status;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {

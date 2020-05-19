@@ -1,4 +1,4 @@
-package com.example.demo.app;
+package com.example.demo.controller;
 
 import java.security.Principal;
 
@@ -12,7 +12,6 @@ import com.example.demo.repository.AccountMapper;
 import com.example.demo.repository.UserDetailsImpl;
 
 @Controller
-//@SessionAttributes(types = AccountForm.class)
 public class LoginController {
 
 	@Autowired
@@ -20,26 +19,16 @@ public class LoginController {
 
 	@GetMapping("/login")
 	public String getLogin() {
-		return "login/login";
+		return "auth/login";
 	}
 
-	@GetMapping("/admin")
-	public String getAdmin(Model model) {
-		model.addAttribute("contents", "login/admin :: admin_contents");
-		return "login/admin";
-	}
-
-	@GetMapping("/logout")
-	public String getLogout() {
-		return "redirect:/login";
-	}
-
-	@GetMapping("/userList")
+	// TODO ユーザー情報の編集用画面をつくる
+	@GetMapping("/account")
 	public String getUserList(Model model, Principal principal) {
 		Authentication auth = (Authentication) principal;
 		UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
 		model.addAttribute("user", userDetails);
-		return "login/userList";
+		return "account";
 	}
 
 	@GetMapping("/403")

@@ -5,22 +5,28 @@
 		type="com.example.demo.domain.Task">
 		<id column="id" property="id" />
 		<result column="user_id" property="userId" />
-		<result column="send_user_id" property="sendUserId" />
+		<result column="user_addressee_id" property="userAddresseeId" />
 	</resultMap>
 
 	<resultMap id="FindOneResultMap"
 		type="com.example.demo.domain.TaskForm">
 		<id column="id" property="id" />
 		<result column="user_id" property="userId" />
-		<result column="send_user_id" property="sendUserId" />
+		<result column="user_addressee_id" property="userAddresseeId" />
 	</resultMap>
 
-	<select id="findAll" resultMap="BaseResultMap">
+	<select id="findAllByUserId" resultMap="BaseResultMap">
 		SELECT
 		*
 		FROM task
 		WHERE user_id =
 		#{userId}
+	</select>
+	
+	<select id="findAll" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM task
 	</select>
 
 	<select id="findReceivedTask" resultMap="BaseResultMap">
@@ -48,7 +54,7 @@
 		user_id =
 		#{userId}
 		AND
-		completed = 0
+		status = '未完'
 	</select>
 
 	<select id="findCompletedTask" resultMap="BaseResultMap">
@@ -59,23 +65,23 @@
 		user_id =
 		#{userId}
 		AND
-		completed = 1
+		status = '完了'
 	</select>
 
 	<insert id="save" useGeneratedKeys="true" keyProperty="id">
 		INSERT
 		INTO
 		task
-		(title, user_id, content, label, deadline, send_user_id,
-		completed)
+		(title, user_id, content, label, deadline, user_addressee_id,
+		status)
 		VALUES
 		(#{title},
 		#{userId},
 		#{content},
 		#{label},
 		#{deadline},
-		#{sendUserId},
-		#{completed}
+		#{userAddresseeId},
+		#{status}
 		)
 	</insert>
 
@@ -86,9 +92,9 @@
 		id = #{id}, user_id = #{userId}, title =
 		#{title}, content
 		= #{content}, label = #{label}, deadline =
-		#{deadline}, send_user_id =
-		#{sendUserId},
-		completed = #{completed}
+		#{deadline}, user_addressee_id =
+		#{userAddresseeId},
+		status = #{status}
 		WHERE
 		id = #{id}
 	</update>
@@ -98,8 +104,8 @@
 		task
 		SET
 		id = #{id},
-		completed =
-		#{completed}
+		status =
+		#{status}
 		WHERE
 		id = #{id}
 	</update>
