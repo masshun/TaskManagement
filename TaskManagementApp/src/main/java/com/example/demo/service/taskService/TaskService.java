@@ -1,6 +1,7 @@
 package com.example.demo.service.taskService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.domain.Task;
 import com.example.demo.domain.TaskForm;
+import com.example.demo.domain.TaskList;
 import com.example.demo.repository.TaskMapper;
 
 @Service
@@ -16,6 +18,9 @@ public class TaskService {
 
 	@Autowired
 	TaskMapper taskMapper;
+
+	@Autowired
+	TaskList task;
 
 	public List<Task> findAllByUserId(int userId) {
 		return taskMapper.findAllByUserId(userId);
@@ -33,13 +38,24 @@ public class TaskService {
 		return taskMapper.findOne(id);
 	}
 
-	public List<Task> findCompletedTask(int userId) {
-		return taskMapper.findCompletedTask(userId);
+	public void setTask(int userId) {
+		List<Task> all = taskMapper.findAllByUserId(userId);
 
+		// 完了した頼みごと
+		List<Task> completed = all.stream().filter(s -> s.getStatus().equals("完了")).collect(Collectors.toList());
+		task.setCompletedTask(completed);
+
+		// 未完の頼みごと
+		List<Task> notExecuted = all.stream().filter(s -> s.getStatus().equals("未完")).collect(Collectors.toList());
+		task.setNotExecutedTask(notExecuted);
 	}
 
-	public List<Task> findInProgressTask(int userId) {
-		return taskMapper.findInProgressTask(userId);
+	public List<Task> getCompletedTask() {
+		return task.getCompletedTask();
+	}
+
+	public List<Task> getNotExecutedTask() {
+		return task.getNotExecutedTask();
 	}
 
 	public boolean updateCompleted(Task task) {

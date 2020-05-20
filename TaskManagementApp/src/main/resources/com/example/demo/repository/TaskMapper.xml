@@ -34,7 +34,7 @@
 		*
 		FROM task
 		WHERE
-		send_user_id =
+		user_addressee_id =
 		#{userId}
 	</select>
 
@@ -45,29 +45,7 @@
 		WHERE id =
 		#{id}
 	</select>
-
-	<select id="findInProgressTask" resultMap="BaseResultMap">
-		SELECT
-		*
-		FROM task
-		WHERE
-		user_id =
-		#{userId}
-		AND
-		status = '未完'
-	</select>
-
-	<select id="findCompletedTask" resultMap="BaseResultMap">
-		SELECT
-		*
-		FROM task
-		WHERE
-		user_id =
-		#{userId}
-		AND
-		status = '完了'
-	</select>
-
+	
 	<insert id="save" useGeneratedKeys="true" keyProperty="id">
 		INSERT
 		INTO

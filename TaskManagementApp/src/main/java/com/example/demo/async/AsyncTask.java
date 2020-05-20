@@ -17,8 +17,9 @@ import com.example.demo.service.mailService.SendMailService;
 import com.example.demo.service.taskService.TaskService;
 import com.example.demo.service.userService.GetUserInfoService;
 
+//TODO runnnableいるかどうか
 @Component
-public class AsyncTask implements Runnable {
+public class AsyncTask {
 
 	@Autowired
 	TaskService taskService;
@@ -29,7 +30,6 @@ public class AsyncTask implements Runnable {
 	@Autowired
 	SendMailService sendingService;
 
-	@Override
 	@Async
 	public void run() {
 		// タスクを全て洗い出す
@@ -38,7 +38,7 @@ public class AsyncTask implements Runnable {
 
 		// タスクの期限が１時間前であるかどうかチェック
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		List<Task> inProgressTask = task.stream().filter(s -> s.getStatus() == "未完").collect(Collectors.toList());
+		List<Task> inProgressTask = task.stream().filter(s -> s.getStatus().equals("未完")).collect(Collectors.toList());
 		LocalDateTime now = timestamp.toLocalDateTime();
 
 		// TODO フィールドは別のクラスで設定する
@@ -71,12 +71,7 @@ public class AsyncTask implements Runnable {
 				map.put("content", content);
 
 				// １時間を切っていたらsendUserIdのアカウントメールに通知を送る
-				boolean result = sendingService.sendMail(map);
-				if (result) {
-					System.out.println("送信完了しました");
-				} else {
-					System.out.println("送信が失敗しました");
-				}
+				sendingService.sendMail(map);
 
 			}
 		}

@@ -31,7 +31,7 @@
 		th:action="@{/readTask/{id}(id=${task.id})}">
 		<div th:each="item : ${status}" th:object="${status}">
 			<input type="radio" name="status" th:text="${item.key}"
-				th:value="${item.value}" th:checked="${item.key == '進行中'}">
+				th:value="${item.value}" th:checked="${item.key == '未完'}">
 		</div>
 		<input type="hidden" name="userId" th:value="${task.userId}">
 		<button type="submit" class="btn btn-primary ml-2">更新</button>

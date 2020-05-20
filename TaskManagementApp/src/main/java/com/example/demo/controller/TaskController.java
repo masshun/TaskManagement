@@ -51,17 +51,18 @@ public class TaskController {
 		int userId = user.getLoginUserId(p);
 		String username = p.getName();
 		model.addAttribute("username", username);
-		model.addAttribute("id", userId);
+		model.addAttribute("userId", userId);
 		return "index";
 	}
 
 	@GetMapping("/requestedTask")
 	public String requestedTask(Model model, Principal p) {
 		int userId = user.getLoginUserId(p);
-		// TODO DBアクセスを減らす
-		List<Task> inProgress = taskService.findInProgressTask(userId);
-		List<Task> completed = taskService.findCompletedTask(userId);
-		model.addAttribute("inProgress", inProgress);
+		taskService.setTask(userId);
+
+		List<Task> notExecuted = taskService.getNotExecutedTask();
+		List<Task> completed = taskService.getCompletedTask();
+		model.addAttribute("notExecuted", notExecuted);
 		model.addAttribute("completed", completed);
 		return "task/requestedTask";
 	}
@@ -72,9 +73,9 @@ public class TaskController {
 		List<Task> task = taskService.findReceivedTask(userId);
 		boolean result = task.stream().anyMatch(s -> "未完".equals(s.getStatus()));
 		if (result) {
-			model.addAttribute("none", "完了した頼みごとはありません");
-		} else {
 			model.addAttribute("receivedTask", task);
+		} else {
+			model.addAttribute("none", "完了した頼みごとはありません");
 		}
 		return "task/received";
 	}

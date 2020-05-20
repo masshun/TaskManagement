@@ -7,7 +7,7 @@
 <body>
 	<h1>頼みごと一覧</h1>
 	<br />
-	<h3>進行中の頼みごと</h3>
+	<h3>完了していない頼みごと</h3>
 	<table>
 		<thead class="thead-dark">
 			<tr>
@@ -22,7 +22,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="obj : ${inProgress}">
+			<tr th:each="obj : ${notExecuted}">
 				<td th:text="${obj.title}"></td>
 				<td th:text="${obj.content}"></td>
 				<td th:text="${obj.label}"></td>
@@ -60,7 +60,7 @@
 				<td th:text="${obj.title}"></td>
 				<td th:text="${obj.content}"></td>
 				<td th:text="${obj.label}"></td>
-				<td th:text="${obj.sendUserId}"></td>
+				<td th:text="${obj.userAddresseeId}"></td>
 				<td th:text="${obj.deadline}"></td>
 				<td><a href="#"
 					th:href="@{/readRequestedTask/{id}(id=${obj.id})}"
