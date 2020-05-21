@@ -47,11 +47,7 @@ public class TaskController {
 	}
 
 	@GetMapping
-	public String index(Model model, Principal p) {
-		int userId = user.getLoginUserId(p);
-		String username = p.getName();
-		model.addAttribute("username", username);
-		model.addAttribute("userId", userId);
+	public String index(Model model) {
 		return "index";
 	}
 
@@ -75,7 +71,7 @@ public class TaskController {
 		if (result) {
 			model.addAttribute("receivedTask", task);
 		} else {
-			model.addAttribute("none", "完了した頼みごとはありません");
+			model.addAttribute("none", "未完状態の頼みごとはありません");
 		}
 		return "task/received";
 	}

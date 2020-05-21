@@ -32,37 +32,39 @@ public class UserDetailsImpl implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		// TODO 自動生成されたメソッド・スタブ
 		return account.getPassword();
+	}
+
+	public String getEmail() {
+		return account.getEmail();
+	}
+
+	public int getUserId() {
+		return account.getId();
 	}
 
 	@Override
 	public String getUsername() {
-		// TODO 自動生成されたメソッド・スタブ
 		return account.getUsername();
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO 自動生成されたメソッド・スタブ
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO 自動生成されたメソッド・スタブ
 		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO 自動生成されたメソッド・スタブ
 		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO 自動生成されたメソッド・スタブ
 		return true;
 	}
 

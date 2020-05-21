@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:include="layout :: frag_head">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body class="text-center">
+	<div class="d-flex w-100 h-100 mx-auto flex-column">
+
+		<header th:include="layout :: frag_body"></header>
+		<main role="main" class="mt-auto mb-auto">
+		<p sec:authentication="principal.username"></p>
+		<p th:text="${userId}"></p>
+		<p th:text="${email}"></p>
+		</main>
+
+	</div>
+</body>
+</html>

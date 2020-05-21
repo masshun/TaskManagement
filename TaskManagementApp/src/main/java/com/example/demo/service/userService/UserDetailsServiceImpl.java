@@ -1,7 +1,6 @@
 package com.example.demo.service.userService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	AccountMapper accountMapper;
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetailsImpl loadUserByUsername(String username) throws UsernameNotFoundException {
 		Account account = accountMapper.findByUsername(username);
 		// accountがnullになっている
 		if (account == null) {

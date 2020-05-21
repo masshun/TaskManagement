@@ -14,7 +14,7 @@ public class GetUserInfoService {
 	@Autowired
 	AccountMapper accountMapper;
 
-	// userdetailsserviceを経由する
+	// TODO userdetailsserviceを経由する
 	public String getAddresseeById(int id) {
 		Account ac = accountMapper.findByUserId(id);
 		String adressee = ac.getUsername();
