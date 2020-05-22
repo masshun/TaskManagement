@@ -10,16 +10,13 @@
 <link th:href="@{css/cover.css}" rel="stylesheet">
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
 	rel="stylesheet">
+<link rel="stylesheet" href="build/css/bootstrap-datetimepicker.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 	crossorigin="anonymous"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-	crossorigin="anonymous"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-	integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
 	crossorigin="anonymous"></script>
 </head>
 <body class="text-center">
@@ -30,7 +27,8 @@
 			<nav class="m-0 navbar navbar-expand-md navbar-dark shadow"
 				style="background: #011627;">
 				<div class="container">
-					<a class="navbar-brand" th:href="@{/}"> <i class="fa-2x fas fa-home"></i>
+					<a class="navbar-brand" th:href="@{/}"> <i
+						class="fa-2x fas fa-home"></i>
 					</a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse"
 						data-target="#navbarSupportedContent"
@@ -69,7 +67,8 @@
 										th:action="@{/logout}" method="post">
 										<button class="clear-decoration w-100 m-auto" type="submit">ログアウト</button>
 									</form>
-									<form class="dropdown-item" th:action="@{/userInfo}" method="get">
+									<form class="dropdown-item" th:action="@{/userInfo}"
+										method="get">
 										<button class="clear-decoration w-100 m-auto" type="submit">ユーザー情報</button>
 									</form>
 								</div></li>
@@ -81,12 +80,10 @@
 		</header>
 	</div>
 
-	<footer th:fragment="frag_footer" class="mastfoot">
-		<div class="inner">
-			<p>
-				Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>,
-				by <a href="https://twitter.com/mdo">@mdo</a>.
-			</p>
+	<footer th:fragment="frag_footer" class="mastfoot" style="">
+		<div class="">
+			<p style="color: white; margin-top: 1%; margin-bottom: 1%;" class="">
+				created by masshun.</p>
 		</div>
 	</footer>
 

@@ -7,7 +7,7 @@
 </head>
 <body class="text-center">
 
-	<div class="d-flex w-100 h-100 mx-auto flex-column">
+	<div class="d-flex w-100 h-100 flex-column">
 
 		<header th:include="layout :: frag_body"></header>
 
@@ -16,10 +16,39 @@
 			<h3 th:text="${failed}"></h3>
 			<h3 th:text="${result}"></h3>
 
-			<a href="#" th:href="@{/receivedTask}" class="btn btn-primary btn-sm"
-				role="button" aria-pressed="true">頼まれたこと</a> <a href="#"
-				th:href="@{/requestedTask}" class="btn btn-primary btn-sm"
-				role="button" aria-pressed="true">頼みごと</a>
+			<div class="row row-cols-1 row-cols-md-2" style="margin: 0 20%;">
+				<div class="col mb-4">
+					<div class="card linkbox" style="height: 18rem;">
+						<div class="card-body">
+							<h1 class="card-title pt-3">
+								<i class="my-color fas fa-3x fa-clipboard-list"></i>
+							</h1>
+							<a href="#" th:href="@{/receivedTask}" role="button"
+								aria-pressed="true"></a>
+							<div class="card-text pt-4">
+								<h4 class="font-weight-bold">頼まれたこと</h4>
+								<p>ユーザーから頼まれた内容を表示します</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col mb-4">
+					<div class="card linkbox" style="height: 18rem;">
+
+						<div class="card-body">
+							<h1 class="card-title pt-3">
+								<i class="my-color fas fa-3x fa-user-check"></i>
+							</h1>
+							<a href="#" th:href="@{/requestedTask}" role="button"
+								aria-pressed="true"></a>
+							<div class="card-text pt-4">
+								<h4 class="font-weight-bold">頼みごと</h4>
+								<p>既にユーザーに頼んでいる内容を表示します</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</main>
 
 		<footer th:include="layout :: frag_footer"></footer>
