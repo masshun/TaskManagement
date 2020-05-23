@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import com.example.demo.service.userService.UserDetailsServiceImpl;
 
@@ -34,11 +35,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return provider;
 	}
 
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("static/**").addResourceLocations("/resources/static/");
+	}
+
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		// 静的リソースの除外
 		// 静的リソースへのアクセスには、セキュリティを適用しない
-		web.ignoring().antMatchers("/static/**", "/css/**");
+		web.ignoring().antMatchers("/js/**", "/css/**", "/static/**");
 	}
 
 	@Override
@@ -46,10 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// Webリソース直リンクの禁止
 		// ログイン不要ページの設定
 		http.authorizeRequests()
-				// webjarsへアクセス許可
-				.antMatchers("/static/**").permitAll()
-				// cssへアクセス許可
-				.antMatchers("/css/**").permitAll()
 				// ログインページ直リンク許可
 				.antMatchers("/login/**").permitAll()
 				// ユーザー登録画面直リンク許可

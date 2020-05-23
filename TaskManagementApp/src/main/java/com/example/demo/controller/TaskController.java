@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,6 +57,7 @@ public class TaskController {
 		int userId = user.getLoginUserId(p);
 		taskService.setTask(userId);
 
+		// TODO DBアクセスの改善
 		List<Task> notExecuted = taskService.getNotExecutedTask();
 		List<Task> completed = taskService.getCompletedTask();
 		model.addAttribute("notExecuted", notExecuted);
@@ -67,12 +69,17 @@ public class TaskController {
 	public String receivedTask(Model model, Principal p) {
 		int userId = user.getLoginUserId(p);
 		List<Task> task = taskService.findReceivedTask(userId);
-		boolean result = task.stream().anyMatch(s -> "未完".equals(s.getStatus()));
-		if (result) {
-			model.addAttribute("receivedTask", task);
-		} else {
-			model.addAttribute("none", "未完状態の頼みごとはありません");
+		List<Task> notExecutedTask = task.stream().filter(s -> s.getStatus().equals("未完")).collect(Collectors.toList());
+		List<Task> completedTask = task.stream().filter(s -> s.getStatus().equals("完了")).collect(Collectors.toList());
+		model.addAttribute("notExecutedTask", notExecutedTask);
+		model.addAttribute("completedTask", completedTask);
+		if (completedTask.isEmpty()) {
+			model.addAttribute("emptyCompleted", "完了した頼みごとはありません");
 		}
+		if (notExecutedTask.isEmpty()) {
+			model.addAttribute("emptyNotExecuted", "これから取り組む頼みごとはありません");
+		}
+
 		return "task/received";
 	}
 

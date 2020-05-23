@@ -54,8 +54,8 @@ body {
 }
 
 .linkbox a:hover {
-	opacity: 0.1;
-	background-color: #2EC4B6;
+	background-color: rgba(46, 196, 182,0.1);
+	text-decoration: none;
 }
 
 .my-color {

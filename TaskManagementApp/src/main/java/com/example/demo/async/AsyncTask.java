@@ -38,7 +38,7 @@ public class AsyncTask {
 
 		// タスクの期限が１時間前であるかどうかチェック
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		List<Task> inProgressTask = task.stream().filter(s -> s.getStatus().equals("未完")).collect(Collectors.toList());
+		List<Task> notExecutedTask = task.stream().filter(s -> s.getStatus().equals("未完")).collect(Collectors.toList());
 		LocalDateTime now = timestamp.toLocalDateTime();
 
 		// TODO フィールドは別のクラスで設定する
@@ -58,7 +58,7 @@ public class AsyncTask {
 		map.put("from", from);
 		map.put("title", title);
 
-		for (Task t : inProgressTask) {
+		for (Task t : notExecutedTask) {
 			deadline = t.getDeadline().toLocalDateTime();
 			// 1時間以内であるかどうか
 			if ((ChronoUnit.HOURS.between(now, deadline) <= 1 && ChronoUnit.HOURS.between(now, deadline) >= 0)) {
