@@ -30,3 +30,5 @@ spring.mail.properties.mail.smtp.starttls.enable: true
 spring.datasource.schema=classpath:schema.sql
 spring.datasource.initialization-mode=always
 ```
+# その他
+動作確認：GoogleChrome
