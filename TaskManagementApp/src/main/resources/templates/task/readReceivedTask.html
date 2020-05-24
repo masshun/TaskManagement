@@ -19,23 +19,39 @@
 							<h2 class="card-header">これから取り組むこと</h2>
 							<div class="card-body" style="color: #011627;">
 								<div class="col">
-									<div class="card linkbox card-body mb-3 text-left">
-										<h2 class="pb-2">
+									<div class="card card-body mb-3">
+										<h2 class="pb-4">
 											<i th:style="${task.label} eq 'blue' ? 'color: #1ec0ff;'"
 												th:styleappend="${task.label eq 'green' ? 'color: #3ac569;' : 'color: red;'}"
 												class="fas fa-tags pr-2"></i><span
-												class="card-title text-left font-weight-bold"
+												class="card-title font-weight-bold"
 												th:text="${task.title}"></span>
 										</h2>
 										<div class="card-text">
 											<h4>
-												<i class="far fa-clipboard fa-lg pr-2"></i><span
+												<i class="far fa-clipboard fa-lg pr-2 pb-4"></i><span
 													th:text="${task.content}"></span>
 											</h4>
-											<h4 class="text-left">
-												<i class="far fa-clock pr-2"></i><span
+											<h4>
+												<i class="fas fa-user-edit fa-lg pr-2"></i><span
+													th:text="${sender}" class="pr-5"></span><i
+													class="far fa-lg fa-clock pr-2"></i><span
 													th:text="${task.deadline}"></span>
 											</h4>
+											<form class="form-group form-control-lg" method="post" th:object="${task}"
+												th:action="@{/readTask/{id}(id=${task.id})}">
+												<div class="form-check-inline" th:each="item : ${status}"
+													th:object="${status}">
+													<label>
+													<input class="form-check-input" style="width: 1.1em; height: 1.1em;" id="customRadio" type="radio" name="status" 
+														th:text="${item.key}" th:value="${item.value}" th:checked="${item.key == '未完'}">
+													</label>
+												</div>
+												<input type="hidden" name="userId" th:value="${task.userId}">
+											</form>
+											<button type="submit" class="btn mr-3" style="background-color: #011627; color: white;">更新</button>
+											<a href="#" th:href="@{/receivedTask}" class="btn" style="background-color: silver; color:#011627 ;"
+												role="button" aria-pressed="true">戻る</a>
 										</div>
 									</div>
 								</div>
@@ -44,21 +60,6 @@
 					</div>
 				</div>
 			</div>
-
-			<!--
-				
-			
-			<form method="post" th:object="${task}"
-				th:action="@{/readTask/{id}(id=${task.id})}">
-				<div th:each="item : ${status}" th:object="${status}">
-					<input type="radio" name="status" th:text="${item.key}"
-						th:value="${item.value}" th:checked="${item.key == '未完'}">
-				</div>
-				<input type="hidden" name="userId" th:value="${task.userId}">
-				<button type="submit" class="btn btn-primary ml-2">更新</button>
-			</form>
-			<a href="#" th:href="@{/}" class="btn btn-primary btn-sm"
-				role="button" aria-pressed="true">戻る</a>-->
 		</main>
 		<footer th:include="layout :: frag_footer"></footer>
 	</div>

@@ -21,6 +21,16 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
+<script type="text/javascript">
+	function check() {
+		if (window.confirm('送信してよろしいですか？')) { // 確認ダイアログを表示
+			return true; // 「OK」時は送信を実行
+		} else { // 「キャンセル」時の処理
+			window.alert('キャンセルされました'); // 警告ダイアログを表示
+			return false; // 送信を中止
+		}
+	}
+</script>
 </head>
 <body class="text-center">
 	<div class="cover-container d-flex w-100 h-100 mx-auto flex-column">

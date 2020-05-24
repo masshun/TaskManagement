@@ -33,4 +33,10 @@ public class GetUserInfoService {
 		int userId = ac.getId();
 		return userId;
 	}
+
+	public String getSenderName(int id) {
+		Account ac = accountMapper.findByUserId(id);
+		String sender = ac.getUsername();
+		return sender;
+	}
 }

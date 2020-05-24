@@ -58,16 +58,24 @@ public class TaskController {
 		taskService.setTask(userId);
 
 		// TODO DBアクセスの改善
-		List<Task> notExecuted = taskService.getNotExecutedTask();
-		List<Task> completed = taskService.getCompletedTask();
-		model.addAttribute("notExecuted", notExecuted);
-		model.addAttribute("completed", completed);
+		List<Task> notExecutedTask = taskService.getNotExecutedTask();
+		List<Task> completedTask = taskService.getCompletedTask();
+		model.addAttribute("notExecutedTask", notExecutedTask);
+		model.addAttribute("completedTask", completedTask);
+		if (completedTask.isEmpty()) {
+			model.addAttribute("emptyCompleted", "完了した頼みごとはありません");
+		}
+		if (notExecutedTask.isEmpty()) {
+			model.addAttribute("emptyNotExecuted", "これから取り組む頼みごとはありません");
+		}
 		return "task/requestedTask";
 	}
 
 	@GetMapping("/receivedTask")
 	public String receivedTask(Model model, Principal p) {
 		int userId = user.getLoginUserId(p);
+
+		// TODO DBアクセスの改善
 		List<Task> task = taskService.findReceivedTask(userId);
 		List<Task> notExecutedTask = task.stream().filter(s -> s.getStatus().equals("未完")).collect(Collectors.toList());
 		List<Task> completedTask = task.stream().filter(s -> s.getStatus().equals("完了")).collect(Collectors.toList());
@@ -86,8 +94,11 @@ public class TaskController {
 	@GetMapping("/readTask/{id}")
 	public String readTask(@PathVariable int id, Model model, AccountForm form) {
 		TaskForm task = taskService.findOne(id);
+		int senderId = task.getUserId();
+		String sender = user.getSenderName(senderId);
 
 		status = initStatus();
+		model.addAttribute("sender", sender);
 		model.addAttribute("status", status);
 		model.addAttribute("form", form);
 		model.addAttribute("task", task);
@@ -138,9 +149,13 @@ public class TaskController {
 		}
 	}
 
+	// TODO 修正
 	@GetMapping("/readRequestedTask/{id}")
 	public String readTask(@PathVariable int id, Model model) {
 		TaskForm taskForm = taskService.findOne(id);
+		int addresseeId = taskForm.getUserAddresseeId();
+		String addressee = user.getAddresseeById(addresseeId);
+		model.addAttribute("addressee", addressee);
 		model.addAttribute("taskForm", taskForm);
 		return "task/readRequestedTask";
 	}
