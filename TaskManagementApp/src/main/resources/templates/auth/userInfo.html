@@ -10,11 +10,47 @@
 
 		<header th:include="layout :: frag_body"></header>
 		<main role="main" class="mt-auto mb-auto">
-		<p sec:authentication="principal.username"></p>
-		<p th:text="${userId}"></p>
-		<p th:text="${email}"></p>
-		</main>
+			<h1 class="mt-5" style="color: white;">
+				<i class="fas fa-user-circle fa-3x"></i>
+			</h1>
 
+			<div class="container">
+				<div class="row">
+					<div class="col mt-5">
+						
+							<div class="col">
+								<div class="card card-body mb-3 mx-auto border-0" style="background-color: #2EC4B6;">
+									<div class="card-text">
+										<div style="display: inline-block; color: white;" class="text-left">
+											<h3>
+											<i class="fas fa-signature pr-2"></i>
+											<span sec:authentication="principal.username"></span>
+											</h3>
+											<h3>
+											<i class="far fa-id-card pr-2"></i>
+											<span th:text="${userId}"></span>
+											</h3>
+											<h3 class="pb-5">
+											<i class="far fa-envelope pr-2"></i>
+											<span th:text="${email}"></span>
+											</h3>
+											<div class="mt-3 text-center">
+												<a href="#" th:href="@{/}" class="btn"
+													style="background-color: #EFFFE9; color: #011627;"
+													role="button" aria-pressed="true">戻る</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+				
+				</div>
+			</div>
+
+
+		</main>
+		<footer th:include="layout :: frag_footer"></footer>
 	</div>
 </body>
 </html>

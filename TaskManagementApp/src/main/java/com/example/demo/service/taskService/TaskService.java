@@ -1,6 +1,7 @@
 package com.example.demo.service.taskService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.domain.Task;
 import com.example.demo.domain.TaskForm;
-import com.example.demo.domain.TaskList;
+import com.example.demo.domain.object.FormButton;
+import com.example.demo.domain.object.TaskList;
 import com.example.demo.repository.TaskMapper;
 
 @Service
@@ -38,7 +40,17 @@ public class TaskService {
 		return taskMapper.findOne(id);
 	}
 
-	public void setTask(int userId) {
+	public void setReceivedTask(int userId) {
+		List<Task> all = taskMapper.findReceivedTask(userId);
+
+		List<Task> notExecuted = all.stream().filter(s -> s.getStatus().equals("未完")).collect(Collectors.toList());
+		task.setNotExecutedTask(notExecuted);
+
+		List<Task> completed = all.stream().filter(s -> s.getStatus().equals("完了")).collect(Collectors.toList());
+		task.setCompletedTask(completed);
+	}
+
+	public void setRequestedTask(int userId) {
 		List<Task> all = taskMapper.findAllByUserId(userId);
 
 		// 完了した頼みごと
@@ -72,6 +84,7 @@ public class TaskService {
 		}
 	}
 
+	// 変換
 	public boolean update(TaskForm taskForm) {
 		boolean result = taskMapper.update(taskForm);
 		if (result) {
@@ -88,6 +101,12 @@ public class TaskService {
 			// exception
 		}
 		return true;
+	}
+
+	public Map<String, String> getSelectLabel() {
+		FormButton form = new FormButton();
+		Map<String, String> selectLabel = form.initSelectLabel();
+		return selectLabel;
 	}
 
 }

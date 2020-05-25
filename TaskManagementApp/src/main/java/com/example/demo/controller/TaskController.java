@@ -4,7 +4,6 @@ import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,6 +37,7 @@ public class TaskController {
 	@Autowired
 	TaskService taskService;
 
+	// クラスを作って別にする
 	private Map<String, Boolean> status;
 
 	private Map<String, Boolean> initStatus() {
@@ -55,11 +55,11 @@ public class TaskController {
 	@GetMapping("/requestedTask")
 	public String requestedTask(Model model, Principal p) {
 		int userId = user.getLoginUserId(p);
-		taskService.setTask(userId);
+		taskService.setRequestedTask(userId);
 
-		// TODO DBアクセスの改善
 		List<Task> notExecutedTask = taskService.getNotExecutedTask();
 		List<Task> completedTask = taskService.getCompletedTask();
+
 		model.addAttribute("notExecutedTask", notExecutedTask);
 		model.addAttribute("completedTask", completedTask);
 		if (completedTask.isEmpty()) {
@@ -74,11 +74,10 @@ public class TaskController {
 	@GetMapping("/receivedTask")
 	public String receivedTask(Model model, Principal p) {
 		int userId = user.getLoginUserId(p);
+		taskService.setReceivedTask(userId);
 
-		// TODO DBアクセスの改善
-		List<Task> task = taskService.findReceivedTask(userId);
-		List<Task> notExecutedTask = task.stream().filter(s -> s.getStatus().equals("未完")).collect(Collectors.toList());
-		List<Task> completedTask = task.stream().filter(s -> s.getStatus().equals("完了")).collect(Collectors.toList());
+		List<Task> notExecutedTask = taskService.getNotExecutedTask();
+		List<Task> completedTask = taskService.getCompletedTask();
 		model.addAttribute("notExecutedTask", notExecutedTask);
 		model.addAttribute("completedTask", completedTask);
 		if (completedTask.isEmpty()) {
@@ -128,6 +127,8 @@ public class TaskController {
 	public String createTask(TaskForm taskForm, Model model, Principal p) {
 		int userId = user.getLoginUserId(p);
 		// デフォルトは進行中
+		Map<String, String> selectLabel = taskService.getSelectLabel();
+		model.addAttribute("selectLabel", selectLabel);
 		model.addAttribute("userId", userId);
 		model.addAttribute("taskForm", taskForm);
 		return "task/createTask";
@@ -163,6 +164,8 @@ public class TaskController {
 	@GetMapping("/edit/{id}")
 	public String editRequiredTask(@PathVariable int id, Model model) {
 		TaskForm taskForm = taskService.findOne(id);
+		Map<String, String> selectLabel = taskService.getSelectLabel();
+		model.addAttribute("selectLabel", selectLabel);
 		model.addAttribute("taskForm", taskForm);
 		return "task/editRequiredTask";
 	}
@@ -174,6 +177,7 @@ public class TaskController {
 		taskForm.setUserId(user.getLoginUserId(p));
 		// 削除しない限りタスクを完了扱いにはしない
 		taskForm.setStatus("未完");
+
 		taskService.update(taskForm);
 		redirectAttributes.addFlashAttribute("successed", "更新が完了しました");
 		return "redirect:/";

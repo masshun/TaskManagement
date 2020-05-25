@@ -29,7 +29,7 @@ public class TaskForm implements Serializable {
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 		dateFormat.setLenient(false);
 		binder.registerCustomEditor(TaskForm.class, deadline, new CustomDateEditor(dateFormat, false));
 	}

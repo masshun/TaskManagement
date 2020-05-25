@@ -7,39 +7,39 @@
 <body class="text-center" style="color: white;">
 	<div class="d-flex w-100 h-100 flex-column">
 		<header th:include="layout :: frag_body"></header>
-
-		<main role="main" class="mt-auto mb-auto">
+		<main role="main" class="mb-auto mt-4">
 			<h3 th:text="${failed}"></h3>
-			<div class="text-center">
-				<h3 th:text="${failed}"></h3>
-				<h1 class="text-center">頼みごとの登録</h1>
-				<br /><br />
-			</div>
+			<h3 th:text="${failed}"></h3>
+			<h1 class="mt-5">頼みごとの登録</h1>
+			<br /> <br />
 			<form class="form-signin m-auto pr-5 pl-5" method="post" action="#"
 				th:action="@{/create}" style="max-width: 47%;"
 				th:object="${taskForm}">
 
 				<div class="form-group">
-					<label class="h5" for="title">タイトル</label> <input id="title" type="text"
-						class="form-control" name="title" th:value="${title}" /> <small
-						th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+					<label class="h5" for="title">タイトル</label> <input id="title"
+						type="text" class="form-control text-left" name="title" th:value="${title}" />
+					<small th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
 						class="err"></small>
 				</div>
 				<div class="form-group">
-					<label class="h5" for="content">内容</label> <input id="content" type="text"
-						class="form-control" name="content" th:value="${content}" /> <small
+					<label class="h5" for="content">内容</label> <input id="content"
+						type="text" class="form-control text-left" name="content"
+						th:value="${content}" /> <small
 						th:if="${#fields.hasErrors('content')}" th:errors="*{content}"
 						class="err"></small>
 				</div>
 				<div class="form-group">
-					<label class="h5" for="label">ラベル</label> <input id="label" type="text"
-						class="form-control" name="label" th:value="${label}" /> <small
-						th:if="${#fields.hasErrors('label')}" th:errors="*{label}"
-						class="err"></small>
+				<label class="h5" for="exampleFormControlSelect1">ラベル</label>
+					<select onchange="changeItem(this)" class="form-control"
+						id="exampleFormControlSelect1" name="label">
+							<option th:each="item : ${selectLabel}" th:value="${item.value}"
+								th:text="${item.key}" th:selected="${item.value} eq 'red'">hoge</option>
+					</select>
 				</div>
 				<div class="form-group">
 					<label class="h5" for="userAddresseeId">頼みたいユーザーのID</label> <input
-						id="userAddresseeId" type="number" class="form-control"
+						id="userAddresseeId" type="number" class="form-control text-left"
 						name="userAddresseeId" th:value="${userAddresseeId}" /> <small
 						th:if="${#fields.hasErrors('userAddresseeId')}"
 						th:errors="*{userAddresseeId}" class="err"></small>
@@ -52,8 +52,10 @@
 						class="err"></small>
 				</div>
 				<input type="hidden" name="userId" th:value="${userId}">
-				<button type="submit" class="btn" style="background-color: #011627; color: white;">登録</button>
-				<a href="/" class="btn btn-md ml-2" style="background-color: #EFFFE9;" role="button"
+				<button type="submit" class="btn"
+					style="background-color: #011627; color: white;">登録</button>
+				<a href="/" class="btn btn-md ml-2"
+					style="background-color: #EFFFE9;" role="button"
 					aria-pressed="true">戻る</a>
 			</form>
 		</main>

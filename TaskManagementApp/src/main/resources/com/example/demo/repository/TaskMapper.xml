@@ -21,6 +21,8 @@
 		FROM task
 		WHERE user_id =
 		#{userId}
+		ORDER BY
+		deadline ASC
 	</select>
 	
 	<select id="findAll" resultMap="BaseResultMap">
@@ -36,6 +38,8 @@
 		WHERE
 		user_addressee_id =
 		#{userId}
+				ORDER BY
+		deadline ASC
 	</select>
 
 	<select id="findOne" resultMap="FindOneResultMap">
