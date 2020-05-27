@@ -12,7 +12,7 @@
 			<h1 class="mt-5">頼みごと一覧</h1>
 
 			<div class="container">
-				<div class="row">
+				<div class="row pb-5">
 					<div class="col-md-6 mt-5">
 						<div class="card" style="background-color: #E71D36;">
 							<h5 class="card-header">完了していないこと</h5>
@@ -36,18 +36,18 @@
 										<div class="card-text">
 											<p>
 												<i class="far fa-clipboard fa-lg pr-2"></i><span
-													class="text-muted" th:text="${obj.content}"></span>
+													th:text="${obj.content}"></span>
 											</p>
 											<p class="h6 text-right">
-												<i class="far fa-clock pr-2"></i><span
-													th:text="${#dates.format(obj.deadline, 'yyyy-MM-dd HH:mm')}"
-													class="text-muted"></span>
-
+												<i class="far fa-address-book pr-1"></i> <span
+													th:each="addressee : ${obj.addressee}"
+													th:text="${addressee.name}" class="pr-2"></span> <i
+													class="far fa-clock pr-2"></i><span
+													th:text="${#dates.format(obj.deadline, 'yyyy-MM-dd HH:mm')}"></span>
 											</p>
 											<a href="#"
 												th:href="@{/readRequestedTask/{id}(id=${obj.id})}"
-												 role="button"
-												aria-pressed="true"></a>
+												role="button" aria-pressed="true"></a>
 										</div>
 									</div>
 								</div>
@@ -80,17 +80,18 @@
 										<div class="card-text">
 											<p>
 												<i class="far fa-clipboard fa-lg pr-2"></i><span
-													class="text-muted" th:text="${obj.content}"></span>
+													th:text="${obj.content}"></span>
 											</p>
 											<p class="h6 text-right">
-												<i class="far fa-clock pr-2"></i><span
-													th:text="${#dates.format(obj.deadline, 'yyyy-MM-dd HH:mm')}"
-													class="text-muted"></span>
+												<i class="far fa-address-book pr-1"></i> <span
+													th:each="addressee : ${obj.addressee}"
+													th:text="${addressee.name}" class="pr-2"></span> <i
+													class="far fa-clock pr-2"></i><span
+													th:text="${#dates.format(obj.deadline, 'yyyy-MM-dd HH:mm')}"></span>
 											</p>
 											<a href="#"
 												th:href="@{/readRequestedTask/{id}(id=${obj.id})}"
-												 role="button"
-												aria-pressed="true"></a>
+												role="button" aria-pressed="true"></a>
 										</div>
 									</div>
 								</div>

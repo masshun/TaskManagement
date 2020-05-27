@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import java.security.Principal;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,16 +35,6 @@ public class TaskController {
 
 	@Autowired
 	TaskService taskService;
-
-	// クラスを作って別にする
-	private Map<String, Boolean> status;
-
-	private Map<String, Boolean> initStatus() {
-		Map<String, Boolean> radio = new LinkedHashMap<>();
-		radio.put("未完", false);
-		radio.put("完了!", true);
-		return radio;
-	}
 
 	@GetMapping
 	public String index(Model model) {
@@ -87,18 +76,19 @@ public class TaskController {
 			model.addAttribute("emptyNotExecuted", "これから取り組む頼みごとはありません");
 		}
 
-		return "task/received";
+		return "task/receivedTask";
 	}
 
 	@GetMapping("/readTask/{id}")
 	public String readTask(@PathVariable int id, Model model, AccountForm form) {
+		// TODO 検索条件の追加
 		TaskForm task = taskService.findOne(id);
 		int senderId = task.getUserId();
 		String sender = user.getSenderName(senderId);
 
-		status = initStatus();
+		Map<String, Boolean> statusRadio = taskService.getStatusRadio();
 		model.addAttribute("sender", sender);
-		model.addAttribute("status", status);
+		model.addAttribute("status", statusRadio);
 		model.addAttribute("form", form);
 		model.addAttribute("task", task);
 		return "task/readReceivedTask";
@@ -167,7 +157,7 @@ public class TaskController {
 		Map<String, String> selectLabel = taskService.getSelectLabel();
 		model.addAttribute("selectLabel", selectLabel);
 		model.addAttribute("taskForm", taskForm);
-		return "task/editRequiredTask";
+		return "task/editRequestedTask";
 	}
 
 	@PostMapping("/edit/{id}")

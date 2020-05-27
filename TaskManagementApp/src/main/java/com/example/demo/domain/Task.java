@@ -2,6 +2,7 @@ package com.example.demo.domain;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
 import lombok.Data;
 
@@ -18,4 +19,9 @@ public class Task implements Serializable {
 	private int userAddresseeId;
 	private Timestamp deadline;
 	private String status;
+
+	// many to many
+	public List<Account> account;
+	public List<Addressee> addressee;
+
 }

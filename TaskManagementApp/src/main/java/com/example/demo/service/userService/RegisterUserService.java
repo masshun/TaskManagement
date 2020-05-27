@@ -45,7 +45,7 @@ public class RegisterUserService {
 	public String registerMail(AccountForm form, ConfirmationToken confirmationToken, String username) {
 		// TODO メールのフィールドは別に作る
 		String IPadnPort = "localhost:9996";
-		String from = "xxx@@gmail.com";
+		String from = "@@@gmail.com";
 		String title = "新規登録 アカウント確認のお願い";
 		String content = username + "さん" + "\n" + "\n" + "以下のリンクにアクセスしてアカウントを認証してください" + "\n" + "http://" + IPadnPort
 				+ "/signup/validate" + "?id=" + confirmationToken;
@@ -78,5 +78,6 @@ public class RegisterUserService {
 	public void registerUser(AccountForm accountForm) {
 		accountForm.setPassword(passwordEncoder.encode(accountForm.getPassword()));
 		accountMapper.save(accountForm);
+		accountMapper.saveAddressee(accountForm);
 	}
 }

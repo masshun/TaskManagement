@@ -15,41 +15,63 @@
 		<result column="user_addressee_id" property="userAddresseeId" />
 	</resultMap>
 
-	<select id="findAllByUserId" resultMap="BaseResultMap">
-		SELECT
-		*
-		FROM task
-		WHERE user_id =
-		#{userId}
-		ORDER BY
-		deadline ASC
-	</select>
-	
 	<select id="findAll" resultMap="BaseResultMap">
 		SELECT
 		*
 		FROM task
 	</select>
 
-	<select id="findReceivedTask" resultMap="BaseResultMap">
-		SELECT
-		*
-		FROM task
-		WHERE
-		user_addressee_id =
-		#{userId}
-				ORDER BY
-		deadline ASC
-	</select>
-
 	<select id="findOne" resultMap="FindOneResultMap">
 		SELECT
 		*
 		FROM task
-		WHERE id =
+		WHERE task.id =
 		#{id}
 	</select>
-	
+
+	<select id="findAllById" resultMap="task">
+		SELECT
+		task.*,
+		user.username,
+		user_addressee.name
+		FROM
+		task,
+		user,
+		user_addressee
+		
+		WHERE
+		task.user_id = user.id
+		AND task.user_addressee_id = user_addressee.id
+		<choose>
+			<when test="userId > 0">
+				AND task.user_addressee_id = #{userId}
+			</when>
+			<when test="userAddresseeId > 0">
+				AND task.user_id = #{userAddresseeId}
+			</when>
+		</choose>
+		ORDER BY
+		task.deadline ASC
+	</select>
+	<resultMap id="task" type="com.example.demo.domain.Task">
+		<id column="id" property="id" />
+		<result column="title" property="title" />
+		<result column="user_id" property="userId" />
+		<result column="content" property="content" />
+		<result column="label" property="label" />
+		<result column="user_addressee_id" property="userAddresseeId" />
+		<result column="deadline" property="deadline" />
+		<result column="status" property="status" />
+		<collection property="account"
+			ofType="com.example.demo.domain.Account">
+			<result column="username" property="username" />
+		</collection>
+		<collection property="addressee"
+			ofType="com.example.demo.domain.Addressee">
+			<result column="name" property="name" />
+		</collection>
+	</resultMap>
+
 	<insert id="save" useGeneratedKeys="true" keyProperty="id">
 		INSERT
 		INTO
@@ -89,7 +111,8 @@
 		status =
 		#{status}
 		WHERE
-		id = #{id}
+		id =
+		#{id}
 	</update>
 
 	<delete id="delete">

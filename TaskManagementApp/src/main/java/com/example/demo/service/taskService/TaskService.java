@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,24 +25,20 @@ public class TaskService {
 	@Autowired
 	TaskList task;
 
-	public List<Task> findAllByUserId(int userId) {
-		return taskMapper.findAllByUserId(userId);
-	}
+	@Autowired
+	FormButton form;
 
 	public List<Task> findAll() {
 		return taskMapper.findAll();
 	}
 
-	public List<Task> findReceivedTask(int userId) {
-		return taskMapper.findReceivedTask(userId);
+	public TaskForm findOne(int userId) {
+		return taskMapper.findOne(userId);
 	}
 
-	public TaskForm findOne(int id) {
-		return taskMapper.findOne(id);
-	}
-
-	public void setReceivedTask(int userId) {
-		List<Task> all = taskMapper.findReceivedTask(userId);
+	public void setReceivedTask(@Param("userId") int userId) {
+		int userAddresseeId = 0;
+		List<Task> all = taskMapper.findAllById(userId, userAddresseeId);
 
 		List<Task> notExecuted = all.stream().filter(s -> s.getStatus().equals("未完")).collect(Collectors.toList());
 		task.setNotExecutedTask(notExecuted);
@@ -50,8 +47,9 @@ public class TaskService {
 		task.setCompletedTask(completed);
 	}
 
-	public void setRequestedTask(int userId) {
-		List<Task> all = taskMapper.findAllByUserId(userId);
+	public void setRequestedTask(@Param("userId") int userAddresseeId) {
+		int userId = 0;
+		List<Task> all = taskMapper.findAllById(userId, userAddresseeId);
 
 		// 完了した頼みごと
 		List<Task> completed = all.stream().filter(s -> s.getStatus().equals("完了")).collect(Collectors.toList());
@@ -104,9 +102,17 @@ public class TaskService {
 	}
 
 	public Map<String, String> getSelectLabel() {
-		FormButton form = new FormButton();
 		Map<String, String> selectLabel = form.initSelectLabel();
 		return selectLabel;
+	}
+
+	public Map<String, Boolean> getStatusRadio() {
+		Map<String, Boolean> statusRadio = form.initStatusRadio();
+		return statusRadio;
+	}
+
+	public List<Task> findAllById(@Param("userId") int userId, @Param("userAddresseeId") int userAddresseeId) {
+		return taskMapper.findAllById(userId, userAddresseeId);
 	}
 
 }

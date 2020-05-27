@@ -12,7 +12,7 @@
 			<h1 class="mt-5">頼まれたこと一覧</h1>
 
 			<div class="container">
-				<div class="row">
+				<div class="row pb-5">
 					<div class="col-md-6 mt-5">
 						<div class="card" style="background-color: #E71D36;">
 							<h5 class="card-header">これから取り組むこと</h5>
@@ -36,15 +36,17 @@
 										<div class="card-text">
 											<p>
 												<i class="far fa-clipboard fa-lg pr-2"></i><span
-													class="text-muted" th:text="${obj.content}"></span>
+													th:text="${obj.content}"></span>
 											</p>
 											<p class="h6 text-right">
-												<i class="far fa-clock pr-2"></i><span
-													th:text="${#dates.format(obj.deadline, 'yyyy-MM-dd HH:mm')}"
-													class="text-muted"></span>
+												<i class="fas fa-user-edit pr-2"></i><span
+													th:each="account : ${obj.account}"
+													th:text="${account.username}" class="pr-2"></span> <i
+													class="far fa-clock pr-2"></i><span
+													th:text="${#dates.format(obj.deadline, 'yyyy-MM-dd HH:mm')}"></span>
 
 											</p>
-											<a href="#" th:href="@{/readTask/{id}(id=${obj.id})}"
+											<a href="#" th:href="@{/readTask/{userId}(userId=${obj.id})}"
 												class="btn btn-sm" role="button" aria-pressed="true"></a>
 										</div>
 									</div>
@@ -65,7 +67,8 @@
 										</div>
 									</th:block>
 
-									<div th:each="obj : ${completedTask}" class="card linkbox card-body mb-3 text-left" style="">
+									<div th:each="obj : ${completedTask}"
+										class="card linkbox card-body mb-3 text-left" style="">
 										<h5 class="pb-2">
 											<i th:style="${obj.label} eq 'blue' ? 'color: #1ec0ff;'"
 												th:styleappend="${obj.label eq 'green' ? 'color: #3ac569;' : 'color: red;'}"
@@ -80,7 +83,10 @@
 													class="text-muted" th:text="${obj.content}"></span>
 											</p>
 											<p class="h6 text-right">
-												<i class="far fa-clock pr-2"></i><span
+												<i class="fas fa-user-edit pr-2"></i><span
+													th:each="account : ${obj.account}"
+													th:text="${account.username}" class="pr-2"></span> <i
+													class="far fa-clock pr-2"></i><span
 													th:text="${#dates.format(obj.deadline, 'yyyy-MM-dd HH:mm')}"
 													class="text-muted"></span>
 

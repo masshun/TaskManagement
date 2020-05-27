@@ -5,7 +5,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -23,7 +22,7 @@ import com.example.demo.domain.ConfirmationToken;
 import com.example.demo.service.userService.RegisterUserService;
 
 @Controller
-@Transactional
+
 @RequestMapping("/signup")
 public class SignupController {
 
@@ -47,7 +46,7 @@ public class SignupController {
 			model.addAttribute("error", "入力値に誤りがあります");
 			return "auth/login";
 		}
-		// TODO 重複確認をあとで行う
+		// TODO メアド重複確認をあとで行う
 
 		try {
 			ConfirmationToken confirmationToken = registerUserService.setConfirmationToken(form, password);

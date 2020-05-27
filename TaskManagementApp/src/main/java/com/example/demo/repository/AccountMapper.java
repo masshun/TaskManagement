@@ -17,6 +17,8 @@ public interface AccountMapper {
 
 	boolean save(AccountForm accountForm);
 
+	boolean saveAddressee(AccountForm accountForm);
+
 	boolean update(Account account);
 
 	boolean delete(int id);
