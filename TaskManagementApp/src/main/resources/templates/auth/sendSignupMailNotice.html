@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: frag_head">
+<title>Spring Sample Demo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+</head>
+<body class="text-center">
+	<div class="d-flex w-100 h-100 flex-column">
+
+		<main role="main" class="mt-auto mb-auto">
+			<h2>メール送信が完了しました。メールに添付されたURLに遷移して登録を完了してください</h2>
+			<a href="#" th:href="@{/signup}" class="btn mt-3"
+				style="background-color: #EFFFE9; color: #011627;" role="button"
+				aria-pressed="true">ログインページに戻る</a>
+		</main>
+
+		<footer th:include="layout :: frag_footer"></footer>
+
+	</div>
+</body>
+</html>
