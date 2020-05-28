@@ -1,5 +1,6 @@
 package com.example.demo.service.userService;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -12,9 +13,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.domain.Account;
 import com.example.demo.domain.AccountForm;
-import com.example.demo.domain.ConfirmationToken;
+import com.example.demo.domain.object.ConfirmationToken;
+import com.example.demo.exception.MultipleException;
 import com.example.demo.repository.AccountMapper;
+import com.example.demo.service.mailService.SendMailService;
 
 @Service
 @Transactional
@@ -32,38 +36,43 @@ public class RegisterUserService {
 	@Autowired
 	HttpSession httpSession;
 
-	public ConfirmationToken setConfirmationToken(AccountForm form, String password) throws Exception {
+	@Autowired
+	SendMailService mailService;
+
+	public ConfirmationToken setConfirmationToken(AccountForm form, String password) {
 		String confirmationToken = UUID.randomUUID().toString();
+		List<Account> account = accountMapper.findAll();
+
+		account.forEach(m -> {
+			if (form.getEmail().equals(m.getEmail())) {
+				throw new MultipleException("すでに登録されているメールアドレスです");
+			}
+		});
 
 		ConfirmationToken token = new ConfirmationToken(passwordEncoder.encode(password), confirmationToken, form);
-		// TODO sessionに入れるtokenがあるかどうか & session例外
 		httpSession.setAttribute("hoge", token);
 		return token;
 	}
 
 	@Async
-	public String registerMail(AccountForm form, ConfirmationToken confirmationToken, String username) {
+	public void registerMail(AccountForm form, ConfirmationToken confirmationToken, String username) {
 		// TODO メールのフィールドは別に作る
-		String IPadnPort = "localhost:9996";
-		String from = "@@@gmail.com";
+		String port = "localhost:9996";
+		String from = "@@@@@email.com";
 		String title = "新規登録 アカウント確認のお願い";
-		String content = username + "さん" + "\n" + "\n" + "以下のリンクにアクセスしてアカウントを認証してください" + "\n" + "http://" + IPadnPort
+		String content = username + "さん" + "\n" + "\n" + "以下のリンクにアクセスしてアカウントを認証してください" + "\n" + "http://" + port
 				+ "/signup/validate" + "?id=" + confirmationToken;
 
+//		mailService.sendMail(map);
 		// TODO 別に作る
-		try {
-			SimpleMailMessage msg = new SimpleMailMessage();
-			msg.setFrom(from);
-			msg.setTo(form.getEmail());
-			msg.setSubject(title);
-			msg.setText(content);
-			javaMailSender.send(msg);
-		} catch (Exception e) {
-			e.printStackTrace();
-			// TODO failed to send
 
-		}
-		return "送信しました";
+		SimpleMailMessage msg = new SimpleMailMessage();
+		msg.setFrom(from);
+		msg.setTo(form.getEmail());
+		msg.setSubject(title);
+		msg.setText(content);
+		javaMailSender.send(msg);
+
 	}
 
 	public AccountForm createForm(ConfirmationToken token) {

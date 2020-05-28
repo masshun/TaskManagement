@@ -1,6 +1,8 @@
-package com.example.demo.domain;
+package com.example.demo.domain.object;
 
 import java.io.Serializable;
+
+import com.example.demo.domain.AccountForm;
 
 import lombok.Getter;
 import lombok.Setter;

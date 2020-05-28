@@ -16,17 +16,12 @@ public class SendMailService {
 
 	@Async
 	public void sendMail(Map<String, String> map) {
-		try {
-			SimpleMailMessage msg = new SimpleMailMessage();
-			msg.setFrom(map.get("from"));
-			msg.setTo(map.get("email"));
-			msg.setSubject(map.get("title"));
-			msg.setText(map.get("content"));
-			javaMailSender.send(msg);
-		} catch (Exception e) {
-			e.printStackTrace();
-			// TODO failed to send タイムアウトなど
+		SimpleMailMessage msg = new SimpleMailMessage();
+		msg.setFrom(map.get("from"));
+		msg.setTo(map.get("email"));
+		msg.setSubject(map.get("title"));
+		msg.setText(map.get("content"));
+		javaMailSender.send(msg);
 
-		}
 	}
 }
