@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.domain.Task;
+import com.example.demo.domain.object.Mail;
 import com.example.demo.service.mailService.SendMailService;
 import com.example.demo.service.taskService.TaskService;
 import com.example.demo.service.userService.GetUserInfoService;
@@ -23,6 +24,9 @@ public class AsyncTask {
 
 	@Autowired
 	TaskService taskService;
+
+	@Autowired
+	Mail mail;
 
 	@Autowired
 	GetUserInfoService getAddressee;
@@ -41,18 +45,16 @@ public class AsyncTask {
 		List<Task> notExecutedTask = task.stream().filter(s -> s.getStatus().equals("未完")).collect(Collectors.toList());
 		LocalDateTime now = timestamp.toLocalDateTime();
 
-		// TODO フィールドは別のクラスで設定する
 		int id = 0;
-		String addressee = "";
-		LocalDateTime deadline = null;
-		String email = "";
-		String taskTitle = "";
+		String addressee;
+		LocalDateTime deadline;
+		String email;
+		String taskTitle;
 		String title = "頼まれたことはもう終わりましたか？";
 
-		String IPadnPort = "localhost:9996";
-		String from = "xxxx@@gmail.com";
-		String content = addressee + "さん" + "\n" + "頼みごと: " + "\n" + taskTitle
-				+ "の期限が1時間を切りました。以下のリンクにアクセスして頼みごとの内容を確認してください。" + "\n" + "http://" + IPadnPort + "/";
+		String port = mail.getPORT();
+		String from = mail.getFROM();
+		String content;
 
 		Map<String, String> map = new HashMap<>();
 		map.put("from", from);
@@ -66,6 +68,8 @@ public class AsyncTask {
 				addressee = getAddressee.getAddresseeById(id);
 				email = getAddressee.getAddreseeMailById(id);
 				taskTitle = t.getTitle();
+				content = addressee + "さん" + "\n" + "頼みごと: " + "\n" + taskTitle
+						+ "の期限が1時間を切りました。以下のリンクにアクセスして頼みごとの内容を確認してください。" + "\n" + "http://" + port + "/";
 
 				map.put("email", email);
 				map.put("content", content);
