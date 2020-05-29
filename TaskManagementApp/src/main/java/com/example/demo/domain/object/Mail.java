@@ -1,11 +1,13 @@
 package com.example.demo.domain.object;
 
+import org.springframework.stereotype.Component;
+
 import lombok.Data;
 
 @Data
+@Component
 public class Mail {
-	private String title;
-	private String content;
+
 	private final String PORT = "localhost:9996";
 	private final String FROM = "hoge@email.com";
 

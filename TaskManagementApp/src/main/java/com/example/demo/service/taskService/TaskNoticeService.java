@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.TaskForm;
+import com.example.demo.domain.object.Mail;
 import com.example.demo.service.mailService.SendMailService;
 import com.example.demo.service.userService.GetUserInfoService;
 
@@ -20,21 +21,23 @@ public class TaskNoticeService {
 	@Autowired
 	SendMailService sendingService;
 
+	@Autowired
+	Mail mail;
+
 	public boolean sendNoticeByMail(TaskForm taskForm, Principal p) {
-		// TODO あとでフィールドは別に作って呼び出す リレーションに変更しておく
+
 		String sender = p.getName();
 		int id = taskForm.getUserAddresseeId();
 		String addressee = getAddressee.getAddresseeById(id);
 		String email = getAddressee.getAddreseeMailById(id);
 		String taskTitle = taskForm.getTitle();
 
-		// TODO ここもあとでフィールドは別に作って呼び出す
-		String IPadnPort = "localhost:9996";
-		String from = "xxxx@@gmail.com";
+		String port = mail.getPORT();
+		String from = mail.getFROM();
 		String title = sender + "さん「" + taskTitle + "」";
 
 		String content = addressee + "さん" + "\n" + sender + "さんからの頼みごとです。" + "\n" + "以下のリンクにアクセスして頼みごとの内容を確認してください。"
-				+ "\n" + "http://" + IPadnPort + "/";
+				+ "\n" + "http://" + port + "/";
 
 		Map<String, String> map = new HashMap<>();
 		map.put("from", from);

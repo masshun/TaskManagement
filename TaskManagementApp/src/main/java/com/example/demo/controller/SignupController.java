@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -39,7 +40,7 @@ public class SignupController {
 	}
 
 	@PostMapping
-	public String create(@ModelAttribute @Validated AccountForm form, BindingResult bindingResult, Model model,
+	public String postSignUp(@ModelAttribute @Validated AccountForm form, BindingResult bindingResult, Model model,
 			RedirectAttributes redirectAttributes, HttpServletRequest request, String username, String password) {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("error", "入力値に誤りがあります");
@@ -55,27 +56,21 @@ public class SignupController {
 	@CrossOrigin
 	@GetMapping("/validate")
 	public String validate(RedirectAttributes redirectAttributes, @RequestParam("id") String id,
-			HttpServletRequest request, String password) throws Exception {
+			HttpServletRequest request, String password) throws ServletException {
 
-		// ダウンキャストチェック
-		Object obj = httpSession.getAttribute("hoge");
-		ConfirmationToken token = null;
-		if (obj instanceof ConfirmationToken) {
-			token = (ConfirmationToken) obj;
-		} else {
-			// TODO java.lang.ClassCastException
+		// UUIDに該当する一時テーブルのユーザー情報を登録
+		Object obj = httpSession.getAttribute(id);
+		if (obj == null) {
+			redirectAttributes.addFlashAttribute("result", "登録に失敗しました");
+			return "redirect:/";
 		}
+		// ControllerAdviceでダウンキャスト例外
+		ConfirmationToken token = (ConfirmationToken) obj;
 
-		if (token != null) {
-			try {
-				AccountForm form = registerUserService.createForm(token);
-				registerUserService.registerUser(form);
-				request.login(form.getUsername(), token.getPassword());
-			} catch (Exception e) {
-				e.printStackTrace();
-				// TODO ServletExceptionも別に作る
-			}
-		}
+		AccountForm form = registerUserService.createForm(token);
+		registerUserService.registerUser(form);
+		request.login(form.getUsername(), token.getPassword());
+
 		redirectAttributes.addFlashAttribute("result", "登録しました");
 		return "redirect:/";
 	}

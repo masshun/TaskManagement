@@ -1,13 +1,13 @@
 package com.example.demo.service.userService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.domain.Account;
 import com.example.demo.domain.AccountForm;
 import com.example.demo.domain.object.ConfirmationToken;
+import com.example.demo.domain.object.Mail;
 import com.example.demo.exception.MultipleException;
 import com.example.demo.repository.AccountMapper;
 import com.example.demo.service.mailService.SendMailService;
@@ -31,16 +32,16 @@ public class RegisterUserService {
 	PasswordEncoder passwordEncoder;
 
 	@Autowired
-	JavaMailSender javaMailSender;
+	HttpSession httpSession;
 
 	@Autowired
-	HttpSession httpSession;
+	Mail mail;
 
 	@Autowired
 	SendMailService mailService;
 
 	public ConfirmationToken setConfirmationToken(AccountForm form, String password) {
-		String confirmationToken = UUID.randomUUID().toString();
+		String id = UUID.randomUUID().toString();
 		List<Account> account = accountMapper.findAll();
 
 		account.forEach(m -> {
@@ -49,29 +50,24 @@ public class RegisterUserService {
 			}
 		});
 
-		ConfirmationToken token = new ConfirmationToken(passwordEncoder.encode(password), confirmationToken, form);
-		httpSession.setAttribute("hoge", token);
+		ConfirmationToken token = new ConfirmationToken(passwordEncoder.encode(password), id, form);
+		httpSession.setAttribute(id, token);
 		return token;
 	}
 
 	@Async
 	public void registerMail(AccountForm form, ConfirmationToken confirmationToken, String username) {
-		// TODO メールのフィールドは別に作る
-		String port = "localhost:9996";
-		String from = "@@@@@email.com";
+
 		String title = "新規登録 アカウント確認のお願い";
-		String content = username + "さん" + "\n" + "\n" + "以下のリンクにアクセスしてアカウントを認証してください" + "\n" + "http://" + port
-				+ "/signup/validate" + "?id=" + confirmationToken;
+		String content = username + "さん" + "\n" + "\n" + "以下のリンクにアクセスしてアカウントを認証してください" + "\n" + "http://"
+				+ mail.getPORT() + "/signup/validate" + "?id=" + confirmationToken;
 
-//		mailService.sendMail(map);
-		// TODO 別に作る
-
-		SimpleMailMessage msg = new SimpleMailMessage();
-		msg.setFrom(from);
-		msg.setTo(form.getEmail());
-		msg.setSubject(title);
-		msg.setText(content);
-		javaMailSender.send(msg);
+		Map<String, String> map = new HashMap<>();
+		map.put("from", mail.getFROM());
+		map.put("title", title);
+		map.put("email", form.getEmail());
+		map.put("content", content);
+		mailService.sendMail(map);
 
 	}
 

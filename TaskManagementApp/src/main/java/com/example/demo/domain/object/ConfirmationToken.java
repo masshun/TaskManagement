@@ -18,13 +18,13 @@ public class ConfirmationToken implements Serializable {
 
 	private String password;
 
-	private String confirmationToken;
+	private String id;
 
 	private AccountForm accountForm;
 
-	public ConfirmationToken(String password, String confirmationToken, AccountForm accountForm) {
+	public ConfirmationToken(String password, String id, AccountForm accountForm) {
 		this.password = password;
-		this.confirmationToken = confirmationToken;
+		this.id = id;
 		this.accountForm = accountForm;
 	}
 
