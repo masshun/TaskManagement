@@ -1,4 +1,8 @@
-package com.example.demo.config;
+package com.example.demo.exception;
+
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -12,8 +16,6 @@ import org.springframework.web.HttpSessionRequiredException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
-import com.example.demo.exception.MultipleException;
 
 @ControllerAdvice
 @Component
@@ -67,6 +69,27 @@ public class WebControllerAdvice {
 	public String mailSendException(MailSendException e, Model model) {
 		model.addAttribute("status", HttpStatus.HTTP_VERSION_NOT_SUPPORTED);
 		model.addAttribute("実装されていません");
+		return "error/systemError";
+	}
+
+	@ExceptionHandler({ ClassCastException.class })
+	public String classCastException(ClassCastException e, Model model) {
+		model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR);
+		model.addAttribute("message", "キャストエラーが発生しました");
+		return "error/systemError";
+	}
+
+	@ExceptionHandler({ ServletException.class })
+	public String servletException(ServletException e, Model model) {
+		model.addAttribute("status", "4XX");
+		model.addAttribute("message", "サーブレットで問題が発生しました");
+		return "error/systemError";
+	}
+
+	@ExceptionHandler({ SQLException.class })
+	public String servletException(SQLException e, Model model) {
+		model.addAttribute("status", "5XX");
+		model.addAttribute("message", "データベースの処理で問題が発生しました");
 		return "error/systemError";
 	}
 }
