@@ -15,6 +15,10 @@
 		<result column="user_addressee_id" property="userAddresseeId" />
 	</resultMap>
 
+	<select id="selectTaskCount" resultType="long"
+		parameterType="string">
+		select count(*) from task
+	</select>
 	<select id="findAll" resultMap="BaseResultMap">
 		SELECT
 		*
@@ -38,18 +42,22 @@
 		task,
 		user,
 		user_addressee
-		
+
 		WHERE
 		task.user_id = user.id
-		AND task.user_addressee_id = user_addressee.id
-		<choose>
-			<when test="userId > 0">
+		AND task.user_addressee_id =
+		user_addressee.id
+		
+			<if test="userId > 0">
 				AND task.user_addressee_id = #{userId}
-			</when>
-			<when test="userAddresseeId > 0">
+			</if>
+			<if test="userAddresseeId > 0">
 				AND task.user_id = #{userAddresseeId}
-			</when>
-		</choose>
+			</if>
+			<if test="param != null">
+				AND task.title LIKE CONCAT('%', #{param}, '%')
+			</if>
+	
 		ORDER BY
 		task.deadline ASC
 	</select>

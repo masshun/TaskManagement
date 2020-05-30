@@ -13,7 +13,8 @@ public interface TaskMapper {
 
 	List<Task> findAll();
 
-	List<Task> findAllById(@Param("userId") int userId, @Param("userAddresseeId") int userAddresseeId);
+	List<Task> findAllById(@Param("userId") int userId, @Param("userAddresseeId") int userAddresseeId,
+			@Param("param") String param);
 
 	TaskForm findOne(int id);
 
@@ -24,5 +25,7 @@ public interface TaskMapper {
 	boolean update(TaskForm taskForm);
 
 	boolean delete(int id);
+
+	Integer selectTaskCount();
 
 }

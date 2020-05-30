@@ -1,10 +1,12 @@
 package com.example.demo.controller;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,11 +16,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.domain.AccountForm;
 import com.example.demo.domain.Task;
 import com.example.demo.domain.TaskForm;
+import com.example.demo.domain.object.PageWrapper;
+import com.example.demo.domain.object.SearchForm;
 import com.example.demo.service.taskService.TaskNoticeService;
 import com.example.demo.service.taskService.TaskService;
 import com.example.demo.service.userService.GetUserInfoService;
@@ -42,15 +47,32 @@ public class TaskController {
 	}
 
 	@GetMapping("/requestedTask")
-	public String requestedTask(Model model, Principal p) {
+	public String requestedTask(Model model, Principal p, @RequestParam("page") Optional<Integer> page,
+			@RequestParam("size") Optional<Integer> size) {
 		int userId = user.getLoginUserId(p);
-		taskService.setRequestedTask(userId);
+		String param = null;
+		taskService.setRequestedTask(userId, param);
 
-		List<Task> notExecutedTask = taskService.getNotExecutedTask();
-		List<Task> completedTask = taskService.getCompletedTask();
+		int currentPage = page.orElse(1);
+		int pageSize = size.orElse(3);
+
+		Page<Task> notExecutedTask = taskService.getNotExecutedTask(PageRequest.of(currentPage - 1, pageSize));
+		Page<Task> completedTask = taskService.getCompletedTask(PageRequest.of(currentPage - 1, pageSize));
+
+		PageWrapper<Task> notExecTaskPageWrapper = new PageWrapper<Task>(notExecutedTask);
+		PageWrapper<Task> completedTaskWrapper = new PageWrapper<Task>(completedTask);
+		int totalNotExecutedTaskPages = notExecutedTask.getTotalPages();
+		int totalCompletedTaskPages = completedTask.getTotalPages();
 
 		model.addAttribute("notExecutedTask", notExecutedTask);
 		model.addAttribute("completedTask", completedTask);
+		if (totalNotExecutedTaskPages > 0) {
+			model.addAttribute("notExecTaskPage", notExecTaskPageWrapper);
+		}
+		if (totalCompletedTaskPages > 0) {
+			model.addAttribute("completedTaskPage", completedTaskWrapper);
+		}
+
 		if (completedTask.isEmpty()) {
 			model.addAttribute("emptyCompleted", "完了した頼みごとはありません");
 		}
@@ -61,14 +83,32 @@ public class TaskController {
 	}
 
 	@GetMapping("/receivedTask")
-	public String receivedTask(Model model, Principal p) {
+	public String receivedTask(Model model, Principal p, @RequestParam("page") Optional<Integer> page,
+			@RequestParam("size") Optional<Integer> size) {
 		int userId = user.getLoginUserId(p);
-		taskService.setReceivedTask(userId);
+		String param = null;
+		taskService.setReceivedTask(userId, param);
 
-		List<Task> notExecutedTask = taskService.getNotExecutedTask();
-		List<Task> completedTask = taskService.getCompletedTask();
+		int currentPage = page.orElse(1);
+		int pageSize = size.orElse(3);
+
+		Page<Task> notExecutedTask = taskService.getNotExecutedTask(PageRequest.of(currentPage - 1, pageSize));
+		Page<Task> completedTask = taskService.getCompletedTask(PageRequest.of(currentPage - 1, pageSize));
+
+		PageWrapper<Task> notExecTaskPageWrapper = new PageWrapper<Task>(notExecutedTask);
+		PageWrapper<Task> completedTaskWrapper = new PageWrapper<Task>(completedTask);
+		int totalNotExecutedTaskPages = notExecutedTask.getTotalPages();
+		int totalCompletedTaskPages = completedTask.getTotalPages();
+
 		model.addAttribute("notExecutedTask", notExecutedTask);
 		model.addAttribute("completedTask", completedTask);
+		if (totalNotExecutedTaskPages > 0) {
+			model.addAttribute("notExecTaskPage", notExecTaskPageWrapper);
+		}
+		if (totalCompletedTaskPages > 0) {
+			model.addAttribute("completedTaskPage", completedTaskWrapper);
+		}
+
 		if (completedTask.isEmpty()) {
 			model.addAttribute("emptyCompleted", "完了した頼みごとはありません");
 		}
@@ -179,4 +219,77 @@ public class TaskController {
 		redirectAttributes.addFlashAttribute("successed", "削除が完了しました");
 		return "redirect:/";
 	}
+
+	@GetMapping("/searchRequestedTask")
+	public String searchRequestedTask(Principal p, Model model, @ModelAttribute SearchForm form,
+			@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+		int userId = user.getLoginUserId(p);
+		taskService.setRequestedTask(userId, form.getParam());
+		int currentPage = page.orElse(1);
+		int pageSize = size.orElse(3);
+
+		Page<Task> notExecutedTask = taskService.getNotExecutedTask(PageRequest.of(currentPage - 1, pageSize));
+		Page<Task> completedTask = taskService.getCompletedTask(PageRequest.of(currentPage - 1, pageSize));
+
+		PageWrapper<Task> notExecTaskPageWrapper = new PageWrapper<Task>(notExecutedTask);
+		PageWrapper<Task> completedTaskWrapper = new PageWrapper<Task>(completedTask);
+		int totalNotExecutedTaskPages = notExecutedTask.getTotalPages();
+		int totalCompletedTaskPages = completedTask.getTotalPages();
+
+		model.addAttribute("notExecutedTask", notExecutedTask);
+		model.addAttribute("completedTask", completedTask);
+		if (totalNotExecutedTaskPages > 0) {
+			model.addAttribute("notExecTaskPage", notExecTaskPageWrapper);
+		}
+		if (totalCompletedTaskPages > 0) {
+			model.addAttribute("completedTaskPage", completedTaskWrapper);
+		}
+
+		if (completedTask.isEmpty()) {
+			model.addAttribute("emptyCompleted", "完了した頼みごとはありません");
+		}
+		if (notExecutedTask.isEmpty()) {
+			model.addAttribute("emptyNotExecuted", "これから取り組む頼みごとはありません");
+		}
+
+		return "task/requestedTask";
+	}
+
+	@GetMapping("/searchReceivedTask")
+	public String searchReceivedTask(Principal p, Model model, @ModelAttribute SearchForm form,
+			@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+		int userId = user.getLoginUserId(p);
+		String param = form.getParam();
+		taskService.setReceivedTask(userId, param);
+
+		int currentPage = page.orElse(1);
+		int pageSize = size.orElse(3);
+
+		Page<Task> notExecutedTask = taskService.getNotExecutedTask(PageRequest.of(currentPage - 1, pageSize));
+		Page<Task> completedTask = taskService.getCompletedTask(PageRequest.of(currentPage - 1, pageSize));
+
+		PageWrapper<Task> notExecTaskPageWrapper = new PageWrapper<Task>(notExecutedTask);
+		PageWrapper<Task> completedTaskWrapper = new PageWrapper<Task>(completedTask);
+		int totalNotExecutedTaskPages = notExecutedTask.getTotalPages();
+		int totalCompletedTaskPages = completedTask.getTotalPages();
+
+		model.addAttribute("notExecutedTask", notExecutedTask);
+		model.addAttribute("completedTask", completedTask);
+		if (totalNotExecutedTaskPages > 0) {
+			model.addAttribute("notExecTaskPage", notExecTaskPageWrapper);
+		}
+		if (totalCompletedTaskPages > 0) {
+			model.addAttribute("completedTaskPage", completedTaskWrapper);
+		}
+
+		if (completedTask.isEmpty()) {
+			model.addAttribute("emptyCompleted", "完了した頼みごとはありません");
+		}
+		if (notExecutedTask.isEmpty()) {
+			model.addAttribute("emptyNotExecuted", "これから取り組む頼みごとはありません");
+		}
+
+		return "task/receivedTask";
+	}
+
 }
