@@ -18,7 +18,7 @@ public class AccountForm implements Serializable {
 
 	private int id;
 	@NotBlank(message = "必須項目です")
-	@Size(min = 1, max = 30, message = "1文字以上30文字以内で入力してください")
+	@Size(min = 1, max = 30, message = "1文字以上15文字以内で入力してください")
 	private String username;
 	@NotBlank(message = "必須項目です")
 	@Pattern(regexp = "[a-zA-Z0-9]*", message = "入力は英数字である必要があります")
