@@ -37,13 +37,13 @@
 							<h5 class="card-header">これから取り組むこと</h5>
 							<div class="card-body" style="color: #011627;">
 								<div class="col-sm-12">
-									<th:block th:if="${emptyNotExecuted}">
+									<th:block th:if="${notExecutedTask.empty}">
 										<div class="card card-body mb-3" style="color: #011627;">
 											<h5 th:text="${emptyNotExecuted}" class="card-title">完了した頼みごとはありません</h5>
 										</div>
 									</th:block>
 									<div th:each="obj : ${notExecutedTask}"
-										class="card linkbox card-body mb-3 text-left" style="">
+										class="text-truncate card linkbox card-body mb-3 text-left" style="">
 										<h5 class="pb-2">
 											<i th:style="${obj.label} eq 'blue' ? 'color: #1ec0ff;'"
 												th:styleappend="${obj.label eq 'green' ? 'color: #3ac569;' : 'color: red;'}"
@@ -72,7 +72,7 @@
 								</div>
 							</div>
 							<div class="card-footer">
-								<div th:unless="${emptyNotExecuted}">
+								<div th:unless="${notExecutedTask.empty}">
 									<ul class="pagination justify-content-center">
 
 										<li class="page-item"
@@ -129,14 +129,14 @@
 							<div class="card-body" style="color: #011627;">
 								<div class="col-sm-12">
 
-									<th:block th:if="${emptyCompleted}">
+									<th:block th:if="${completedTask.empty}">
 										<div class="card card-body mb-3" style="color: #011627;">
-											<h5 th:text="${emptyCompleted}" class="card-title">完了した頼みごとはありません</h5>
+											<h5 th:text="完了した頼みごとはありません" class="card-title"></h5>
 										</div>
 									</th:block>
 
 									<div th:each="obj : ${completedTask}"
-										class="card linkbox card-body mb-3 text-left" style="">
+										class="text-truncate card linkbox card-body mb-3 text-left" style="">
 										<h5 class="pb-2">
 											<i th:style="${obj.label} eq 'blue' ? 'color: #1ec0ff;'"
 												th:styleappend="${obj.label eq 'green' ? 'color: #3ac569;' : 'color: red;'}"
@@ -166,7 +166,7 @@
 								</div>
 							</div>
 							<div class="card-footer">
-								<div th:unless="${emptyCompleted}">
+								<div th:unless="${completedTask.empty}">
 									<ul class="pagination justify-content-center">
 
 										<li class="page-item"

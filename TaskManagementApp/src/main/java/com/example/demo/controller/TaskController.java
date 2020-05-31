@@ -54,7 +54,7 @@ public class TaskController {
 		taskService.setRequestedTask(userId, param);
 
 		int currentPage = page.orElse(1);
-		int pageSize = size.orElse(3);
+		int pageSize = size.orElse(2);
 
 		Page<Task> notExecutedTask = taskService.getNotExecutedTask(PageRequest.of(currentPage - 1, pageSize));
 		Page<Task> completedTask = taskService.getCompletedTask(PageRequest.of(currentPage - 1, pageSize));
@@ -73,12 +73,6 @@ public class TaskController {
 			model.addAttribute("completedTaskPage", completedTaskWrapper);
 		}
 
-		if (completedTask.isEmpty()) {
-			model.addAttribute("emptyCompleted", "完了した頼みごとはありません");
-		}
-		if (notExecutedTask.isEmpty()) {
-			model.addAttribute("emptyNotExecuted", "これから取り組む頼みごとはありません");
-		}
 		return "task/requestedTask";
 	}
 
@@ -90,7 +84,7 @@ public class TaskController {
 		taskService.setReceivedTask(userId, param);
 
 		int currentPage = page.orElse(1);
-		int pageSize = size.orElse(3);
+		int pageSize = size.orElse(2);
 
 		Page<Task> notExecutedTask = taskService.getNotExecutedTask(PageRequest.of(currentPage - 1, pageSize));
 		Page<Task> completedTask = taskService.getCompletedTask(PageRequest.of(currentPage - 1, pageSize));
@@ -175,7 +169,11 @@ public class TaskController {
 			redirectAttributes.addFlashAttribute("successed", "登録が完了しました");
 			return "redirect:/";
 		} else {
-			model.addAttribute("failed", "入力値に誤りがあります");
+			int userId = user.getLoginUserId(p);
+			Map<String, String> selectLabel = taskService.getSelectLabel();
+			model.addAttribute("selectLabel", selectLabel);
+			model.addAttribute("userId", userId);
+			model.addAttribute("taskForm", taskForm);
 			return "task/createTask";
 		}
 	}
@@ -201,16 +199,25 @@ public class TaskController {
 	}
 
 	@PostMapping("/edit/{id}")
-	public String editRequiredTask(@PathVariable int id, @ModelAttribute @Validated TaskForm taskForm, Model model,
-			RedirectAttributes redirectAttributes, Principal p) {
-		taskForm.setId(id);
-		taskForm.setUserId(user.getLoginUserId(p));
-		// 削除しない限りタスクを完了扱いにはしない
-		taskForm.setStatus("未完");
+	public String editRequiredTask(@PathVariable int id, @ModelAttribute @Validated TaskForm taskForm,
+			BindingResult result, Model model, RedirectAttributes redirectAttributes, Principal p) {
+		if (!result.hasErrors()) {
+			taskForm.setId(id);
+			taskForm.setUserId(user.getLoginUserId(p));
+			// 削除しない限りタスクを完了扱いにはしない
+			taskForm.setStatus("未完");
 
-		taskService.update(taskForm);
-		redirectAttributes.addFlashAttribute("successed", "更新が完了しました");
-		return "redirect:/";
+			taskService.update(taskForm);
+			redirectAttributes.addFlashAttribute("successed", "更新が完了しました");
+			return "redirect:/";
+		} else {
+			TaskForm form = taskService.findOne(id);
+			Map<String, String> selectLabel = taskService.getSelectLabel();
+			model.addAttribute("selectLabel", selectLabel);
+			model.addAttribute("taskForm", form);
+			return "task/editRequestedTask";
+		}
+
 	}
 
 	@PostMapping("/delete/{id}")
@@ -245,13 +252,6 @@ public class TaskController {
 			model.addAttribute("completedTaskPage", completedTaskWrapper);
 		}
 
-		if (completedTask.isEmpty()) {
-			model.addAttribute("emptyCompleted", "完了した頼みごとはありません");
-		}
-		if (notExecutedTask.isEmpty()) {
-			model.addAttribute("emptyNotExecuted", "これから取り組む頼みごとはありません");
-		}
-
 		return "task/requestedTask";
 	}
 
@@ -280,13 +280,6 @@ public class TaskController {
 		}
 		if (totalCompletedTaskPages > 0) {
 			model.addAttribute("completedTaskPage", completedTaskWrapper);
-		}
-
-		if (completedTask.isEmpty()) {
-			model.addAttribute("emptyCompleted", "完了した頼みごとはありません");
-		}
-		if (notExecutedTask.isEmpty()) {
-			model.addAttribute("emptyNotExecuted", "これから取り組む頼みごとはありません");
 		}
 
 		return "task/receivedTask";
