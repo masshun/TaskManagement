@@ -1,6 +1,8 @@
-package com.example.demo.service;
+package com.example.demo.mail;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Properties;
 
@@ -16,6 +18,8 @@ import javax.mail.internet.MimeMessage.RecipientType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +37,7 @@ public class JavaMailSenderTest {
 	private Session session = null;
 
 	@BeforeEach
-	public void setUp() {
+	void setUp() {
 		this.greenMail = new GreenMail(ServerSetupTest.SMTP_IMAP);
 		// テスト用SMTPサーバーを起動
 		this.greenMail.start();
@@ -54,32 +58,33 @@ public class JavaMailSenderTest {
 	}
 
 	@AfterEach
-	public void tearDown() {
+	void tearDown() {
 		this.greenMail.stop();
 	}
 
 	@Test
-	public void testSendAndReceive() throws Exception {
+	void testSendAndReceive() throws Exception {
 
 		// メール送信内容を設定
 		MimeMessage message = new MimeMessage(this.session);
-		message.setRecipient(RecipientType.TO, new InternetAddress("matsushun753@gmail.com"));
-		message.setFrom(new InternetAddress("mmada8293@gmail.com"));
+		message.setRecipient(RecipientType.TO, new InternetAddress("togmail.com"));
+		message.setFrom(new InternetAddress("fromgmail.com"));
 		message.setSubject("タイトルです");
 		message.setText("本文です");
 
 		// メールを送信
-		this.user = greenMail.setUser("matsushun753@gmail.com", "egqfycstvxkxpxfq");
+		this.user = greenMail.setUser("usernamemail.com", "pass");
 		this.user.deliver(message);
 
 		// IMAPはサーバー上でメール管理
 		IMAPStore imapStore = greenMail.getImap().createStore();
-		imapStore.connect("matsushun753@gmail.com", "egqfycstvxkxpxfq");
+		imapStore.connect("usernamegmail.com", "egqfycstvxkxpxfq");
 		// サーバー上の特定のユーザーのプライマリーなフォルダ
 		Folder inbox = imapStore.getFolder("INBOX");
 		inbox.open(Folder.READ_ONLY);
 		Message msgReceived = inbox.getMessage(1);
 		assertEquals(message.getSubject(), msgReceived.getSubject());
+		assertTrue(msgReceived.getContentType().toLowerCase().startsWith("text/plain"));
 
 		// 直接フェッチする
 		Message[] messages = greenMail.getReceivedMessages();
@@ -87,6 +92,21 @@ public class JavaMailSenderTest {
 		assertEquals(message.getSubject(), actual.getSubject());
 		assertEquals(message.getContent(), actual.getContent());
 
+	}
+
+	@Test
+	void exceptionTest() {
+		Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
+			throw new IllegalArgumentException("a message");
+		});
+		assertEquals("a message", exception.getMessage());
+
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = { 1, 2, 3 })
+	void exvenTrue(int n) {
+		assertTrue(n > 0);
 	}
 
 }
