@@ -57,12 +57,12 @@ public class TaskNoticeService {
 		String email = getAddressee.getAddreseeMailById(id);
 		String taskTitle = taskForm.getTitle();
 
-		String IPadnPort = "localhost:9996";
-		String from = "xxxx@@email.com";
+		String port = mail.getPORT();
+		String from = mail.getFROM();
 		String title = sender + "さん「" + taskTitle + "」完了!";
 
 		String content = addressee + "さん" + "\n" + sender + "さんの頼みごとが終わりました!" + "\n" + "以下のリンクにアクセスして頼みごとの内容を確認してください。"
-				+ "\n" + "http://" + IPadnPort + "/";
+				+ "\n" + "http://" + port + "/";
 
 		Map<String, String> map = new HashMap<>();
 		map.put("from", from);

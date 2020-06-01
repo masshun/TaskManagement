@@ -8,7 +8,6 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,7 +54,6 @@ public class RegisterUserService {
 		return token;
 	}
 
-	@Async
 	public void registerMail(AccountForm form, ConfirmationToken confirmationToken, String username) {
 
 		String title = "新規登録 アカウント確認のお願い";
