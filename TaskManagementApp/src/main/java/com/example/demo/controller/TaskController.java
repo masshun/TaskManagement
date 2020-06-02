@@ -42,7 +42,7 @@ public class TaskController {
 	TaskService taskService;
 
 	@GetMapping
-	public String index(Model model) {
+	public String index() {
 		return "index";
 	}
 
@@ -59,7 +59,8 @@ public class TaskController {
 		Page<Task> notExecutedTask = taskService.getNotExecutedTask(PageRequest.of(currentPage - 1, pageSize));
 		Page<Task> completedTask = taskService.getCompletedTask(PageRequest.of(currentPage - 1, pageSize));
 
-		PageWrapper<Task> notExecTaskPageWrapper = new PageWrapper<Task>(notExecutedTask);
+		// TODO seviceに詰める
+		PageWrapper<Task> notExecTaskPageWrapper = taskService.getNotExecTaskPage(notExecutedTask);
 		PageWrapper<Task> completedTaskWrapper = new PageWrapper<Task>(completedTask);
 		int totalNotExecutedTaskPages = notExecutedTask.getTotalPages();
 		int totalCompletedTaskPages = completedTask.getTotalPages();

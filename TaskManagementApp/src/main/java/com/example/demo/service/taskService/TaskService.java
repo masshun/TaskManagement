@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.domain.Task;
 import com.example.demo.domain.TaskForm;
 import com.example.demo.domain.object.FormButton;
+import com.example.demo.domain.object.PageWrapper;
 import com.example.demo.domain.object.TaskList;
 import com.example.demo.repository.TaskMapper;
 
@@ -105,6 +106,11 @@ public class TaskService {
 
 	public boolean updateCompleted(Task task) {
 		return taskMapper.updateCompleted(task);
+	}
+
+	public PageWrapper<Task> getNotExecTaskPage(Page<Task> notExecutedTask) {
+		PageWrapper<Task> notExecTaskPage = new PageWrapper<Task>(notExecutedTask);
+		return notExecTaskPage;
 	}
 
 	public boolean save(TaskForm form) {

@@ -36,6 +36,11 @@ public class LoginAndLogoutControllerTest {
 	}
 
 	@Test
+	void ログイン無しにindexにgetアクセスするとログイン画面にリダイレクトする() throws Exception {
+		this.mockMvc.perform(get("/")).andExpect(redirectedUrl("http://localhost/login"));
+	}
+
+	@Test
 	@WithMockUser(username = "hoge", password = "password")
 	void ログアウト処理でログイン画面に遷移する() throws Exception {
 		this.mockMvc.perform(post("/logout").with(SecurityMockMvcRequestPostProcessors.csrf()))
