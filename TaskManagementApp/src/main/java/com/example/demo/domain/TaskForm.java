@@ -22,10 +22,10 @@ public class TaskForm implements Serializable {
 
 	private int id;
 	private int userId;
-	@NotBlank(message = "必須項目です")
+	@NotEmpty(message = "必須項目です")
 	@Size(max = 50, message = "1文字以上50文字以内で入力してください")
 	private String title;
-	@NotBlank(message = "必須項目です")
+	@NotEmpty(message = "必須項目です")
 	@Size(max = 255, message = "1文字以上255文字以内で入力してください")
 	private String content;
 	@NotEmpty(message = "必須項目です")

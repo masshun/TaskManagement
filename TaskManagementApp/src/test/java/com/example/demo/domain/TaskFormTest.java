@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -41,16 +40,17 @@ public class TaskFormTest {
 
 	@ParameterizedTest
 	@NullAndEmptySource
-	void titleの未入力(String input) throws Exception {
+	void titleの空文字(String input) throws Exception {
 		taskForm.setTitle(input);
 		taskForm.setUserAddresseeId(1);
 		validator.validate(taskForm, bindingResult);
 		assertEquals("必須項目です", bindingResult.getFieldError().getDefaultMessage());
 	}
 
-	@Test
-	void titleの文字超過() throws Exception {
-		taskForm.setTitle("50文字以上のあああああああああああああああおあああああああああああああああああああああああああああああああ");
+	@ParameterizedTest
+	@ValueSource(strings = { "50文字以上のあああああああああああああああおあああああああああああああああああああああああああああああああ" })
+	void titleの文字超過(String input) throws Exception {
+		taskForm.setTitle(input);
 		taskForm.setUserAddresseeId(1);
 		validator.validate(taskForm, bindingResult);
 		assertEquals("1文字以上50文字以内で入力してください", bindingResult.getFieldError().getDefaultMessage());
