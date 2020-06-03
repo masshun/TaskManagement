@@ -3,6 +3,7 @@ package com.example.demo.domain;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -12,11 +13,9 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class TaskForm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -24,15 +23,16 @@ public class TaskForm implements Serializable {
 	private int id;
 	private int userId;
 	@NotBlank(message = "必須項目です")
-	@Size(min = 1, max = 50, message = "1文字以上50文字以内で入力してください")
+	@Size(max = 50, message = "1文字以上50文字以内で入力してください")
 	private String title;
 	@NotBlank(message = "必須項目です")
-	@Size(min = 1, max = 255, message = "1文字以上255文字以内で入力してください")
+	@Size(max = 255, message = "1文字以上255文字以内で入力してください")
 	private String content;
 	@NotEmpty(message = "必須項目です")
 	private String label;
 	@NotNull(message = "必須項目です")
-	private Integer userAddresseeId;
+	@Min(value = 1, message = "1以上の数字を入力してください")
+	private int userAddresseeId;
 	@NotBlank(message = "必須項目です")
 	private String deadline;
 	private String status;
