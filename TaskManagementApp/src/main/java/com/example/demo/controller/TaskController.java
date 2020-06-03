@@ -162,24 +162,22 @@ public class TaskController {
 	@PostMapping("/create")
 	public String createTask(@ModelAttribute @Validated TaskForm taskForm, BindingResult result, Model model,
 			RedirectAttributes redirectAttributes, Principal p) {
-		if (!result.hasErrors()) {
-			taskForm.setStatus("未完");
-			taskService.save(taskForm);
-
-			taskNoticeService.sendNoticeByMail(taskForm, p);
-			redirectAttributes.addFlashAttribute("successed", "登録が完了しました");
-			return "redirect:/";
-		} else {
-			int userId = user.getLoginUserId(p);
+		int userId = user.getLoginUserId(p);
+		if (result.hasErrors() || taskForm.getUserAddresseeId() == userId) {
 			Map<String, String> selectLabel = taskService.getSelectLabel();
 			model.addAttribute("selectLabel", selectLabel);
 			model.addAttribute("userId", userId);
 			model.addAttribute("taskForm", taskForm);
 			return "task/createTask";
 		}
+		taskForm.setStatus("未完");
+		taskService.save(taskForm);
+
+		taskNoticeService.sendNoticeByMail(taskForm, p);
+		redirectAttributes.addFlashAttribute("successed", "登録が完了しました");
+		return "redirect:/";
 	}
 
-	// TODO 修正
 	@GetMapping("/readRequestedTask/{id}")
 	public String readTask(@PathVariable int id, Model model) {
 		TaskForm taskForm = taskService.findOne(id);
@@ -202,23 +200,22 @@ public class TaskController {
 	@PostMapping("/edit/{id}")
 	public String editRequiredTask(@PathVariable int id, @ModelAttribute @Validated TaskForm taskForm,
 			BindingResult result, Model model, RedirectAttributes redirectAttributes, Principal p) {
-		if (!result.hasErrors()) {
-			taskForm.setId(id);
-			taskForm.setUserId(user.getLoginUserId(p));
-			// 削除しない限りタスクを完了扱いにはしない
-			taskForm.setStatus("未完");
-
-			taskService.update(taskForm);
-			redirectAttributes.addFlashAttribute("successed", "更新が完了しました");
-			return "redirect:/";
-		} else {
+		int userId = user.getLoginUserId(p);
+		if (result.hasErrors() || taskForm.getUserAddresseeId() == userId) {
 			TaskForm form = taskService.findOne(id);
 			Map<String, String> selectLabel = taskService.getSelectLabel();
 			model.addAttribute("selectLabel", selectLabel);
 			model.addAttribute("taskForm", form);
 			return "task/editRequestedTask";
 		}
+		taskForm.setId(id);
+		taskForm.setUserId(user.getLoginUserId(p));
+		// 削除しない限りタスクを完了扱いにはしない
+		taskForm.setStatus("未完");
 
+		taskService.update(taskForm);
+		redirectAttributes.addFlashAttribute("successed", "更新が完了しました");
+		return "redirect:/";
 	}
 
 	@PostMapping("/delete/{id}")
