@@ -234,7 +234,7 @@ public class TaskController {
 		int userId = user.getLoginUserId(p);
 		taskService.setRequestedTask(userId, form.getParam());
 		int currentPage = page.orElse(1);
-		int pageSize = size.orElse(3);
+		int pageSize = size.orElse(2);
 
 		Page<Task> notExecutedTask = taskService.getNotExecutedTask(PageRequest.of(currentPage - 1, pageSize));
 		Page<Task> completedTask = taskService.getCompletedTask(PageRequest.of(currentPage - 1, pageSize));
