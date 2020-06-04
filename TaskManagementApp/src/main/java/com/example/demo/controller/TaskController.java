@@ -116,7 +116,6 @@ public class TaskController {
 
 	@GetMapping("/readTask/{id}")
 	public String readTask(@PathVariable int id, Model model, AccountForm form) {
-		// TODO 検索条件の追加
 		TaskForm task = taskService.findOne(id);
 		int senderId = task.getUserId();
 		String sender = user.getSenderName(senderId);
