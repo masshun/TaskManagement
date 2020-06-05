@@ -11,6 +11,7 @@
 		<main role="main" class="mb-auto mt-4">
 			<h1 class="mt-5">頼みごとの編集</h1>
 			<br />
+			<h2 style="color: red;" th:text="${failed}"></h2>
 			<br />
 			<form class="form-signin m-auto pr-5 pl-5" method="post" action="#"
 				th:object="${taskForm}" th:action="@{/edit/{id}(id=${taskForm.id})}"
@@ -36,7 +37,7 @@
 						onchange="changeItem(this)" class="form-control"
 						id="exampleFormControlSelect1" name="label">
 						<option th:each="item : ${selectLabel}" th:value="${item.value}"
-							th:text="${item.key}" th:selected="*{label}"></option>
+							th:text="${item.key}" th:selected="*{label} eq ${item.value}"></option>
 					</select>
 				</div>
 
