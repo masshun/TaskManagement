@@ -15,10 +15,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -56,9 +56,6 @@ public class TaskControllerTest {
 	@MockBean
 	GetUserInfoService user;
 
-	@Mock
-	TaskForm form;
-
 	@MockBean
 	TaskNoticeService task;
 
@@ -72,7 +69,7 @@ public class TaskControllerTest {
 	public void setup() {
 		mockMvc = MockMvcBuilders.standaloneSetup(controller)
 				.setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver()).alwaysDo(log()).build();
-		// MockitoAnnotations.initMocks(this);
+		MockitoAnnotations.initMocks(this);
 	}
 
 	@Test
@@ -152,65 +149,62 @@ public class TaskControllerTest {
 	@Test
 	void receivedTaskのpostで未完のままにする() throws Exception {
 		mockMvc.perform(post("/readTask/{id}", 1).param("title", "hoge").param("content", "hoge").param("label", "red")
-				.param("status", "未完")).andExpect(redirectedUrl("/"))
+				.param("userAddresseeId", "1").param("status", "未完")).andExpect(redirectedUrl("/"))
 				.andExpect(flash().attribute("failed", "すでに進行中になっています"));
 	}
 
-	@Disabled
 	@Test
-	void editのpost() throws Exception {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		int userId = user.getLoginUserId(auth);
-		mockMvc.perform(post("/edit/{id}", 1).param("title", "hoge").param("content", "hoge").param("label", "red")
-				.param("status", "未完")).andExpect(redirectedUrl("/"))
-				.andExpect(flash().attribute("successed", "更新が完了しました"));
-	}
-
-	@Nested
-	@WebMvcTest(TaskController.class)
-	@WithMockUser(username = "hoge", password = "password")
-	class Task {
-
-		@Autowired
-		private MockMvc mockMvc;
-
-		@MockBean
-		TaskService taskService;
-
-		@MockBean
-		GetUserInfoService user;
-
-		@MockBean
-		TaskNoticeService taskNoticeService;
-
-		@MockBean
-		UserDetailsServiceImpl impl;
-
-		@Mock
-		TaskForm taskForm;
-
-		@Test
-		void readReceivedTaskのget() throws Exception {
-			Map<String, Boolean> statusRadio = taskService.getStatusRadio();
-			TaskForm form = new TaskForm();
-			form.setUserId(1);
-			when(taskService.findOne(1)).thenReturn(form);
-			mockMvc.perform(get("/readTask/{id}", 1)).andExpect(status().isOk())
-					.andExpect(MockMvcResultMatchers.model().attribute("status", statusRadio))
-					.andExpect(MockMvcResultMatchers.model().attribute("task", form));
-		}
-
-		@Test
-		void editのget() throws Exception {
-			TaskForm form = new TaskForm();
-			form.setUserId(1);
-			when(taskService.findOne(1)).thenReturn(form);
-			Map<String, String> selectLabel = taskService.getSelectLabel();
-			mockMvc.perform(get("/edit/{id}", 1)).andExpect(status().isOk())
-					.andExpect(MockMvcResultMatchers.model().attribute("selectLabel", selectLabel))
-					.andExpect(MockMvcResultMatchers.model().attribute("taskForm", form))
-					.andExpect(view().name("task/editRequestedTask"));
-		}
+	void delete() throws Exception {
+		mockMvc.perform(post("/delete/{id}", 1)).andExpect(redirectedUrl("/"))
+				.andExpect(flash().attribute("successed", "削除が完了しました"));
 
 	}
+}
+
+@Nested
+@WebMvcTest(TaskController.class)
+@WithMockUser(username = "hoge", password = "password")
+class Task {
+
+	@Autowired
+	private MockMvc mockMvc;
+
+	@MockBean
+	TaskService taskService;
+
+	@MockBean
+	GetUserInfoService user;
+
+	@MockBean
+	TaskNoticeService taskNoticeService;
+
+	@MockBean
+	UserDetailsServiceImpl impl;
+
+	@Mock
+	TaskForm taskForm;
+
+	@Test
+	void readReceivedTaskのget() throws Exception {
+		Map<String, Boolean> statusRadio = taskService.getStatusRadio();
+		TaskForm form = new TaskForm();
+		form.setUserId(1);
+		when(taskService.findOne(1)).thenReturn(form);
+		mockMvc.perform(get("/readTask/{id}", 1)).andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.model().attribute("status", statusRadio))
+				.andExpect(MockMvcResultMatchers.model().attribute("task", form));
+	}
+
+	@Test
+	void editのget() throws Exception {
+		TaskForm form = new TaskForm();
+		form.setUserId(1);
+		when(taskService.findOne(1)).thenReturn(form);
+		Map<String, String> selectLabel = taskService.getSelectLabel();
+		mockMvc.perform(get("/edit/{id}", 1)).andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.model().attribute("selectLabel", selectLabel))
+				.andExpect(MockMvcResultMatchers.model().attribute("taskForm", form))
+				.andExpect(view().name("task/editRequestedTask"));
+	}
+
 }
