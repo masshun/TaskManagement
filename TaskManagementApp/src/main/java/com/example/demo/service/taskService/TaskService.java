@@ -104,8 +104,8 @@ public class TaskService {
 		return page;
 	}
 
-	public boolean updateCompleted(Task task) {
-		return taskMapper.updateCompleted(task);
+	public boolean updateCompleted(TaskForm taskForm) {
+		return taskMapper.updateCompleted(taskForm);
 	}
 
 	public PageWrapper<Task> getNotExecTaskPage(Page<Task> notExecutedTask) {
@@ -113,33 +113,16 @@ public class TaskService {
 		return notExecTaskPage;
 	}
 
-	public boolean save(TaskForm form) {
-		boolean result = taskMapper.save(form);
-		if (result) {
-			return true;
-		} else {
-			// Exceptionの実装
-			return false;
-		}
+	public void save(TaskForm form) {
+		taskMapper.save(form);
 	}
 
-	// 変換
-	public boolean update(TaskForm taskForm) {
-		boolean result = taskMapper.update(taskForm);
-		if (result) {
-			return true;
-		} else {
-			// Exceptionの実装
-			return false;
-		}
+	public void update(TaskForm taskForm) {
+		taskMapper.update(taskForm);
 	}
 
-	public boolean delete(int id) {
-		boolean result = taskMapper.delete(id);
-		if (!result) {
-			// exception
-		}
-		return true;
+	public void delete(int id) {
+		taskMapper.delete(id);
 	}
 
 	public Map<String, String> getSelectLabel() {

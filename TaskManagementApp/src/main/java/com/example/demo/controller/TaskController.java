@@ -129,8 +129,8 @@ public class TaskController {
 	}
 
 	@PostMapping("/readTask/{id}")
-	public String postCompleted(@PathVariable int id, @ModelAttribute Task task, RedirectAttributes redirectAttributes,
-			Principal p) {
+	public String postCompleted(@PathVariable int id, @ModelAttribute TaskForm task,
+			RedirectAttributes redirectAttributes, Principal p) {
 		task.setId(id);
 		if (task.getStatus().equals("未完")) {
 			redirectAttributes.addFlashAttribute("failed", "すでに進行中になっています");
@@ -199,12 +199,12 @@ public class TaskController {
 	@PostMapping("/edit/{id}")
 	public String editRequiredTask(@PathVariable int id, @ModelAttribute @Validated TaskForm taskForm,
 			BindingResult result, Model model, RedirectAttributes redirectAttributes, Principal p) {
-		int userId = user.getLoginUserId(p);
-		if (result.hasErrors() || taskForm.getUserAddresseeId() == userId) {
+		if (result.hasErrors() || taskForm.getUserAddresseeId() == user.getLoginUserId(p)) {
 			TaskForm form = taskService.findOne(id);
 			Map<String, String> selectLabel = taskService.getSelectLabel();
 			model.addAttribute("selectLabel", selectLabel);
 			model.addAttribute("taskForm", form);
+			model.addAttribute("failed", "入力値に問題があります");
 			return "task/editRequestedTask";
 		}
 		taskForm.setId(id);
@@ -260,7 +260,7 @@ public class TaskController {
 		taskService.setReceivedTask(userId, param);
 
 		int currentPage = page.orElse(1);
-		int pageSize = size.orElse(3);
+		int pageSize = size.orElse(2);
 
 		Page<Task> notExecutedTask = taskService.getNotExecutedTask(PageRequest.of(currentPage - 1, pageSize));
 		Page<Task> completedTask = taskService.getCompletedTask(PageRequest.of(currentPage - 1, pageSize));

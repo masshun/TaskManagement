@@ -18,7 +18,7 @@ public interface TaskMapper {
 
 	TaskForm findOne(int id);
 
-	boolean updateCompleted(Task task);
+	boolean updateCompleted(TaskForm form);
 
 	boolean save(TaskForm form);
 
