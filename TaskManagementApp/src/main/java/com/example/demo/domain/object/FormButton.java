@@ -10,7 +10,7 @@ public class FormButton {
 
 	private Map<String, String> selectLabel;
 
-	private Map<String, Boolean> statusRadio;
+	private Map<String, String> statusRadio;
 
 	public Map<String, String> initSelectLabel() {
 		this.selectLabel = new LinkedHashMap<>();
@@ -20,10 +20,10 @@ public class FormButton {
 		return this.selectLabel;
 	}
 
-	public Map<String, Boolean> initStatusRadio() {
+	public Map<String, String> initStatusRadio() {
 		this.statusRadio = new LinkedHashMap<>();
-		statusRadio.put("未完", false);
-		statusRadio.put("完了!", true);
+		statusRadio.put("未完", "未完");
+		statusRadio.put("完了!", "完了");
 		return this.statusRadio;
 	}
 

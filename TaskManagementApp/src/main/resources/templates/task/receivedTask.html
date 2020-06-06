@@ -39,14 +39,17 @@
 								<div class="col-sm-12">
 									<th:block th:if="${notExecutedTask.empty}">
 										<div class="card card-body mb-3" style="color: #011627;">
-											<h5 th:text="${emptyNotExecuted}" class="card-title">完了した頼みごとはありません</h5>
+											<h5 class="card-title">これから取り組む頼みごとはありません</h5>
 										</div>
 									</th:block>
 									<div th:each="obj : ${notExecutedTask}"
 										class="text-truncate card linkbox card-body mb-3 text-left" style="">
 										<h5 class="pb-2">
-											<i th:style="${obj.label} eq 'blue' ? 'color: #1ec0ff;'"
-												th:styleappend="${obj.label eq 'green' ? 'color: #3ac569;' : 'color: red;'}"
+											<i th:if="${obj.label} eq 'green'" style="color: green;"
+												class="fas fa-tags pr-2"></i><i
+												th:if="${obj.label} eq 'red'" style="color: red;"
+												class="fas fa-tags pr-2"></i><i
+												th:if="${obj.label} eq 'blue'" style="color: blue;"
 												class="fas fa-tags pr-2"></i><span
 												class="card-title text-left font-weight-bold"
 												th:text="${obj.title}"></span>
@@ -138,8 +141,11 @@
 									<div th:each="obj : ${completedTask}"
 										class="text-truncate card linkbox card-body mb-3 text-left" style="">
 										<h5 class="pb-2">
-											<i th:style="${obj.label} eq 'blue' ? 'color: #1ec0ff;'"
-												th:styleappend="${obj.label eq 'green' ? 'color: #3ac569;' : 'color: red;'}"
+											<i th:if="${obj.label} eq 'green'" style="color: green;"
+												class="fas fa-tags pr-2"></i><i
+												th:if="${obj.label} eq 'red'" style="color: red;"
+												class="fas fa-tags pr-2"></i><i
+												th:if="${obj.label} eq 'blue'" style="color: blue;"
 												class="fas fa-tags pr-2"></i><span
 												class="card-title text-left font-weight-bold"
 												th:text="${obj.title}"></span>

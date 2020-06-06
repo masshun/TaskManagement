@@ -14,14 +14,19 @@
 			<div class="container">
 				<div class="row">
 					<div class="col mt-5">
-						<div class="card" th:style="${taskForm.status} eq '未完' ? 'background-color: #E71D36;' : 'background-color: #0080ff;'">
-							<h2 class="card-header" th:text="${taskForm.status} eq '未完' ? 'これから取り組むこと' : '完了したこと'"></h2>
+						<div class="card"
+							th:style="${taskForm.status} eq '未完' ? 'background-color: #E71D36;' : 'background-color: #0080ff;'">
+							<h2 class="card-header"
+								th:text="${taskForm.status} eq '未完' ? 'これから取り組むこと' : '完了したこと'"></h2>
 							<div class="card-body" style="color: #011627;">
 								<div class="col">
 									<div class="card card-body mb-3">
 										<h2 class="pb-4">
-											<i th:style="${taskForm.label} eq 'blue' ? 'color: #1ec0ff;'"
-												th:styleappend="${taskForm.label eq 'green' ? 'color: #3ac569;' : 'color: red;'}"
+											<i th:if="${taskForm.label} eq 'green'" style="color: green;"
+												class="fas fa-tags pr-2"></i><i
+												th:if="${taskForm.label} eq 'red'" style="color: red;"
+												class="fas fa-tags pr-2"></i><i
+												th:if="${taskForm.label} eq 'blue'" style="color: blue;"
 												class="fas fa-tags pr-2"></i><span
 												class="card-title font-weight-bold"
 												th:text="${taskForm.title}"></span>
@@ -39,16 +44,15 @@
 											</h4>
 											<div class="mt-3">
 												<a href="#" th:href="@{/edit/{id}(id=${taskForm.id})}"
-													class="btn mr-3" role="button"
-													aria-pressed="true" style="background-color: #011627; color: white;">編集</a><a href="#" th:href="@{/requestedTask}"
-													class="btn"
+													class="btn mr-3" role="button" aria-pressed="true"
+													style="background-color: #011627; color: white;">編集</a><a
+													href="#" th:href="@{/requestedTask}" class="btn"
 													style="background-color: silver; color: #011627;"
 													role="button" aria-pressed="true">戻る</a>
 												<form class="ml-2" style="display: inline;" method="post"
 													th:action="@{/delete/{id}(id=${taskForm.id})}"
 													onSubmit="return check()">
-													<button class="btn btn-danger"
-														type="submit">削除</button>
+													<button class="btn btn-danger" type="submit">削除</button>
 												</form>
 											</div>
 
