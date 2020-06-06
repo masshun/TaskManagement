@@ -71,6 +71,26 @@ input {
 	color:red;
 }
 
+.fadein{
+	opacity: 1;
+	animation-name: fadeout;
+	animation-duration: 3s;
+	animation-fill-mode: forwards;
+	animation-delay: 0.5s;
+}
+
+@keyframes fadeout{
+	0%{
+		opacity: 1;
+	}
+	50%{
+		opacity: 50%;
+	}
+	100%{
+		opacity: 0%;
+	}
+}
+
 /*
  * Header
  */
