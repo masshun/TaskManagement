@@ -32,7 +32,7 @@
 
 			<div class="container">
 				<div class="row pb-5">
-					<div class="col-md-6 mt-5">
+					<div class="col-lg-6 mt-5">
 						<div class="card" style="background-color: #E71D36;">
 							<h5 class="card-header">これから取り組むこと</h5>
 							<div class="card-body" style="color: #011627;">
@@ -80,7 +80,7 @@
 											style="display: inline"><span class="page-link"
 											th:if='${notExecTaskPage.firstPage}'>←先頭</span> <a
 											class="page-link" th:if='${not notExecTaskPage.firstPage}'
-											th:href='@{/requestedTask(page=1)}'>←先頭</a></li>
+											th:href='@{/receivedTask(page=1)}'>←先頭</a></li>
 
 										<li class="page-item"
 											th:classappend="${notExecTaskPage.hasPreviousPage}? '' : 'disabled'"
@@ -88,7 +88,7 @@
 											th:if='${not notExecTaskPage.hasPreviousPage}'>&laquo;</span>
 											<a th:if='${notExecTaskPage.hasPreviousPage}'
 											class="page-link"
-											th:href='@{/requestedTask(page=${notExecTaskPage.number-1})}'>«</a>
+											th:href='@{/receivedTask(page=${notExecTaskPage.number-1})}'>«</a>
 										</li>
 
 										<li class="page-item"
@@ -97,7 +97,7 @@
 											style="display: inline"><span th:if='${item.current}'
 											class="page-link" th:text='${item.number}'>1</span> <a
 											th:if='${not item.current}' class="page-link"
-											th:href='@{/requestedTask(page=${item.number})}'> <span
+											th:href='@{/receivedTask(page=${item.number})}'> <span
 												th:text='${item.number}'></span>
 										</a></li>
 
@@ -123,7 +123,7 @@
 						</div>
 					</div>
 
-					<div class="col-md-6 mt-5">
+					<div class="col-lg-6 mt-5">
 						<div class="card" style="background-color: #0080ff;">
 							<h5 class="card-header">完了したこと</h5>
 							<div class="card-body" style="color: #011627;">
@@ -174,7 +174,7 @@
 											style="display: inline"><span class="page-link"
 											th:if='${completedTaskPage.firstPage}'>←先頭</span> <a
 											class="page-link" th:if='${not completedTaskPage.firstPage}'
-											th:href='@{/requestedTask(page=1)}'>←先頭</a></li>
+											th:href='@{/receivedTask(page=1)}'>←先頭</a></li>
 
 										<li class="page-item"
 											th:classappend="${completedTaskPage.hasPreviousPage}? '' : 'disabled'"
@@ -182,7 +182,7 @@
 											th:if='${not completedTaskPage.hasPreviousPage}'>&laquo;</span>
 											<a th:if='${completedTaskPage.hasPreviousPage}'
 											class="page-link"
-											th:href='@{/requestedTask(page=${completedTaskPage.number-1})}'>«</a>
+											th:href='@{/receivedTask(page=${completedTaskPage.number-1})}'>«</a>
 										</li>
 
 										<li class="page-item"
@@ -191,7 +191,7 @@
 											style="display: inline"><span th:if='${item.current}'
 											class="page-link" th:text='${item.number}'>1</span> <a
 											th:if='${not item.current}' class="page-link"
-											th:href='@{/requestedTask(page=${item.number})}'> <span
+											th:href='@{/receivedTask(page=${item.number})}'> <span
 												th:text='${item.number}'></span>
 										</a></li>
 
@@ -200,7 +200,7 @@
 											style="display: inline"><span class="page-link"
 											th:if='${not completedTaskPage.hasNextPage}'>&raquo</span> <a
 											th:if='${ncompletedTaskPage.hasNextPage}' class="page-link"
-											th:href='@{/requestedTask(page=${completedTaskPage.number +1})}'>»</a>
+											th:href='@{/receivedTask(page=${completedTaskPage.number +1})}'>»</a>
 										</li>
 
 										<li class="page-item"
@@ -208,7 +208,7 @@
 											style="display: inline"><span class="page-link"
 											th:if='${completedTaskPage.lastPage}'>末尾➝</span> <a
 											th:if='${not completedTaskPage.lastPage}' class="page-link"
-											th:href='@{/requestedTask(page=${completedTaskPage.totalPages})}'>末尾➝</a>
+											th:href='@{/receivedTask(page=${completedTaskPage.totalPages})}'>末尾➝</a>
 										</li>
 
 									</ul>
