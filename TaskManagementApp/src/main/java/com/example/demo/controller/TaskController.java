@@ -59,7 +59,6 @@ public class TaskController {
 		Page<Task> notExecutedTask = taskService.getNotExecutedTask(PageRequest.of(currentPage - 1, pageSize));
 		Page<Task> completedTask = taskService.getCompletedTask(PageRequest.of(currentPage - 1, pageSize));
 
-		// TODO seviceに詰める
 		PageWrapper<Task> notExecTaskPageWrapper = taskService.getNotExecTaskPage(notExecutedTask);
 		PageWrapper<Task> completedTaskWrapper = new PageWrapper<Task>(completedTask);
 		int totalNotExecutedTaskPages = notExecutedTask.getTotalPages();
@@ -104,13 +103,6 @@ public class TaskController {
 			model.addAttribute("completedTaskPage", completedTaskWrapper);
 		}
 
-		if (completedTask.isEmpty()) {
-			model.addAttribute("emptyCompleted", "完了した頼みごとはありません");
-		}
-		if (notExecutedTask.isEmpty()) {
-			model.addAttribute("emptyNotExecuted", "これから取り組む頼みごとはありません");
-		}
-
 		return "task/receivedTask";
 	}
 
@@ -120,7 +112,7 @@ public class TaskController {
 		int senderId = task.getUserId();
 		String sender = user.getSenderName(senderId);
 
-		Map<String, Boolean> statusRadio = taskService.getStatusRadio();
+		Map<String, String> statusRadio = taskService.getStatusRadio();
 		model.addAttribute("sender", sender);
 		model.addAttribute("status", statusRadio);
 		model.addAttribute("form", form);
@@ -137,12 +129,9 @@ public class TaskController {
 			return "redirect:/";
 		}
 
-		taskService.updateCompleted(task);
-
 		// 送り主にメール通知をする
-		int userId = task.getUserId();
-		TaskForm form = taskService.findOne(userId);
-		taskNoticeService.sendCompletedNoticeByMail(form, p);
+		taskService.updateCompleted(task);
+		taskNoticeService.sendCompletedNoticeByMail(task, p);
 		redirectAttributes.addFlashAttribute("successed", "頼みごとが完了しました");
 		return "redirect:/";
 	}

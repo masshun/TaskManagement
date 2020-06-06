@@ -1,8 +1,11 @@
 package com.example.demo.repository;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
-import org.junit.jupiter.api.Disabled;
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.domain.Task;
 import com.example.demo.domain.TaskForm;
 
 @MybatisTest
@@ -43,12 +47,30 @@ public class TaskMapperTest {
 		assertEquals(actual.toString(), form.toString());
 	}
 
-	@Disabled
 	@Test
-	void 頼みごとの更新() {
+	void 頼みごとの更新() throws Exception {
 		TaskForm form = getInsertTaskData();
 		taskMapper.save(form);
+		form.setTitle("洗濯物を干す");
+		taskMapper.update(form);
+		TaskForm actual = taskMapper.findOne(form.getId());
+		assertEquals(actual.toString(), form.toString());
+	}
 
+	@Test
+	void 頼みごとの削除() throws Exception {
+		TaskForm form = getInsertTaskData();
+		taskMapper.save(form);
+		taskMapper.delete(form.getId());
+		TaskForm deletedForm = taskMapper.findOne(form.getId());
+		assertNull(deletedForm);
+	}
+
+	@Test
+	void 全件取得() throws Exception {
+		List<Task> list = taskMapper.findAll();
+		Optional<Task> one = list.stream().findFirst();
+		assertEquals("コンテンツ", one.get().getContent());
 	}
 
 	private TaskForm getInsertTaskData() {
@@ -74,4 +96,5 @@ public class TaskMapperTest {
 		form.setUserAddresseeId(1);
 		return form;
 	}
+
 }

@@ -130,8 +130,8 @@ public class TaskService {
 		return selectLabel;
 	}
 
-	public Map<String, Boolean> getStatusRadio() {
-		Map<String, Boolean> statusRadio = form.initStatusRadio();
+	public Map<String, String> getStatusRadio() {
+		Map<String, String> statusRadio = form.initStatusRadio();
 		return statusRadio;
 	}
 

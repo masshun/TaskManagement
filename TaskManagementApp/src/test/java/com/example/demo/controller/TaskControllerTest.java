@@ -186,7 +186,7 @@ class Task {
 
 	@Test
 	void readReceivedTaskのget() throws Exception {
-		Map<String, Boolean> statusRadio = taskService.getStatusRadio();
+		Map<String, String> statusRadio = taskService.getStatusRadio();
 		TaskForm form = new TaskForm();
 		form.setUserId(1);
 		when(taskService.findOne(1)).thenReturn(form);

@@ -50,7 +50,7 @@ public class TaskNoticeService {
 		return true;
 	}
 
-	public boolean sendCompletedNoticeByMail(TaskForm taskForm, Principal p) {
+	public void sendCompletedNoticeByMail(TaskForm taskForm, Principal p) {
 		String sender = p.getName();
 		int id = taskForm.getUserId();
 		String addressee = getAddressee.getAddresseeById(id);
@@ -71,7 +71,5 @@ public class TaskNoticeService {
 		map.put("content", content);
 
 		sendingService.sendMail(map);
-
-		return true;
 	}
 }
