@@ -8,10 +8,10 @@
 	style="background-color: #2EC4B6; color: #fff;">
 	<div class="d-flex w-100 h-100 mx-auto flex-column">
 		<header th:include="layout :: frag_body"></header>
-		<main role="main" class="mb-auto">
-			<h1 class="mt-5">
+		<main role="main" class="mt-auto mb-auto">
+			<h1 class="pt-4">
 				頼まれたこと一覧
-				<button type="button" class="btn bg-secondary ml-2"
+				<button type="button" class="btn border-white ml-2 rounded-pill ml-2"
 					data-toggle="collapse" data-target="#collapseExample"
 					aria-expanded="false" aria-controls="collapseExample"
 					style="color: white;">
@@ -224,7 +224,9 @@
 					</div>
 				</div>
 			</div>
-
+			<div>
+			<a class="h3 cp_link" style="text-decoration: none;" th:href="@{/requestedTask}">頼みごと一覧へ　<i class="fas fa-arrow-right"></i></a>
+			</div>
 		</main>
 		<footer th:include="layout :: frag_footer"> </footer>
 	</div>

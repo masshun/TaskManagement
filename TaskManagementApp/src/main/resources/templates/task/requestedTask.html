@@ -5,13 +5,13 @@
 <title>Insert title here</title>
 </head>
 <body class="text-center"
-	style="background-color: #2EC4B6; color: #fff;">
-	<div class="d-flex w-100 h-100 mx-auto flex-column" style="">
+	style="color: #fff;">
+	<div class="d-flex w-100 h-100 m-auto flex-column">
 		<header th:include="layout :: frag_body"></header>
-		<main role="main" class="mb-auto">
-			<h1 class="mt-5">
+		<main role="main" class="mt-auto mb-auto">
+			<h1 class="pt-4">
 				頼みごと一覧
-				<button type="button" class="btn bg-secondary ml-2"
+				<button type="button" class="btn border-white ml-2 rounded-pill"
 					data-toggle="collapse" data-target="#collapseExample"
 					aria-expanded="false" aria-controls="collapseExample"
 					style="color: white;">
@@ -226,7 +226,7 @@
 				</div>
 			</div>
 			<div>
-			<h3>リンク</h3>
+			<a class="h3 cp_link" style="text-decoration: none;" th:href="@{/receivedTask}">頼まれたこと一覧へ　<i class="fas fa-arrow-right"></i></a>
 			</div>
 		</main>
 		<footer th:include="layout :: frag_footer"></footer>
