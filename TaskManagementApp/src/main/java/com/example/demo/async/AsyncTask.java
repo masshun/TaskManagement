@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.config.MailPropConfig;
 import com.example.demo.domain.Task;
-import com.example.demo.domain.object.Mail;
 import com.example.demo.service.mailService.SendMailService;
 import com.example.demo.service.taskService.TaskService;
 import com.example.demo.service.userService.GetUserInfoService;
@@ -26,7 +26,7 @@ public class AsyncTask {
 	TaskService taskService;
 
 	@Autowired
-	Mail mail;
+	MailPropConfig prop;
 
 	@Autowired
 	GetUserInfoService getAddressee;
@@ -52,8 +52,8 @@ public class AsyncTask {
 		String taskTitle;
 		String title = "頼まれたことはもう終わりましたか？";
 
-		String port = mail.getPORT();
-		String from = mail.getFROM();
+		String port = prop.get("port");
+		String from = prop.get("mailaddress");
 		String content;
 
 		Map<String, String> map = new HashMap<>();

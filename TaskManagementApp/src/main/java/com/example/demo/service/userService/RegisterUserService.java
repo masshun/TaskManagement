@@ -12,10 +12,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.config.MailPropConfig;
 import com.example.demo.domain.Account;
 import com.example.demo.domain.AccountForm;
 import com.example.demo.domain.object.ConfirmationToken;
-import com.example.demo.domain.object.Mail;
 import com.example.demo.exception.MultipleException;
 import com.example.demo.repository.AccountMapper;
 import com.example.demo.service.mailService.SendMailService;
@@ -25,6 +25,9 @@ import com.example.demo.service.mailService.SendMailService;
 public class RegisterUserService {
 
 	@Autowired
+	MailPropConfig prop;
+
+	@Autowired
 	AccountMapper accountMapper;
 
 	@Autowired
@@ -32,9 +35,6 @@ public class RegisterUserService {
 
 	@Autowired
 	HttpSession httpSession;
-
-	@Autowired
-	Mail mail;
 
 	@Autowired
 	SendMailService mailService;
@@ -58,10 +58,10 @@ public class RegisterUserService {
 
 		String title = "新規登録 アカウント確認のお願い";
 		String content = username + "さん" + "\n" + "\n" + "以下のリンクにアクセスしてアカウントを認証してください" + "\n" + "http://"
-				+ mail.getPORT() + "/signup/validate" + "?id=" + confirmationToken;
+				+ prop.get("port") + "/signup/validate" + "?id=" + confirmationToken;
 
 		Map<String, String> map = new HashMap<>();
-		map.put("from", mail.getFROM());
+		map.put("from", prop.get("mailaddress"));
 		map.put("title", title);
 		map.put("email", form.getEmail());
 		map.put("content", content);
