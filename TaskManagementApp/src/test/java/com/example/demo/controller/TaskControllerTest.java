@@ -73,12 +73,12 @@ public class TaskControllerTest {
 	}
 
 	@Test
-	void indexにgetメソッドでアクセスする() throws Exception {
+	void indexにgetリクエストする() throws Exception {
 		mockMvc.perform(get("/")).andExpect(status().isOk()).andExpect(view().name("index"));
 	}
 
 	@Test
-	void requestedTaskにgetアクセスする() {
+	void requestedTaskにgetリクエストする() {
 		try {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			int userId = user.getLoginUserId(auth);
@@ -101,7 +101,7 @@ public class TaskControllerTest {
 	}
 
 	@Test
-	void receivedTaskにgetアクセスする() {
+	void receivedTaskにgetリクエストする() {
 		try {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 

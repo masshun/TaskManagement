@@ -21,13 +21,17 @@ import com.example.demo.domain.TaskForm;
 @Transactional
 @Sql(statements = {
 		"INSERT INTO task(title, content, label, deadline, user_id, user_addressee_id, status) VALUES ('タイトル', 'コンテンツ', 'red', '2020-09-09 12:00:00', 1, 2, '未完')",
-		"INSERT INTO task(title, content, label, deadline, user_id, user_addressee_id, status) VALUES ('買い物', '食材を買う', 'red', '2020-09-08 12:00:00', 2, 1, '完了')", })
+		"INSERT INTO task(title, content, label, deadline, user_id, user_addressee_id, status) VALUES ('買い物', '食材を買う', 'red', '2020-09-08 12:00:00', 2, 1, '完了')",
+		"INSERT INTO user(username, password, email) VALUES ('ユーザー1', 'password', 'hoge@email.com')",
+		"INSERT INTO user(username, password, email)VALUES('ユーザー2', 'password', 'hoge2@email.com')",
+		"INSERT INTO user_addressee(name) VALUES('ユーザー1')", "INSERT INTO user_addressee(name)VALUES('ユーザー2')" })
 public class TaskMapperTest {
 
 	@Autowired
 	TaskMapper taskMapper;
 
-	// private static Logger logger = LoggerFactory.getLogger(TaskMapperTest.class);
+	@Autowired
+	AccountMapper accountMapper;
 
 	@Test
 	void 頼みごとの新規登録() throws Exception {
@@ -73,6 +77,30 @@ public class TaskMapperTest {
 		assertEquals("コンテンツ", one.get().getContent());
 	}
 
+	@Test
+	void 検索による頼みごとリストの取得() throws Exception {
+		TaskForm form = getCompletedData();
+		taskMapper.save(form);
+		int userId = 0;
+		int userAddresseeId = 0;
+		String param = null;
+		List<Task> list = taskMapper.findAllById(userId, userAddresseeId, param);
+		Optional<Task> one = list.stream().findFirst();
+		assertEquals("駅で落とした忘れ物を取りに行く", one.get().getContent());
+	}
+
+	@Test
+	void 曖昧検索() throws Exception {
+		TaskForm form = getForSearchData();
+		taskMapper.save(form);
+		int userId = 0;
+		int userAddresseeId = 0;
+		String param = "提出";
+		List<Task> list = taskMapper.findAllById(userId, userAddresseeId, param);
+		Optional<Task> one = list.stream().findFirst();
+		assertEquals("書類を提出する", one.get().getTitle());
+	}
+
 	private TaskForm getInsertTaskData() {
 		TaskForm form = new TaskForm();
 		form.setTitle("洗濯物を取り込む");
@@ -85,16 +113,29 @@ public class TaskMapperTest {
 		return form;
 	}
 
-	private TaskForm getSetCompletedData() {
+	private TaskForm getCompletedData() {
 		TaskForm form = new TaskForm();
 		form.setTitle("忘れ物を取りに行く");
 		form.setContent("駅で落とした忘れ物を取りに行く");
 		form.setLabel("red");
 		form.setDeadline("2020-08-07 12:00:00");
-		form.setStatus("未完");
-		form.setUserId(2);
-		form.setUserAddresseeId(1);
+		form.setStatus("完了");
+		form.setUserId(5);
+		form.setUserAddresseeId(6);
 		return form;
+	}
+
+	private TaskForm getForSearchData() {
+		TaskForm form = new TaskForm();
+		form.setTitle("書類を提出する");
+		form.setContent("上司に書類を提出する");
+		form.setLabel("red");
+		form.setDeadline("2020-08-08 12:00:00");
+		form.setStatus("未完");
+		form.setUserId(13);
+		form.setUserAddresseeId(14);
+		return form;
+
 	}
 
 }

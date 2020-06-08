@@ -26,6 +26,4 @@ public interface TaskMapper {
 
 	boolean delete(int id);
 
-	Integer selectTaskCount();
-
 }
