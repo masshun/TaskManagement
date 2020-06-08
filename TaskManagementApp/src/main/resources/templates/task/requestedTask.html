@@ -9,7 +9,7 @@
 	<div class="d-flex w-100 h-100 m-auto flex-column">
 		<header th:include="layout :: frag_body"></header>
 		<main role="main" class="mt-auto mb-auto">
-			<h1 class="pt-4">
+			<h1 class="pt-4" style="color: #011627;">
 				頼みごと一覧
 				<button type="button" class="btn border-white ml-2 rounded-pill"
 					data-toggle="collapse" data-target="#collapseExample"
@@ -20,7 +20,7 @@
 			</h1>
 			<div style="" class="collapse" id="collapseExample">
 				<div class="card border-0 card-body mx-auto"
-					style="background-color: #2EC4B6; color: black; width: 50%;">
+					style="background: #bac2c6; color: black; width: 50%;">
 					<form method="get" th:action="@{/searchRequestedTask}">
 						<input placeholder="頼みごとのタイトル" type="text" name="param"
 							class="form-control">
@@ -226,7 +226,7 @@
 				</div>
 			</div>
 			<div>
-			<a class="h3 cp_link" style="text-decoration: none;" th:href="@{/receivedTask}">頼まれたこと一覧へ　<i class="fas fa-arrow-right"></i></a>
+			<a class="h3 cp_link" style="text-decoration: none; color: #011627;" th:href="@{/receivedTask}">頼まれたこと一覧へ　<i class="fas fa-arrow-right"></i></a>
 			</div>
 		</main>
 		<footer th:include="layout :: frag_footer"></footer>

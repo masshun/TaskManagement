@@ -5,11 +5,11 @@
 <title>Insert title here</title>
 </head>
 <body class="text-center"
-	style="background-color: #2EC4B6; color: #fff;">
+	style="color: #fff;">
 	<div class="d-flex w-100 h-100 flex-column">
 		<header th:include="layout :: frag_body"></header>
-		<main role="main" class="mb-auto mt-4">
-			<h1 class="mt-5">頼みごとの編集</h1>
+		<main role="main" class="mb-auto mt-auto" style="color: #011627;">
+			<h1>頼みごとの編集</h1>
 			<br />
 			<h2 style="color: red;" th:text="${failed}"></h2>
 			<br />
@@ -57,7 +57,7 @@
 				</div>
 				<button type="submit" class="btn" style="background-color: #011627; color: white;">更新</button>
 				<a th:href="@{/requestedTask}" class="btn btn-secondary btn-md ml-2"
-					role="button" aria-pressed="true" style="background-color: #EFFFE9;">戻る</a>
+					role="button" aria-pressed="true" style="background: white;">戻る</a>
 			</form>
 		</main>
 		<footer th:include="layout :: frag_footer"></footer>
