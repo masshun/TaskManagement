@@ -4,6 +4,8 @@ plugins {
 	id 'java'
 }
 
+apply plugin: 'findbugs'
+
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -49,6 +51,7 @@ dependencies {
 	testCompile group: 'com.github.springtestdbunit', name: 'spring-test-dbunit', version: '1.3.0'
 	testCompile group: 'org.dbunit', name: 'dbunit', version: '2.7.0'
 	testCompile group: 'com.h2database', name: 'h2', version: '1.4.200'
+	testCompile group: 'org.mockito', name: 'mockito-core', version: '3.3.3'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.1.1'
 }
 bootRun {

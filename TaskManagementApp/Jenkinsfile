@@ -1,0 +1,13 @@
+pipeline{
+
+	agent any
+	
+	stages{
+		stage('TaskManagementApp'){
+			steps {
+			withGradle(gradle : 'Gradle3.0')
+			}
+			
+		}
+	}
+}
