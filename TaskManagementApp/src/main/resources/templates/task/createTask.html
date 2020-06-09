@@ -40,7 +40,7 @@
 				</div>
 				<div class="form-group">
 					<label class="h5" for="userAddresseeId">頼みたいユーザーのID</label> <input
-						id="userAddresseeId" type="number" class="form-control text-left"
+						id="userAddresseeId" type="number" min="1" class="form-control text-left"
 						name="userAddresseeId" th:value="${userAddresseeId}" th:required="${#fields.hasErrors('userAddresseeId')} ? required" /> <small
 						th:if="${#fields.hasErrors('userAddresseeId')}"
 						th:errors="*{userAddresseeId}" class="err"></small>

@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body class="text-center"
-	style="color: #fff;">
+<body class="text-center" style="color: #fff;">
 	<div class="d-flex w-100 h-100 flex-column">
 		<header th:include="layout :: frag_body"></header>
 		<main role="main" class="mb-auto mt-auto" style="color: #011627;">
@@ -43,7 +42,7 @@
 
 				<div class="form-group">
 					<label for="userAddresseeId">送り先のID</label> <input type="number"
-						class="form-control text-left" name="userAddresseeId"
+						min="1" class="form-control text-left" name="userAddresseeId"
 						th:value="*{userAddresseeId}" /> <small
 						th:if="${#fields.hasErrors('userAddresseeId')}"
 						th:errors="*{userAddresseeId}" class="err"></small>
@@ -55,7 +54,8 @@
 						th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}"
 						class="err"></small>
 				</div>
-				<button type="submit" class="btn" style="background-color: #011627; color: white;">更新</button>
+				<button type="submit" class="btn"
+					style="background-color: #011627; color: white;">更新</button>
 				<a th:href="@{/requestedTask}" class="btn btn-secondary btn-md ml-2"
 					role="button" aria-pressed="true" style="background: white;">戻る</a>
 			</form>
