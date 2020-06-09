@@ -1,13 +1,16 @@
-pipeline{
-
-	agent any
-	
-	stages{
-		stage('TaskManagementApp'){
-			steps {
-			withGradle(gradle : 'Gradle3.0')
-			}
-			
-		}
-	}
+pipeline {
+  agent {
+    node {
+      label 'test'
+    }
+    
+  }
+  stages {
+    stage('test') {
+      steps {
+        sh '''#!/bin/sh
+echo "Hello, World!"'''
+      }
+    }
+  }
 }
