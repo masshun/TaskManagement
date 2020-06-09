@@ -1,4 +1,4 @@
-pipelineJob('pipelineJob'){
+TaskManagementApp('TaskManagementApp'){
 	definition{
 		cps{
 			script(readFileFromworkspace('TaskManagementApp.groovy'))
