@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,13 +63,13 @@ public class AccountFormTest {
 	}
 
 	@ParameterizedTest
-	@NullAndEmptySource
-	void passwordの空文字及びnull(String input) {
+	@EmptySource
+	void passwordの空文字(String input) {
 		accountForm.setUsername("hoge");
 		accountForm.setEmail("email@email.com");
 		accountForm.setPassword(input);
 		validator.validate(accountForm, bindingResult);
-		assertEquals("必須項目です", bindingResult.getFieldError().getDefaultMessage());
+		assertEquals("8文字以上255文字以内で入力してください", bindingResult.getFieldError().getDefaultMessage());
 	}
 
 	@ParameterizedTest
@@ -111,12 +112,12 @@ public class AccountFormTest {
 	}
 
 	@ParameterizedTest
-	@NullAndEmptySource
-	void メールアドレスの空文字及びnull(String input) {
+	@EmptySource
+	void メールアドレスの空文字(String input) {
 		accountForm.setUsername("hoge");
 		accountForm.setPassword("password");
 		accountForm.setEmail(input);
 		validator.validate(accountForm, bindingResult);
-		assertEquals("必須項目です", bindingResult.getFieldError().getDefaultMessage());
+		assertEquals("正しいメールアドレスを入力してください", bindingResult.getFieldError().getDefaultMessage());
 	}
 }
