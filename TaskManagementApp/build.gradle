@@ -4,10 +4,19 @@ plugins {
 	id 'java'
 }
 
-jar {
-   baseName = 'TaskManagementApp'
-   version = '0.0.1-SNAPSHOT'
+pipleline{
+	agent any
+	stage("run backend"){
+		steps{
+			echo 'executing gradle...'
+			withGradle(){
+				sh './gradlew -v'
+			}
+		}
+	}
+
 }
+
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
