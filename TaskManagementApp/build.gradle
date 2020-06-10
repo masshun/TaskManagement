@@ -4,20 +4,6 @@ plugins {
 	id 'java'
 }
 
-pipeline{
-	agent any
-	stage("run backend"){
-		steps{
-			echo 'executing gradle...'
-			withGradle(){
-				sh './gradlew -v'
-			}
-		}
-	}
-
-}
-
-
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
