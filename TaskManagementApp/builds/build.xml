@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <target name="test" depends="compile-test" description="JUnit のテストを実行します">
+    <mkdir dir="${test.report.dir}" />
+
+    <junit>
+      <classpath location="${classes.dir}" />
+      <classpath refid="runtime.classpath" />
+      <classpath refid="test.classpath" />
+      <test name="${test.class}" todir="${test.report.dir}" />
+      <formatter type="xml" extension=".xml" /> <!-- type を xml に変更 -->
+    </junit>
+  </target>
