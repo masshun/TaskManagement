@@ -15,4 +15,9 @@
    <target name="init">
     	<echo message="Hello World"/>
     </target>
+     <target name="compile" depends="init">
+        <javac srcdir="${srcdir}" 
+        	destdir="${destdir}" 
+        	includeAntRuntime="false"/>
+    </target>
 </project>
