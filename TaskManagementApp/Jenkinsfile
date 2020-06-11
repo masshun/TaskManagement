@@ -1,26 +1,33 @@
-pipeline{
-	agent any
+node {
+  stage('Checkout') {
+    git branch: 'master', url: 'https://github.com/masshun/TaskManagement.git'
+  }
 
-    triggers {
-        pollSCM('*/5 * * * *')
+  stage('Build') {
+    dir('./Modules') {
+      gradle('clean')
+      gradle('compileTestGroovy')
     }
+  }
 
-    stages {
-        stage('Compile') {
-            steps {
-                gradlew('clean', 'classes')
-            }
-        }
-        stage('Unit Tests') {
-            steps {
-                gradlew('test')
-            }
-            post {
-                always {
-                    junit '**/build/test-results/test/TEST-*.xml'
-                }
-            }
-        }
+  stage('UnitTest') {
+    dir('./Modules') {
+      gradle('test')
+      junit '/build/test-results/**/TEST-*.xml'
     }
+  }
+
+  stage('IntegrationTest') {
+    stage('CodeTableDownload') {
+      dir('./SoapUi') {
+        bat 'AutoRun.bat'
+        junit '/results/**/*-JUNIT.xml'
+      }
+    }
+  }
+}
+
+def gradle(command) {
+  bat "./gradlew.bat $command"
 
 }
