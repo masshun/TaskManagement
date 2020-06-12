@@ -26,8 +26,16 @@ configurations {
 	}
 }
 
+ 
+jar {
+    manifest {
+        attributes('Main-Class': 'Application')
+    }
+}
+
 repositories {
 	mavenCentral()
+	 jcenter()
 }
 
 dependencies {
