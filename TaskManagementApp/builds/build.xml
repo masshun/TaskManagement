@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir=".">
-<!-- 
+ 
   <target name="test" depends="compile-test" description="JUnit のテストを実行します">
     <mkdir dir="${test.report.dir}" />
     <junit haltonfailure="false" printsummary="true">
@@ -11,13 +11,17 @@
       <formatter type="xml" extension=".xml" /> 
     </junit>
   </target>
-   -->
-   <target name="init">
+   
+   
+   <property name="srcdir"	value="./src/main/java" />
+	<property name="destdir" value="./bin/test1" />
+	
+ <!--   <target name="init">
     	<echo message="Hello World"/>
     </target>
      <target name="compile" depends="init">
         <javac srcdir="${srcdir}" 
         	destdir="${destdir}" 
         	includeAntRuntime="false"/>
-    </target>
+    </target> -->
 </project>
