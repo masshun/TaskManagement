@@ -13,7 +13,7 @@
 		<echo message="Hello World" />
 	</target>
 
-	<target name="test" depends="compile"
+	<target name="test" 
 		description="test the source ">
 		<!-- JUnitによるテストを実行 -->
 		<junit fork="yes" haltonfailure="yes">
