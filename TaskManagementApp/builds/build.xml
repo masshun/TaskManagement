@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir=".">
 	<property name="srcdir" value="./src/main/java" />
-
+	<property name="destdir" value=".//test1" />
 	<property name="test.class.name" value="./test/main" />
     <path id="test.classpath">
         <pathelement location="${build}" />
@@ -12,8 +12,11 @@
 	<target name="init">
 		<echo message="Hello World" />
 	</target>
-
-	<target name="test" 
+	<target name="compile" depends="init">
+		<javac srcdir="${srcdir}"
+			includeAntRuntime="false" />
+	</target>
+	<target name="test" depends="compile"
 		description="test the source ">
 		<!-- JUnitによるテストを実行 -->
 		<junit fork="yes" haltonfailure="yes">
