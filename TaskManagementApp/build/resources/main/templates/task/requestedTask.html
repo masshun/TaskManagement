@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: frag_head">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body class="text-center"
+	style="color: #fff;">
+	<div class="d-flex w-100 h-100 m-auto flex-column">
+		<header th:include="layout :: frag_body"></header>
+		<main role="main" class="mt-auto mb-auto">
+			<h1 class="pt-4" style="color: #011627;">
+				頼みごと一覧
+				<button type="button" class="btn border-white ml-2 rounded-pill"
+					data-toggle="collapse" data-target="#collapseExample"
+					aria-expanded="false" aria-controls="collapseExample"
+					style="color: white;">
+					▼<i class="pl-2 fas fa-lg fa-search"></i>
+				</button>
+			</h1>
+			<div style="" class="collapse" id="collapseExample">
+				<div class="card border-0 card-body mx-auto"
+					style="background: #bac2c6; color: black; width: 50%;">
+					<form method="get" th:action="@{/searchRequestedTask}">
+						<input placeholder="頼みごとのタイトル" type="text" name="param"
+							class="form-control">
+						<button class="btn mt-2"
+							style="background-color: #011627; color: white;" type="submit">検索</button>
+					</form>
+				</div>
+			</div>
+
+			<div class="container">
+				<div class="row pb-5">
+					<div class="col-lg-6 mt-5">
+						<div class="card" style="background-color: #E71D36;">
+							<h5 class="card-header">完了していないこと</h5>
+							<div class="card-body" style="color: #011627;">
+								<div class="col-sm-12">
+									<th:block th:if="${notExecutedTask.empty}">
+										<div class="card card-body mb-3" style="color: #011627;">
+											<h5 class="card-title">これから取り組む頼みごとはありません</h5>
+										</div>
+									</th:block>
+									<div th:each="obj : ${notExecutedTask}"
+										class="text-truncate card linkbox card-body mb-3 text-left"
+										style="">
+										<h5 class="pb-2">
+											<i th:if="${obj.label} eq 'green'" style="color: green;"
+												class="fas fa-tags pr-2"></i><i
+												th:if="${obj.label} eq 'red'" style="color: red;"
+												class="fas fa-tags pr-2"></i><i
+												th:if="${obj.label} eq 'blue'" style="color: blue;"
+												class="fas fa-tags pr-2"></i><span
+												class="card-title text-left font-weight-bold"
+												th:text="${obj.title}"></span>
+										</h5>
+
+										<div class="card-text">
+											<p>
+												<i class="far fa-clipboard fa-lg pr-2"></i><span
+													th:text="${obj.content}"></span>
+											</p>
+											<p class="h6 text-right">
+												<i class="far fa-address-book pr-1"></i> <span
+													th:each="addressee : ${obj.addressee}"
+													th:text="${addressee.name}" class="pr-2"></span> <i
+													class="far fa-clock pr-2"></i><span
+													th:text="${#dates.format(obj.deadline, 'yyyy-MM-dd HH:mm')}"></span>
+											</p>
+											<a href="#"
+												th:href="@{/readRequestedTask/{id}(id=${obj.id})}"
+												role="button" aria-pressed="true"></a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card-footer">
+								<div th:unless="${notExecutedTask.empty}">
+									<ul class="pagination justify-content-center">
+
+										<li class="page-item"
+											th:classappend="${notExecTaskPage.firstPage}?'disabled':''"
+											style="display: inline"><span class="page-link"
+											th:if='${notExecTaskPage.firstPage}'>←先頭</span> <a
+											class="page-link" th:if='${not notExecTaskPage.firstPage}'
+											th:href='@{/requestedTask(page=1)}'>←先頭</a></li>
+
+										<li class="page-item"
+											th:classappend="${notExecTaskPage.hasPreviousPage}? '' : 'disabled'"
+											style="display: inline"><span class="page-link"
+											th:if='${not notExecTaskPage.hasPreviousPage}'>&laquo;</span>
+											<a th:if='${notExecTaskPage.hasPreviousPage}'
+											class="page-link"
+											th:href='@{/requestedTask(page=${notExecTaskPage.number-1})}'>«</a>
+										</li>
+
+										<li class="page-item"
+											th:each='item : ${notExecTaskPage.items}'
+											th:classappend="${item.current}? 'active' : ''"
+											style="display: inline"><span th:if='${item.current}'
+											class="page-link" th:text='${item.number}'>1</span> <a
+											th:if='${not item.current}' class="page-link"
+											th:href='@{/requestedTask(page=${item.number})}'> <span
+												th:text='${item.number}'></span>
+										</a></li>
+
+										<li class="page-item"
+											th:classappend="${notExecTaskPage.hasNextPage}? '' : 'disabled'"
+											style="display: inline"><span class="page-link"
+											th:if='${not notExecTaskPage.hasNextPage}'>&raquo</span> <a
+											th:if='${notExecTaskPage.hasNextPage}' class="page-link"
+											th:href='@{/requestedTask(page=${notExecTaskPage.number +1})}'>»</a>
+										</li>
+
+										<li class="page-item"
+											th:classappend="${notExecTaskPage.lastPage}? 'disabled' : ''"
+											style="display: inline"><span class="page-link"
+											th:if='${notExecTaskPage.lastPage}'>末尾➝</span> <a
+											th:if='${not notExecTaskPage.lastPage}' class="page-link"
+											th:href='@{/requestedTask(page=${notExecTaskPage.totalPages})}'>末尾➝</a>
+										</li>
+
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-6 mt-5">
+						<div class="card" style="background-color: #0080ff;">
+							<h5 class="card-header">完了したこと</h5>
+							<div class="card-body" style="color: #011627;">
+								<div class="col-sm-12">
+
+									<th:block th:if="${completedTask.empty}">
+										<div class="card card-body mb-3" style="color: #011627;">
+											<h5 th:text="完了した頼みごとはありません" class="card-title"></h5>
+										</div>
+									</th:block>
+
+									<div th:each="obj : ${completedTask}"
+										class="text-truncate card linkbox card-body mb-3 text-left"
+										style="">
+										<h5 class="pb-2">
+											<i th:if="${obj.label} eq 'green'" style="color: green;"
+												class="fas fa-tags pr-2"></i><i
+												th:if="${obj.label} eq 'red'" style="color: red;"
+												class="fas fa-tags pr-2"></i><i
+												th:if="${obj.label} eq 'blue'" style="color: blue;"
+												class="fas fa-tags pr-2"></i><span
+												class="card-title text-left font-weight-bold"
+												th:text="${obj.title}"></span>
+										</h5>
+
+										<div class="card-text">
+											<p>
+												<i class="far fa-clipboard fa-lg pr-2"></i><span
+													th:text="${obj.content}"></span>
+											</p>
+											<p class="h6 text-right">
+												<i class="far fa-address-book pr-1"></i> <span
+													th:each="addressee : ${obj.addressee}"
+													th:text="${addressee.name}" class="pr-2"></span> <i
+													class="far fa-clock pr-2"></i><span
+													th:text="${#dates.format(obj.deadline, 'yyyy-MM-dd HH:mm')}"></span>
+											</p>
+											<a href="#"
+												th:href="@{/readRequestedTask/{id}(id=${obj.id})}"
+												role="button" aria-pressed="true"></a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card-footer">
+								<div th:unless="${completedTask.empty}">
+									<ul class="pagination justify-content-center">
+
+										<li class="page-item"
+											th:classappend="${completedTaskPage.firstPage}?'disabled':''"
+											style="display: inline"><span class="page-link"
+											th:if='${completedTaskPage.firstPage}'>←先頭</span> <a
+											class="page-link" th:if='${not completedTaskPage.firstPage}'
+											th:href='@{/requestedTask(page=1)}'>←先頭</a></li>
+
+										<li class="page-item"
+											th:classappend="${completedTaskPage.hasPreviousPage}? '' : 'disabled'"
+											style="display: inline"><span class="page-link"
+											th:if='${not completedTaskPage.hasPreviousPage}'>&laquo;</span>
+											<a th:if='${completedTaskPage.hasPreviousPage}'
+											class="page-link"
+											th:href='@{/requestedTask(page=${completedTaskPage.number-1})}'>«</a>
+										</li>
+
+										<li class="page-item"
+											th:each='item : ${completedTaskPage.items}'
+											th:classappend="${item.current}? 'active' : ''"
+											style="display: inline"><span th:if='${item.current}'
+											class="page-link" th:text='${item.number}'>1</span> <a
+											th:if='${not item.current}' class="page-link"
+											th:href='@{/requestedTask(page=${item.number})}'> <span
+												th:text='${item.number}'></span>
+										</a></li>
+
+										<li class="page-item"
+											th:classappend="${completedTaskPage.hasNextPage}? '' : 'disabled'"
+											style="display: inline"><span class="page-link"
+											th:if='${not completedTaskPage.hasNextPage}'>&raquo</span> <a
+											th:if='${ncompletedTaskPage.hasNextPage}' class="page-link"
+											th:href='@{/requestedTask(page=${completedTaskPage.number +1})}'>»</a>
+										</li>
+
+										<li class="page-item"
+											th:classappend="${completedTaskPage.lastPage}? 'disabled' : ''"
+											style="display: inline"><span class="page-link"
+											th:if='${completedTaskPage.lastPage}'>末尾➝</span> <a
+											th:if='${not completedTaskPage.lastPage}' class="page-link"
+											th:href='@{/requestedTask(page=${completedTaskPage.totalPages})}'>末尾➝</a>
+										</li>
+
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div>
+			<a class="h3 cp_link" style="text-decoration: none; color: #011627;" th:href="@{/receivedTask}">頼まれたこと一覧へ　<i class="fas fa-arrow-right"></i></a>
+			</div>
+		</main>
+		<footer th:include="layout :: frag_footer"></footer>
+
+	</div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: frag_head">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body class="text-center"
+	style="color: #fff;">
+	<div class="d-flex w-100 h-100 mx-auto flex-column">
+		<header th:include="layout :: frag_body"></header>
+		<main role="main" class="mb-auto mt-auto">
+			<h1 style="color: #011627;">頼みごとの詳細</h1>
+
+			<div class="container">
+				<div class="row">
+					<div class="col mt-5">
+						<div class="card"
+							th:style="${taskForm.status} eq '未完' ? 'background-color: #E71D36;' : 'background-color: #0080ff;'">
+							<h2 class="card-header"
+								th:text="${taskForm.status} eq '未完' ? 'これから取り組むこと' : '完了したこと'"></h2>
+							<div class="card-body" style="color: #011627;">
+								<div class="col">
+									<div class="card card-body mb-3">
+										<h2 class="pb-4">
+											<i th:if="${taskForm.label} eq 'green'" style="color: green;"
+												class="fas fa-tags pr-2"></i><i
+												th:if="${taskForm.label} eq 'red'" style="color: red;"
+												class="fas fa-tags pr-2"></i><i
+												th:if="${taskForm.label} eq 'blue'" style="color: blue;"
+												class="fas fa-tags pr-2"></i><span
+												class="card-title font-weight-bold"
+												th:text="${taskForm.title}"></span>
+										</h2>
+										<div class="card-text">
+											<h4>
+												<i class="far fa-clipboard fa-lg pr-2 pb-4"></i><span
+													th:text="${taskForm.content}"></span>
+											</h4>
+											<h4>
+												<i class="far fa-address-book fa-lg pr-2"></i><span
+													th:text="${addressee}" class="pr-5"></span><i
+													class="far fa-lg fa-clock pr-2"></i><span
+													th:text="${taskForm.deadline}"></span>
+											</h4>
+											<div class="mt-3">
+												<a href="#" th:href="@{/edit/{id}(id=${taskForm.id})}"
+													class="btn mr-3" role="button" aria-pressed="true"
+													style="background-color: #011627; color: white;">編集</a><a
+													href="#" th:href="@{/requestedTask}" class="btn"
+													style="background-color: silver; color: #011627;"
+													role="button" aria-pressed="true">戻る</a>
+												<form class="ml-2" style="display: inline;" method="post"
+													th:action="@{/delete/{id}(id=${taskForm.id})}"
+													onSubmit="return check()">
+													<button class="btn btn-danger" type="submit">削除</button>
+												</form>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		<footer th:include="layout :: frag_footer"></footer>
+	</div>
+</body>
+</html>

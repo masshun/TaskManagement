@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserInfoController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TaskManagementApp</a> &gt; <a href="index.source.html" class="el_package">com.example.demo.controller</a> &gt; <span class="el_source">UserInfoController.java</span></div><h1>UserInfoController.java</h1><pre class="source lang-java linenums">package com.example.demo.controller;
+
+import java.security.Principal;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.demo.repository.UserDetailsImpl;
+import com.example.demo.service.userService.GetUserInfoService;
+import com.example.demo.service.userService.UserDetailsServiceImpl;
+
+@Controller
+@RequestMapping(&quot;/userInfo&quot;)
+<span class="fc" id="L17">public class UserInfoController {</span>
+
+	@Autowired
+	GetUserInfoService user;
+
+	@Autowired
+	UserDetailsServiceImpl userImpl;
+
+	@GetMapping
+	public String getUserInfo(Model model, Principal p) {
+
+<span class="nc" id="L28">		String username = p.getName();</span>
+<span class="nc" id="L29">		UserDetailsImpl account = userImpl.loadUserByUsername(username);</span>
+<span class="nc" id="L30">		String email = account.getEmail();</span>
+<span class="nc" id="L31">		int userId = account.getUserId();</span>
+
+<span class="nc" id="L33">		model.addAttribute(&quot;email&quot;, email);</span>
+<span class="nc" id="L34">		model.addAttribute(&quot;userId&quot;, userId);</span>
+<span class="nc" id="L35">		return &quot;auth/userInfo&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

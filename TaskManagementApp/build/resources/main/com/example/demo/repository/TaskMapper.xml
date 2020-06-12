@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.repository.TaskMapper">
+	<resultMap id="BaseResultMap"
+		type="com.example.demo.domain.Task">
+		<id column="id" property="id" />
+		<result column="user_id" property="userId" />
+		<result column="user_addressee_id" property="userAddresseeId" />
+	</resultMap>
+
+	<resultMap id="FindOneResultMap"
+		type="com.example.demo.domain.TaskForm">
+		<id column="id" property="id" />
+		<result column="user_id" property="userId" />
+		<result column="user_addressee_id" property="userAddresseeId" />
+	</resultMap>
+
+	<select id="selectTaskCount" resultType="long"
+		parameterType="string">
+		select count(*) from task
+	</select>
+	<select id="findAll" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM task
+	</select>
+
+	<select id="findOne" resultMap="FindOneResultMap">
+		SELECT
+		*
+		FROM task
+		WHERE task.id =
+		#{id}
+	</select>
+
+	<select id="findAllById" resultMap="task">
+		SELECT
+		task.*,
+		user.username,
+		user_addressee.name
+		FROM
+		task,
+		user,
+		user_addressee
+
+		WHERE
+		task.user_id = user.id
+		AND task.user_addressee_id =
+		user_addressee.id
+		
+			<if test="userId > 0">
+				AND task.user_addressee_id = #{userId}
+			</if>
+			<if test="userAddresseeId > 0">
+				AND task.user_id = #{userAddresseeId}
+			</if>
+			<if test="param != null">
+				AND task.title LIKE CONCAT('%', #{param}, '%')
+			</if>
+	
+		ORDER BY
+		task.deadline ASC
+	</select>
+	<resultMap id="task" type="com.example.demo.domain.Task">
+		<id column="id" property="id" />
+		<result column="title" property="title" />
+		<result column="user_id" property="userId" />
+		<result column="content" property="content" />
+		<result column="label" property="label" />
+		<result column="user_addressee_id" property="userAddresseeId" />
+		<result column="deadline" property="deadline" />
+		<result column="status" property="status" />
+		<collection property="account"
+			ofType="com.example.demo.domain.Account">
+			<result column="username" property="username" />
+		</collection>
+		<collection property="addressee"
+			ofType="com.example.demo.domain.Addressee">
+			<result column="name" property="name" />
+		</collection>
+	</resultMap>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id">
+		INSERT
+		INTO
+		task
+		(title, user_id, content, label, deadline, user_addressee_id,
+		status)
+		VALUES
+		(#{title},
+		#{userId},
+		#{content},
+		#{label},
+		#{deadline},
+		#{userAddresseeId},
+		#{status}
+		)
+	</insert>
+
+	<update id="update">
+		UPDATE
+		task
+		SET
+		id = #{id}, user_id = #{userId}, title =
+		#{title}, content
+		= #{content}, label = #{label}, deadline =
+		#{deadline}, user_addressee_id =
+		#{userAddresseeId},
+		status = #{status}
+		WHERE
+		id = #{id}
+	</update>
+
+	<update id="updateCompleted">
+		UPDATE
+		task
+		SET
+		id = #{id},
+		status =
+		#{status}
+		WHERE
+		id =
+		#{id}
+	</update>
+
+	<delete id="delete">
+		DELETE
+		FROM
+		task
+		WHERE
+		id = #{id}
+	</delete>
+</mapper>

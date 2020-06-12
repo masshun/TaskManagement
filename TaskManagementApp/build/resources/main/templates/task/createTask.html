@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: frag_head">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body class="text-center">
+	<div class="d-flex w-100 h-100 flex-column">
+		<header th:include="layout :: frag_body"></header>
+		<main role="main" class="mt-auto mb-auto" style="color: #011627;">
+			<h1>頼みごとの登録</h1>
+			<br /> <br />
+			<form class="form-signin was-validated mx-auto pr-5 pl-5"
+				method="post" action="#" th:action="@{/create}"
+				style="max-width: 47%;" th:object="${taskForm}">
+
+				<div class="form-group">
+					<label class="h5" for="title">タイトル</label> <input id="title"
+						type="text" class="form-control text-left" name="title"
+						th:value="${title}"
+						th:required="${#fields.hasErrors('title')} ? required" /> <small
+						th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+						class="err"></small>
+				</div>
+				<div class="form-group">
+					<label class="h5" for="content">内容</label> <input id="content"
+						type="text" class="form-control text-left" name="content"
+						th:value="${content}"
+						th:required="${#fields.hasErrors('content')} ? required" /> <small
+						th:if="${#fields.hasErrors('content')}" th:errors="*{content}"
+						class="err"></small>
+				</div>
+				<div class="form-group">
+					<label class="h5" for="exampleFormControlSelect1">ラベル</label> <select
+						onchange="changeItem(this)" class="form-control"
+						id="exampleFormControlSelect1" name="label">
+						<option th:each="item : ${selectLabel}" th:value="${item.value}"
+							th:text="${item.key}" th:selected="${item.value} eq 'red'">hoge</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label class="h5" for="userAddresseeId">頼みたいユーザーのID</label> <input
+						id="userAddresseeId" type="number" min="1" class="form-control text-left"
+						name="userAddresseeId" th:value="${userAddresseeId}" th:required="${#fields.hasErrors('userAddresseeId')} ? required" /> <small
+						th:if="${#fields.hasErrors('userAddresseeId')}"
+						th:errors="*{userAddresseeId}" class="err"></small>
+				</div>
+				<div class="form-group">
+					<label class="h5" for="deadline">期限</label> <input id="deadline"
+						type="datetime-local" class="form-control" name="deadline"
+						th:value="${deadline}" th:required="${#fields.hasErrors('deadline')} ? required" /> <small
+						th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}"
+						class="err"></small>
+				</div>
+				<input type="hidden" name="userId" th:value="${userId}">
+				<div class="mb-3">
+					<button type="submit" class="btn"
+						style="background-color: #011627; color: white;">登録</button>
+					<a href="/" class="btn btn-md ml-2"
+						style="background: white;" role="button"
+						aria-pressed="true">戻る</a>
+				</div>
+			</form>
+		</main>
+		<footer th:include="layout :: frag_footer"></footer>
+	</div>
+</body>
+</html>

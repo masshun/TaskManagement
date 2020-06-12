@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PageWrapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TaskManagementApp</a> &gt; <a href="index.source.html" class="el_package">com.example.demo.domain.object</a> &gt; <span class="el_source">PageWrapper.java</span></div><h1>PageWrapper.java</h1><pre class="source lang-java linenums">package com.example.demo.domain.object;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+
+public class PageWrapper&lt;T&gt; {
+	public static final int MAX_PAGE_ITEM_DISPLAY = 5;
+	private Page&lt;T&gt; page;
+	private List&lt;PageItem&gt; items;
+	private int currentNumber;
+
+<span class="nc" id="L14">	public PageWrapper(Page&lt;T&gt; page) {</span>
+<span class="nc" id="L15">		this.page = page;</span>
+
+<span class="nc" id="L17">		items = new ArrayList&lt;PageItem&gt;();</span>
+
+<span class="nc" id="L19">		currentNumber = page.getNumber() + 1;</span>
+
+		int start, size;
+<span class="nc bnc" id="L22" title="All 2 branches missed.">		if (page.getTotalPages() &lt;= MAX_PAGE_ITEM_DISPLAY) {</span>
+<span class="nc" id="L23">			start = 1;</span>
+<span class="nc" id="L24">			size = page.getTotalPages();</span>
+		} else {
+<span class="nc bnc" id="L26" title="All 2 branches missed.">			if (currentNumber &lt;= MAX_PAGE_ITEM_DISPLAY - MAX_PAGE_ITEM_DISPLAY / 2) {</span>
+<span class="nc" id="L27">				start = 1;</span>
+<span class="nc" id="L28">				size = MAX_PAGE_ITEM_DISPLAY;</span>
+<span class="nc bnc" id="L29" title="All 2 branches missed.">			} else if (currentNumber &gt;= page.getTotalPages() - MAX_PAGE_ITEM_DISPLAY / 2) {</span>
+<span class="nc" id="L30">				start = page.getTotalPages() - MAX_PAGE_ITEM_DISPLAY + 1;</span>
+<span class="nc" id="L31">				size = MAX_PAGE_ITEM_DISPLAY;</span>
+			} else {
+<span class="nc" id="L33">				start = currentNumber - MAX_PAGE_ITEM_DISPLAY / 2;</span>
+<span class="nc" id="L34">				size = MAX_PAGE_ITEM_DISPLAY;</span>
+			}
+		}
+
+<span class="nc bnc" id="L38" title="All 2 branches missed.">		for (int i = 0; i &lt; size; i++) {</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">			items.add(new PageItem(start + i, (start + i) == currentNumber));</span>
+		}
+<span class="nc" id="L41">	}</span>
+
+	public List&lt;PageItem&gt; getItems() {
+<span class="nc" id="L44">		return items;</span>
+	}
+
+	public int getNumber() {
+<span class="nc" id="L48">		return currentNumber;</span>
+	}
+
+	public List&lt;T&gt; getContent() {
+<span class="nc" id="L52">		return page.getContent();</span>
+	}
+
+	public int getSize() {
+<span class="nc" id="L56">		return page.getSize();</span>
+	}
+
+	public int getTotalPages() {
+<span class="nc" id="L60">		return page.getTotalPages();</span>
+	}
+
+	public boolean isFirstPage() {
+<span class="nc" id="L64">		return page.isFirst();</span>
+	}
+
+	public boolean isLastPage() {
+<span class="nc" id="L68">		return page.isLast();</span>
+	}
+
+	public boolean isHasPreviousPage() {
+<span class="nc" id="L72">		return page.hasPrevious();</span>
+	}
+
+	public boolean isHasNextPage() {
+<span class="nc" id="L76">		return page.hasNext();</span>
+	}
+
+	public class PageItem {
+		private int number;
+		private boolean current;
+
+<span class="nc" id="L83">		public PageItem(int number, boolean current) {</span>
+<span class="nc" id="L84">			this.number = number;</span>
+<span class="nc" id="L85">			this.current = current;</span>
+<span class="nc" id="L86">		}</span>
+
+		public int getNumber() {
+<span class="nc" id="L89">			return this.number;</span>
+		}
+
+		public boolean isCurrent() {
+<span class="nc" id="L93">			return this.current;</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

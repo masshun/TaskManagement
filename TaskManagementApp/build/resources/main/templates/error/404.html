@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: frag_head">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body class="text-center">
+	<div class="d-flex w-100 h-100 flex-column">
+
+		<main role="main" class="mt-auto mb-auto" style="color: #011627;">
+			<h2 th:text="${status} + '　' + ${error}"></h2>
+			<h2>ページが存在しません</h2>
+			<a href="#"
+				th:href="@{/}" class="btn mt-3"
+				style="background: white; color: #011627;" role="button"
+				aria-pressed="true">戻る</a>
+		</main>
+		<footer th:include="layout :: frag_footer"></footer>
+
+	</div>
+</body>
+</html>

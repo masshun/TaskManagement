@@ -1,0 +1,20 @@
+com/example/demo/controller/SignupControllerTest.java
+ com.example.demo.controller.SignupControllerTest
+com/example/demo/repository/AccountMapperTest.java
+ com.example.demo.repository.AccountMapperTest
+com/example/demo/domain/TaskFormTest.java
+ com.example.demo.domain.TaskFormTest
+com/example/demo/TaskManagementAppApplicationTests.java
+ com.example.demo.TaskManagementAppApplicationTests
+com/example/demo/controller/LoginAndLogoutControllerTest.java
+ com.example.demo.controller.LoginAndLogoutControllerTest
+com/example/demo/service/JavaMailSenderTest.java
+ com.example.demo.service.JavaMailSenderTest
+ com.example.demo.service.JavaMailSenderTest$1
+com/example/demo/repository/TaskMapperTest.java
+ com.example.demo.repository.TaskMapperTest
+com/example/demo/domain/AccountFormTest.java
+ com.example.demo.domain.AccountFormTest
+com/example/demo/controller/TaskControllerTest.java
+ com.example.demo.controller.Task
+ com.example.demo.controller.TaskControllerTest

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Page.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TaskManagementApp</a> &gt; <a href="index.source.html" class="el_package">com.example.demo.domain.object</a> &gt; <span class="el_source">Page.java</span></div><h1>Page.java</h1><pre class="source lang-java linenums">package com.example.demo.domain.object;
+
+import java.util.Collections;
+import java.util.List;
+
+public class Page&lt;T&gt; {
+
+	private List&lt;T&gt; list;
+
+<span class="nc" id="L10">	private int pageSize = 0;</span>
+
+<span class="nc" id="L12">	private int currentPage = 0;</span>
+
+<span class="nc" id="L14">	private int totalPages = 0;</span>
+
+<span class="nc" id="L16">	public Page(List&lt;T&gt; list, int pageSize, int currentPage) {</span>
+
+<span class="nc bnc" id="L18" title="All 2 branches missed.">		if (list.isEmpty()) {</span>
+<span class="nc" id="L19">			this.list = list;</span>
+		}
+
+<span class="nc bnc" id="L22" title="All 6 branches missed.">		if (pageSize &lt;= 0 || pageSize &gt; list.size() || currentPage &lt;= 0) {</span>
+<span class="nc" id="L23">			throw new IllegalArgumentException(&quot;invalid page size or current page!&quot;);</span>
+		}
+
+<span class="nc" id="L26">		this.pageSize = pageSize;</span>
+
+<span class="nc" id="L28">		this.currentPage = currentPage;</span>
+
+<span class="nc bnc" id="L30" title="All 2 branches missed.">		if (list.size() % pageSize == 0) {</span>
+<span class="nc" id="L31">			this.totalPages = list.size() / pageSize;</span>
+		} else {
+<span class="nc" id="L33">			this.totalPages = list.size() / pageSize + 1;</span>
+		}
+
+<span class="nc" id="L36">		int startItem = (currentPage - 1) * pageSize;</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">		if (list.size() &lt; startItem) {</span>
+<span class="nc" id="L38">			this.list = Collections.emptyList();</span>
+		}
+
+<span class="nc" id="L41">		int toIndex = Math.min(startItem + pageSize, list.size());</span>
+<span class="nc" id="L42">		this.list = list.subList(startItem, toIndex);</span>
+<span class="nc" id="L43">	}</span>
+
+	public List&lt;T&gt; getList() {
+<span class="nc" id="L46">		return list;</span>
+	}
+
+	public int getPageSize() {
+<span class="nc" id="L50">		return pageSize;</span>
+	}
+
+	public int getCurrentPage() {
+<span class="nc" id="L54">		return currentPage;</span>
+	}
+
+	public int getTotalPages() {
+<span class="nc" id="L58">		return totalPages;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

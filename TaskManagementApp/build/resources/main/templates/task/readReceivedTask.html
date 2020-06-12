@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: frag_head">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body class="text-center"
+	style="color: #fff;">
+	<div class="d-flex w-100 h-100 mx-auto flex-column">
+		<header th:include="layout :: frag_body"></header>
+		<main role="main" class="mb-auto mt-auto">
+			<h1 style="color: #011627;">詳細</h1>
+			<div class="container">
+				<div class="row">
+					<div class="col mt-5">
+						<div class="card" style="background-color: #E71D36;">
+							<h2 class="card-header">これから取り組むこと</h2>
+							<div class="card-body" style="color: #011627;">
+								<div class="col">
+									<div class="card card-body mb-3">
+										<h2 class="pb-4">
+											<i th:if="${task.label} eq 'green'" style="color: green;"
+												class="fas fa-tags pr-2"></i><i
+												th:if="${task.label} eq 'red'" style="color: red;"
+												class="fas fa-tags pr-2"></i><i
+												th:if="${task.label} eq 'blue'" style="color: blue;"
+												class="fas fa-tags pr-2"></i><span
+												class="card-title font-weight-bold" th:text="${task.title}"></span>
+										</h2>
+										<div class="card-text">
+											<h4>
+												<i class="far fa-clipboard fa-lg pr-2 pb-4"></i><span
+													th:text="${task.content}"></span>
+											</h4>
+											<h4>
+												<i class="fas fa-user-edit fa-lg pr-2"></i><span
+													th:text="${sender}" class="pr-5"></span><i
+													class="far fa-lg fa-clock pr-2"></i><span
+													th:text="${task.deadline}"></span>
+											</h4>
+											<form class="form-group form-control-lg mb-5" method="post"
+												th:object="${task}"
+												th:action="@{/readTask/{id}(id=${task.id})}">
+												<div class="form-check-inline pt-2"
+													th:each="item : ${status}" th:object="${status}">
+													<label> <input class="form-check-input"
+														style="width: 1.1em; height: 1.1em;" id="customRadio"
+														type="radio" name="status" th:text="${item.key}"
+														th:value="${item.value}" th:checked="${item.key == '未完'}">
+													</label>
+												</div>
+												<div>
+													<input type="hidden" name="userId"
+														th:value="${task.userId}"> <input type="hidden"
+														name="title" th:value="${task.title}">
+													<button type="submit" class="btn mr-3"
+														style="background-color: #011627; color: white;">更新</button>
+													<a href="#" th:href="@{/receivedTask}" class="btn"
+														style="background-color: silver; color: #011627;"
+														role="button" aria-pressed="true">戻る</a>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		<footer th:include="layout :: frag_footer"></footer>
+	</div>
+</body>
+</html>

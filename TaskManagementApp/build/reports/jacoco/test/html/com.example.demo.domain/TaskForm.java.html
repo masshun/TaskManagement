@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TaskForm.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TaskManagementApp</a> &gt; <a href="index.source.html" class="el_package">com.example.demo.domain</a> &gt; <span class="el_source">TaskForm.java</span></div><h1>TaskForm.java</h1><pre class="source lang-java linenums">package com.example.demo.domain;
+
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+
+import lombok.Data;
+
+<span class="pc bnc" id="L18" title="All 52 branches missed.">@Data</span>
+public class TaskForm implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+<span class="fc" id="L23">	private int id;</span>
+<span class="fc" id="L24">	private int userId;</span>
+	@NotEmpty(message = &quot;必須項目です&quot;)
+	@Size(max = 50, message = &quot;1文字以上50文字以内で入力してください&quot;)
+<span class="fc" id="L27">	private String title;</span>
+	@NotEmpty(message = &quot;必須項目です&quot;)
+	@Size(max = 255, message = &quot;1文字以上255文字以内で入力してください&quot;)
+<span class="fc" id="L30">	private String content;</span>
+	@NotEmpty(message = &quot;必須項目です&quot;)
+<span class="fc" id="L32">	private String label;</span>
+	@NotNull(message = &quot;必須項目です&quot;)
+	@Min(value = 1, message = &quot;1以上の数字を入力してください&quot;)
+<span class="fc" id="L35">	private int userAddresseeId;</span>
+	@NotBlank(message = &quot;必須項目です&quot;)
+<span class="fc" id="L37">	private String deadline;</span>
+<span class="fc" id="L38">	private String status;</span>
+
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+<span class="nc" id="L42">		SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd'T'HH:mm&quot;);</span>
+<span class="nc" id="L43">		dateFormat.setLenient(false);</span>
+<span class="nc" id="L44">		binder.registerCustomEditor(TaskForm.class, deadline, new CustomDateEditor(dateFormat, false));</span>
+<span class="nc" id="L45">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

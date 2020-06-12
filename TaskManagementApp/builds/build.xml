@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir=".">
+<!-- <project basedir=".">
 	<property name="srcdir" value="../src/main/java" />
 	<property name="destdir" value=".//test1" />
 	<property name="test.class.name" value="./test/main" />
@@ -18,11 +18,11 @@
 	</target>
 	<target name="test" depends="compile"
 		description="test the source ">
-		<!-- JUnitによるテストを実行 -->
+		JUnitによるテストを実行
 		<junit fork="yes" haltonfailure="yes">
 			<test name="${test.class.name}" />
 			<formatter type="plain" usefile="false" />
 			<classpath refid="test.classpath" />
 		</junit>
 	</target>
-</project>
+</project> -->
