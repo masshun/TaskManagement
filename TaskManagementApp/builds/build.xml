@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir=".">
- 
-  <target name="test" depends="compile-test" description="JUnit のテストを実行します">
-    <mkdir dir="${test.report.dir}" />
-    <junit haltonfailure="false" printsummary="true">
-      <classpath location="${classes.dir}" />
-      <classpath refid="runtime.classpath" />
-      <classpath refid="test.classpath" />
-      <test name="${test.class}" todir="${test.report.dir}" />
-      <formatter type="xml" extension=".xml" /> 
-    </junit>
-  </target>
-   
-   
-   <property name="srcdir"	value="./src/main/java" />
+	<property name="srcdir" value="./src/main/java" />
 	<property name="destdir" value="./bin/test1" />
-	
- <!--   <target name="init">
-    	<echo message="Hello World"/>
-    </target>
-     <target name="compile" depends="init">
-        <javac srcdir="${srcdir}" 
-        	destdir="${destdir}" 
-        	includeAntRuntime="false"/>
-    </target> -->
+	<property name="test.class.name" value="./test/main" />
+    <path id="test.classpath">
+        <pathelement location="${build}" />
+        <pathelement location="${test.build}" />
+        <pathelement location="lib/junit-4.13.jar" />
+    </path>
+    
+	<target name="init">
+		<echo message="Hello World" />
+	</target>
+	<target name="compile" depends="init">
+		<javac srcdir="${srcdir}" destdir="${destdir}"
+			includeAntRuntime="false" />
+	</target>
+	<target name="test" depends="compile"
+		description="test the source ">
+		<!-- JUnitによるテストを実行 -->
+		<junit fork="yes" haltonfailure="yes">
+			<test name="${test.class.name}" />
+			<formatter type="plain" usefile="false" />
+			<classpath refid="test.classpath" />
+		</junit>
+	</target>
 </project>
