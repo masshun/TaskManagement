@@ -4,6 +4,7 @@ plugins {
 	id 'java'
 	id 'jacoco'
 }
+
 test.finalizedBy jacocoTestReport
 jacocoTestReport {
     reports {
@@ -26,6 +27,9 @@ configurations {
 	}
 }
 
+bootJar {
+    launchScript()
+}
  
 jar {
     manifest {
