@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: TaskManagementApp.zip
+  - source: TaskManagementApp/deploy/TaskManagementApp.zip
     destination: /var/src/
     overwrite: yes
 hooks:
