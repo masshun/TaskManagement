@@ -1,6 +1,6 @@
 version: 0.0
 os: linux
 files:
-  - source: TaskManagementApp/deploy/TaskManagementApp.zip
+  - source: /
     destination: /var/src/
     overwrite: yes
