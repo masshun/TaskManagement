@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.example.demo.controller.LoginAndLogoutControllerTest" tests="4" skipped="0" failures="4" errors="0" timestamp="2020-06-14T02:00:07" hostname="matsushitashunnoMacBook-Pro.local" time="4.047">
+<testsuite name="com.example.demo.controller.LoginAndLogoutControllerTest" tests="4" skipped="0" failures="4" errors="0" timestamp="2020-06-22T06:28:41" hostname="matsushitashunnoMacBook-Pro.local" time="109.216">
   <properties/>
   <testcase name="DBに存在しないユーザー情報でログインするとログインページへ戻される()" classname="com.example.demo.controller.LoginAndLogoutControllerTest" time="0.0">
     <failure message="java.lang.IllegalStateException: Failed to load ApplicationContext" type="java.lang.IllegalStateException">java.lang.IllegalStateException: Failed to load ApplicationContext
@@ -253,7 +253,7 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:956)
 	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:826)
 	... 186 more
-Caused by: java.net.ConnectException: Connection refused (Connection refused)
+Caused by: java.net.SocketTimeoutException: connect timed out
 	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method)
 	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399)
 	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242)
@@ -265,7 +265,7 @@ Caused by: java.net.ConnectException: Connection refused (Connection refused)
 	... 189 more
 </failure>
   </testcase>
-  <testcase name="ログアウト処理でログイン画面に遷移する()" classname="com.example.demo.controller.LoginAndLogoutControllerTest" time="0.001">
+  <testcase name="ログアウト処理でログイン画面に遷移する()" classname="com.example.demo.controller.LoginAndLogoutControllerTest" time="0.0">
     <failure message="java.lang.IllegalStateException: Failed to load ApplicationContext" type="java.lang.IllegalStateException">java.lang.IllegalStateException: Failed to load ApplicationContext
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:132)
 	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:123)
@@ -517,7 +517,7 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:956)
 	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:826)
 	... 186 more
-Caused by: java.net.ConnectException: Connection refused (Connection refused)
+Caused by: java.net.SocketTimeoutException: connect timed out
 	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method)
 	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399)
 	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242)
@@ -781,7 +781,7 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:956)
 	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:826)
 	... 186 more
-Caused by: java.net.ConnectException: Connection refused (Connection refused)
+Caused by: java.net.SocketTimeoutException: connect timed out
 	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method)
 	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399)
 	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242)
@@ -1045,7 +1045,7 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:956)
 	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:826)
 	... 186 more
-Caused by: java.net.ConnectException: Connection refused (Connection refused)
+Caused by: java.net.SocketTimeoutException: connect timed out
 	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method)
 	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399)
 	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242)
@@ -1057,12 +1057,12 @@ Caused by: java.net.ConnectException: Connection refused (Connection refused)
 	... 189 more
 </failure>
   </testcase>
-  <system-out><![CDATA[2020-06-14 11:00:00.778  INFO 70016 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.example.demo.controller.LoginAndLogoutControllerTest], using SpringBootContextLoader
-2020-06-14 11:00:00.779  INFO 70016 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.example.demo.controller.LoginAndLogoutControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
-2020-06-14 11:00:00.779  INFO 70016 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demo.controller.LoginAndLogoutControllerTest]: LoginAndLogoutControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2020-06-14 11:00:00.788  INFO 70016 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demo.TaskManagementAppApplication for test class com.example.demo.controller.LoginAndLogoutControllerTest
-2020-06-14 11:00:00.789  INFO 70016 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
-2020-06-14 11:00:00.789  INFO 70016 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@4d161b14, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@15bbb6df, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@56c91b78, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@54a9d281, org.springframework.test.context.support.DirtiesContextTestExecutionListener@299abdbb, org.springframework.test.context.transaction.TransactionalTestExecutionListener@615ffb19, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@7fd32e91, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@6574c630, org.springframework.test.context.event.EventPublishingTestExecutionListener@19ffc840, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@7667f55, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@61277e8e, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@222161dc, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@457b0010, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@71d3433d, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@2bda9087]
+  <system-out><![CDATA[2020-06-22 15:28:05.050  INFO 83900 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.example.demo.controller.LoginAndLogoutControllerTest], using SpringBootContextLoader
+2020-06-22 15:28:05.051  INFO 83900 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.example.demo.controller.LoginAndLogoutControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2020-06-22 15:28:05.051  INFO 83900 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.demo.controller.LoginAndLogoutControllerTest]: LoginAndLogoutControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2020-06-22 15:28:05.076  INFO 83900 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.demo.TaskManagementAppApplication for test class com.example.demo.controller.LoginAndLogoutControllerTest
+2020-06-22 15:28:05.078  INFO 83900 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2020-06-22 15:28:05.078  INFO 83900 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@1c29f876, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@32d3e9ff, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@a866b1, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@68d20409, org.springframework.test.context.support.DirtiesContextTestExecutionListener@3b6bbb2d, org.springframework.test.context.transaction.TransactionalTestExecutionListener@165a21ae, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@5504503a, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@2d8ef4df, org.springframework.test.context.event.EventPublishingTestExecutionListener@4bda8090, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@c4a8f14, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@7b389b27, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@21cab093, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@3e8b7a3a, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@666160d0, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@593f3e98]
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -1072,10 +1072,10 @@ Caused by: java.net.ConnectException: Connection refused (Connection refused)
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v2.2.6.RELEASE)
 
-2020-06-14 11:00:05.830  INFO 70016 --- [    Test worker] c.e.d.c.LoginAndLogoutControllerTest     : Starting LoginAndLogoutControllerTest on matsushitashunnoMacBook-Pro.local with PID 70016 (started by matsushitashun in /Users/matsushitashun/git/TaskManagement/TaskManagementApp)
-2020-06-14 11:00:05.831  INFO 70016 --- [    Test worker] c.e.d.c.LoginAndLogoutControllerTest     : No active profile set, falling back to default profiles: default
-2020-06-14 11:00:06.155  INFO 70016 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
-2020-06-14 11:00:07.163 ERROR 70016 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Exception during pool initialization.
+2020-06-22 15:28:10.123  INFO 83900 --- [    Test worker] c.e.d.c.LoginAndLogoutControllerTest     : Starting LoginAndLogoutControllerTest on matsushitashunnoMacBook-Pro.local with PID 83900 (started by matsushitashun in /Users/matsushitashun/git/TaskManagement/TaskManagementApp)
+2020-06-22 15:28:10.124  INFO 83900 --- [    Test worker] c.e.d.c.LoginAndLogoutControllerTest     : No active profile set, falling back to default profiles: default
+2020-06-22 15:28:10.461  INFO 83900 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2020-06-22 15:28:41.516 ERROR 83900 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Exception during pool initialization.
 
 com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
 
@@ -1285,7 +1285,7 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:956) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:826) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	... 186 common frames omitted
-Caused by: java.net.ConnectException: Connection refused (Connection refused)
+Caused by: java.net.SocketTimeoutException: connect timed out
 	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242) ~[na:na]
@@ -1296,13 +1296,13 @@ Caused by: java.net.ConnectException: Connection refused (Connection refused)
 	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:65) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	... 189 common frames omitted
 
-2020-06-14 11:00:07.169  WARN 70016 --- [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'asyncTask': Unsatisfied dependency expressed through field 'taskService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskService': Unsatisfied dependency expressed through field 'taskMapper'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskMapper' defined in file [/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/main/com/example/demo/repository/TaskMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Unsatisfied dependency expressed through method 'sqlSessionFactory' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Initialization of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker': Invocation of init method failed; nested exception is org.springframework.jdbc.datasource.init.UncategorizedScriptException: Failed to execute database script; nested exception is org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+2020-06-22 15:28:41.527  WARN 83900 --- [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'asyncTask': Unsatisfied dependency expressed through field 'taskService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskService': Unsatisfied dependency expressed through field 'taskMapper'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskMapper' defined in file [/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/main/com/example/demo/repository/TaskMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Unsatisfied dependency expressed through method 'sqlSessionFactory' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Initialization of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker': Invocation of init method failed; nested exception is org.springframework.jdbc.datasource.init.UncategorizedScriptException: Failed to execute database script; nested exception is org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2020-06-14 11:00:07.173  INFO 70016 --- [    Test worker] ConditionEvaluationReportLoggingListener : 
+2020-06-22 15:28:41.534  INFO 83900 --- [    Test worker] ConditionEvaluationReportLoggingListener : 
 
 Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-2020-06-14 11:00:07.178 ERROR 70016 --- [    Test worker] o.s.boot.SpringApplication               : Application run failed
+2020-06-22 15:28:41.539 ERROR 83900 --- [    Test worker] o.s.boot.SpringApplication               : Application run failed
 
 org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'asyncTask': Unsatisfied dependency expressed through field 'taskService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskService': Unsatisfied dependency expressed through field 'taskMapper'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskMapper' defined in file [/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/main/com/example/demo/repository/TaskMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Unsatisfied dependency expressed through method 'sqlSessionFactory' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Initialization of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker': Invocation of init method failed; nested exception is org.springframework.jdbc.datasource.init.UncategorizedScriptException: Failed to execute database script; nested exception is org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
 
@@ -1552,7 +1552,7 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:956) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:826) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	... 186 common frames omitted
-Caused by: java.net.ConnectException: Connection refused (Connection refused)
+Caused by: java.net.SocketTimeoutException: connect timed out
 	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242) ~[na:na]
@@ -1563,7 +1563,7 @@ Caused by: java.net.ConnectException: Connection refused (Connection refused)
 	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:65) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	... 189 common frames omitted
 
-2020-06-14 11:00:07.187 ERROR 70016 --- [    Test worker] o.s.test.context.TestContextManager      : Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener@4d161b14] to prepare test instance [com.example.demo.controller.LoginAndLogoutControllerTest@7372238a]
+2020-06-22 15:28:41.549 ERROR 83900 --- [    Test worker] o.s.test.context.TestContextManager      : Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener@1c29f876] to prepare test instance [com.example.demo.controller.LoginAndLogoutControllerTest@60933a03]
 
 java.lang.IllegalStateException: Failed to load ApplicationContext
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:132) ~[spring-test-5.2.5.RELEASE.jar:5.2.5.RELEASE]
@@ -1816,7 +1816,7 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:956) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:826) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	... 186 common frames omitted
-Caused by: java.net.ConnectException: Connection refused (Connection refused)
+Caused by: java.net.SocketTimeoutException: connect timed out
 	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242) ~[na:na]
@@ -1836,10 +1836,10 @@ Caused by: java.net.ConnectException: Connection refused (Connection refused)
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v2.2.6.RELEASE)
 
-2020-06-14 11:00:07.219  INFO 70016 --- [    Test worker] c.e.d.c.LoginAndLogoutControllerTest     : Starting LoginAndLogoutControllerTest on matsushitashunnoMacBook-Pro.local with PID 70016 (started by matsushitashun in /Users/matsushitashun/git/TaskManagement/TaskManagementApp)
-2020-06-14 11:00:07.219  INFO 70016 --- [    Test worker] c.e.d.c.LoginAndLogoutControllerTest     : No active profile set, falling back to default profiles: default
-2020-06-14 11:00:07.494  INFO 70016 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
-2020-06-14 11:00:08.502 ERROR 70016 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Exception during pool initialization.
+2020-06-22 15:28:46.589  INFO 83900 --- [    Test worker] c.e.d.c.LoginAndLogoutControllerTest     : Starting LoginAndLogoutControllerTest on matsushitashunnoMacBook-Pro.local with PID 83900 (started by matsushitashun in /Users/matsushitashun/git/TaskManagement/TaskManagementApp)
+2020-06-22 15:28:46.590  INFO 83900 --- [    Test worker] c.e.d.c.LoginAndLogoutControllerTest     : No active profile set, falling back to default profiles: default
+2020-06-22 15:28:46.875  INFO 83900 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2020-06-22 15:29:17.917 ERROR 83900 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Exception during pool initialization.
 
 com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
 
@@ -2049,7 +2049,7 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:956) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:826) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	... 186 common frames omitted
-Caused by: java.net.ConnectException: Connection refused (Connection refused)
+Caused by: java.net.SocketTimeoutException: connect timed out
 	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242) ~[na:na]
@@ -2060,13 +2060,13 @@ Caused by: java.net.ConnectException: Connection refused (Connection refused)
 	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:65) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	... 189 common frames omitted
 
-2020-06-14 11:00:08.509  WARN 70016 --- [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'asyncTask': Unsatisfied dependency expressed through field 'taskService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskService': Unsatisfied dependency expressed through field 'taskMapper'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskMapper' defined in file [/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/main/com/example/demo/repository/TaskMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Unsatisfied dependency expressed through method 'sqlSessionFactory' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Initialization of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker': Invocation of init method failed; nested exception is org.springframework.jdbc.datasource.init.UncategorizedScriptException: Failed to execute database script; nested exception is org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+2020-06-22 15:29:17.922  WARN 83900 --- [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'asyncTask': Unsatisfied dependency expressed through field 'taskService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskService': Unsatisfied dependency expressed through field 'taskMapper'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskMapper' defined in file [/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/main/com/example/demo/repository/TaskMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Unsatisfied dependency expressed through method 'sqlSessionFactory' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Initialization of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker': Invocation of init method failed; nested exception is org.springframework.jdbc.datasource.init.UncategorizedScriptException: Failed to execute database script; nested exception is org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2020-06-14 11:00:08.513  INFO 70016 --- [    Test worker] ConditionEvaluationReportLoggingListener : 
+2020-06-22 15:29:17.926  INFO 83900 --- [    Test worker] ConditionEvaluationReportLoggingListener : 
 
 Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-2020-06-14 11:00:08.521 ERROR 70016 --- [    Test worker] o.s.boot.SpringApplication               : Application run failed
+2020-06-22 15:29:17.932 ERROR 83900 --- [    Test worker] o.s.boot.SpringApplication               : Application run failed
 
 org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'asyncTask': Unsatisfied dependency expressed through field 'taskService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskService': Unsatisfied dependency expressed through field 'taskMapper'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskMapper' defined in file [/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/main/com/example/demo/repository/TaskMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Unsatisfied dependency expressed through method 'sqlSessionFactory' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Initialization of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker': Invocation of init method failed; nested exception is org.springframework.jdbc.datasource.init.UncategorizedScriptException: Failed to execute database script; nested exception is org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
 
@@ -2316,7 +2316,7 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:956) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:826) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	... 186 common frames omitted
-Caused by: java.net.ConnectException: Connection refused (Connection refused)
+Caused by: java.net.SocketTimeoutException: connect timed out
 	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242) ~[na:na]
@@ -2327,7 +2327,7 @@ Caused by: java.net.ConnectException: Connection refused (Connection refused)
 	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:65) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	... 189 common frames omitted
 
-2020-06-14 11:00:08.533 ERROR 70016 --- [    Test worker] o.s.test.context.TestContextManager      : Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener@4d161b14] to prepare test instance [com.example.demo.controller.LoginAndLogoutControllerTest@2f927b2b]
+2020-06-22 15:29:17.939 ERROR 83900 --- [    Test worker] o.s.test.context.TestContextManager      : Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener@1c29f876] to prepare test instance [com.example.demo.controller.LoginAndLogoutControllerTest@79b0f797]
 
 java.lang.IllegalStateException: Failed to load ApplicationContext
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:132) ~[spring-test-5.2.5.RELEASE.jar:5.2.5.RELEASE]
@@ -2580,7 +2580,7 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:956) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:826) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	... 186 common frames omitted
-Caused by: java.net.ConnectException: Connection refused (Connection refused)
+Caused by: java.net.SocketTimeoutException: connect timed out
 	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242) ~[na:na]
@@ -2600,10 +2600,10 @@ Caused by: java.net.ConnectException: Connection refused (Connection refused)
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v2.2.6.RELEASE)
 
-2020-06-14 11:00:08.567  INFO 70016 --- [    Test worker] c.e.d.c.LoginAndLogoutControllerTest     : Starting LoginAndLogoutControllerTest on matsushitashunnoMacBook-Pro.local with PID 70016 (started by matsushitashun in /Users/matsushitashun/git/TaskManagement/TaskManagementApp)
-2020-06-14 11:00:08.568  INFO 70016 --- [    Test worker] c.e.d.c.LoginAndLogoutControllerTest     : No active profile set, falling back to default profiles: default
-2020-06-14 11:00:08.873  INFO 70016 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
-2020-06-14 11:00:09.888 ERROR 70016 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Exception during pool initialization.
+2020-06-22 15:29:22.976  INFO 83900 --- [    Test worker] c.e.d.c.LoginAndLogoutControllerTest     : Starting LoginAndLogoutControllerTest on matsushitashunnoMacBook-Pro.local with PID 83900 (started by matsushitashun in /Users/matsushitashun/git/TaskManagement/TaskManagementApp)
+2020-06-22 15:29:22.977  INFO 83900 --- [    Test worker] c.e.d.c.LoginAndLogoutControllerTest     : No active profile set, falling back to default profiles: default
+2020-06-22 15:29:23.253  INFO 83900 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2020-06-22 15:29:54.319 ERROR 83900 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Exception during pool initialization.
 
 com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
 
@@ -2813,7 +2813,7 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:956) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:826) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	... 186 common frames omitted
-Caused by: java.net.ConnectException: Connection refused (Connection refused)
+Caused by: java.net.SocketTimeoutException: connect timed out
 	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242) ~[na:na]
@@ -2824,13 +2824,13 @@ Caused by: java.net.ConnectException: Connection refused (Connection refused)
 	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:65) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	... 189 common frames omitted
 
-2020-06-14 11:00:09.892  WARN 70016 --- [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'asyncTask': Unsatisfied dependency expressed through field 'taskService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskService': Unsatisfied dependency expressed through field 'taskMapper'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskMapper' defined in file [/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/main/com/example/demo/repository/TaskMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Unsatisfied dependency expressed through method 'sqlSessionFactory' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Initialization of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker': Invocation of init method failed; nested exception is org.springframework.jdbc.datasource.init.UncategorizedScriptException: Failed to execute database script; nested exception is org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+2020-06-22 15:29:54.324  WARN 83900 --- [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'asyncTask': Unsatisfied dependency expressed through field 'taskService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskService': Unsatisfied dependency expressed through field 'taskMapper'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskMapper' defined in file [/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/main/com/example/demo/repository/TaskMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Unsatisfied dependency expressed through method 'sqlSessionFactory' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Initialization of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker': Invocation of init method failed; nested exception is org.springframework.jdbc.datasource.init.UncategorizedScriptException: Failed to execute database script; nested exception is org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2020-06-14 11:00:09.896  INFO 70016 --- [    Test worker] ConditionEvaluationReportLoggingListener : 
+2020-06-22 15:29:54.329  INFO 83900 --- [    Test worker] ConditionEvaluationReportLoggingListener : 
 
 Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-2020-06-14 11:00:09.902 ERROR 70016 --- [    Test worker] o.s.boot.SpringApplication               : Application run failed
+2020-06-22 15:29:54.336 ERROR 83900 --- [    Test worker] o.s.boot.SpringApplication               : Application run failed
 
 org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'asyncTask': Unsatisfied dependency expressed through field 'taskService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskService': Unsatisfied dependency expressed through field 'taskMapper'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskMapper' defined in file [/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/main/com/example/demo/repository/TaskMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Unsatisfied dependency expressed through method 'sqlSessionFactory' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Initialization of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker': Invocation of init method failed; nested exception is org.springframework.jdbc.datasource.init.UncategorizedScriptException: Failed to execute database script; nested exception is org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
 
@@ -3080,7 +3080,7 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:956) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:826) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	... 186 common frames omitted
-Caused by: java.net.ConnectException: Connection refused (Connection refused)
+Caused by: java.net.SocketTimeoutException: connect timed out
 	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242) ~[na:na]
@@ -3091,7 +3091,7 @@ Caused by: java.net.ConnectException: Connection refused (Connection refused)
 	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:65) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	... 189 common frames omitted
 
-2020-06-14 11:00:09.909 ERROR 70016 --- [    Test worker] o.s.test.context.TestContextManager      : Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener@4d161b14] to prepare test instance [com.example.demo.controller.LoginAndLogoutControllerTest@d468d81]
+2020-06-22 15:29:54.342 ERROR 83900 --- [    Test worker] o.s.test.context.TestContextManager      : Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener@1c29f876] to prepare test instance [com.example.demo.controller.LoginAndLogoutControllerTest@75a99c2b]
 
 java.lang.IllegalStateException: Failed to load ApplicationContext
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:132) ~[spring-test-5.2.5.RELEASE.jar:5.2.5.RELEASE]
@@ -3344,7 +3344,7 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:956) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:826) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	... 186 common frames omitted
-Caused by: java.net.ConnectException: Connection refused (Connection refused)
+Caused by: java.net.SocketTimeoutException: connect timed out
 	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242) ~[na:na]
@@ -3364,10 +3364,10 @@ Caused by: java.net.ConnectException: Connection refused (Connection refused)
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v2.2.6.RELEASE)
 
-2020-06-14 11:00:09.934  INFO 70016 --- [    Test worker] c.e.d.c.LoginAndLogoutControllerTest     : Starting LoginAndLogoutControllerTest on matsushitashunnoMacBook-Pro.local with PID 70016 (started by matsushitashun in /Users/matsushitashun/git/TaskManagement/TaskManagementApp)
-2020-06-14 11:00:09.934  INFO 70016 --- [    Test worker] c.e.d.c.LoginAndLogoutControllerTest     : No active profile set, falling back to default profiles: default
-2020-06-14 11:00:10.198  INFO 70016 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Starting...
-2020-06-14 11:00:11.214 ERROR 70016 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-5 - Exception during pool initialization.
+2020-06-22 15:29:59.381  INFO 83900 --- [    Test worker] c.e.d.c.LoginAndLogoutControllerTest     : Starting LoginAndLogoutControllerTest on matsushitashunnoMacBook-Pro.local with PID 83900 (started by matsushitashun in /Users/matsushitashun/git/TaskManagement/TaskManagementApp)
+2020-06-22 15:29:59.382  INFO 83900 --- [    Test worker] c.e.d.c.LoginAndLogoutControllerTest     : No active profile set, falling back to default profiles: default
+2020-06-22 15:29:59.703  INFO 83900 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Starting...
+2020-06-22 15:30:30.750 ERROR 83900 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-5 - Exception during pool initialization.
 
 com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
 
@@ -3577,7 +3577,7 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:956) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:826) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	... 186 common frames omitted
-Caused by: java.net.ConnectException: Connection refused (Connection refused)
+Caused by: java.net.SocketTimeoutException: connect timed out
 	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242) ~[na:na]
@@ -3588,13 +3588,13 @@ Caused by: java.net.ConnectException: Connection refused (Connection refused)
 	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:65) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	... 189 common frames omitted
 
-2020-06-14 11:00:11.218  WARN 70016 --- [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'asyncTask': Unsatisfied dependency expressed through field 'taskService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskService': Unsatisfied dependency expressed through field 'taskMapper'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskMapper' defined in file [/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/main/com/example/demo/repository/TaskMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Unsatisfied dependency expressed through method 'sqlSessionFactory' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Initialization of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker': Invocation of init method failed; nested exception is org.springframework.jdbc.datasource.init.UncategorizedScriptException: Failed to execute database script; nested exception is org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+2020-06-22 15:30:30.754  WARN 83900 --- [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'asyncTask': Unsatisfied dependency expressed through field 'taskService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskService': Unsatisfied dependency expressed through field 'taskMapper'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskMapper' defined in file [/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/main/com/example/demo/repository/TaskMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Unsatisfied dependency expressed through method 'sqlSessionFactory' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Initialization of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker': Invocation of init method failed; nested exception is org.springframework.jdbc.datasource.init.UncategorizedScriptException: Failed to execute database script; nested exception is org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2020-06-14 11:00:11.223  INFO 70016 --- [    Test worker] ConditionEvaluationReportLoggingListener : 
+2020-06-22 15:30:30.757  INFO 83900 --- [    Test worker] ConditionEvaluationReportLoggingListener : 
 
 Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-2020-06-14 11:00:11.229 ERROR 70016 --- [    Test worker] o.s.boot.SpringApplication               : Application run failed
+2020-06-22 15:30:30.763 ERROR 83900 --- [    Test worker] o.s.boot.SpringApplication               : Application run failed
 
 org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'asyncTask': Unsatisfied dependency expressed through field 'taskService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskService': Unsatisfied dependency expressed through field 'taskMapper'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'taskMapper' defined in file [/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/main/com/example/demo/repository/TaskMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Unsatisfied dependency expressed through method 'sqlSessionFactory' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Initialization of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker': Invocation of init method failed; nested exception is org.springframework.jdbc.datasource.init.UncategorizedScriptException: Failed to execute database script; nested exception is org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
 
@@ -3844,7 +3844,7 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:956) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:826) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	... 186 common frames omitted
-Caused by: java.net.ConnectException: Connection refused (Connection refused)
+Caused by: java.net.SocketTimeoutException: connect timed out
 	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242) ~[na:na]
@@ -3855,7 +3855,7 @@ Caused by: java.net.ConnectException: Connection refused (Connection refused)
 	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:65) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	... 189 common frames omitted
 
-2020-06-14 11:00:11.236 ERROR 70016 --- [    Test worker] o.s.test.context.TestContextManager      : Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener@4d161b14] to prepare test instance [com.example.demo.controller.LoginAndLogoutControllerTest@687ac0cb]
+2020-06-22 15:30:30.770 ERROR 83900 --- [    Test worker] o.s.test.context.TestContextManager      : Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener@1c29f876] to prepare test instance [com.example.demo.controller.LoginAndLogoutControllerTest@4a5d8cce]
 
 java.lang.IllegalStateException: Failed to load ApplicationContext
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:132) ~[spring-test-5.2.5.RELEASE.jar:5.2.5.RELEASE]
@@ -4108,7 +4108,7 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:956) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:826) ~[mysql-connector-java-8.0.19.jar:8.0.19]
 	... 186 common frames omitted
-Caused by: java.net.ConnectException: Connection refused (Connection refused)
+Caused by: java.net.SocketTimeoutException: connect timed out
 	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399) ~[na:na]
 	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242) ~[na:na]
