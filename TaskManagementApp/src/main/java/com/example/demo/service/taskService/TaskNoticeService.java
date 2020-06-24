@@ -59,12 +59,12 @@ public class TaskNoticeService {
 		String taskTitle = taskForm.getTitle();
 
 		String address = prop.get("mailaddress");
-		String localhost = prop.get("port");
+		String port = prop.get("port");
 
 		String title = sender + "さん「" + taskTitle + "」完了!";
 
 		String content = addressee + "さん" + "\n" + sender + "さんの頼みごとが終わりました!" + "\n" + "以下のリンクにアクセスして頼みごとの内容を確認してください。"
-				+ "\n" + "http://" + localhost + "/";
+				+ "\n" + "http://" + port + "/";
 
 		Map<String, String> map = new HashMap<>();
 		map.put("from", address);
