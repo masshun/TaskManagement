@@ -11,17 +11,17 @@ public class PageWrapper&lt;T&gt; {
 	private List&lt;PageItem&gt; items;
 	private int currentNumber;
 
-<span class="fc" id="L14">	public PageWrapper(Page&lt;T&gt; page) {</span>
-<span class="fc" id="L15">		this.page = page;</span>
+<span class="nc" id="L14">	public PageWrapper(Page&lt;T&gt; page) {</span>
+<span class="nc" id="L15">		this.page = page;</span>
 
-<span class="fc" id="L17">		items = new ArrayList&lt;PageItem&gt;();</span>
+<span class="nc" id="L17">		items = new ArrayList&lt;PageItem&gt;();</span>
 
-<span class="fc" id="L19">		currentNumber = page.getNumber() + 1;</span>
+<span class="nc" id="L19">		currentNumber = page.getNumber() + 1;</span>
 
 		int start, size;
-<span class="pc bpc" id="L22" title="1 of 2 branches missed.">		if (page.getTotalPages() &lt;= MAX_PAGE_ITEM_DISPLAY) {</span>
-<span class="fc" id="L23">			start = 1;</span>
-<span class="fc" id="L24">			size = page.getTotalPages();</span>
+<span class="nc bnc" id="L22" title="All 2 branches missed.">		if (page.getTotalPages() &lt;= MAX_PAGE_ITEM_DISPLAY) {</span>
+<span class="nc" id="L23">			start = 1;</span>
+<span class="nc" id="L24">			size = page.getTotalPages();</span>
 		} else {
 <span class="nc bnc" id="L26" title="All 2 branches missed.">			if (currentNumber &lt;= MAX_PAGE_ITEM_DISPLAY - MAX_PAGE_ITEM_DISPLAY / 2) {</span>
 <span class="nc" id="L27">				start = 1;</span>
@@ -35,10 +35,10 @@ public class PageWrapper&lt;T&gt; {
 			}
 		}
 
-<span class="pc bpc" id="L38" title="1 of 2 branches missed.">		for (int i = 0; i &lt; size; i++) {</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">		for (int i = 0; i &lt; size; i++) {</span>
 <span class="nc bnc" id="L39" title="All 2 branches missed.">			items.add(new PageItem(start + i, (start + i) == currentNumber));</span>
 		}
-<span class="fc" id="L41">	}</span>
+<span class="nc" id="L41">	}</span>
 
 	public List&lt;PageItem&gt; getItems() {
 <span class="nc" id="L44">		return items;</span>
@@ -53,7 +53,7 @@ public class PageWrapper&lt;T&gt; {
 	}
 
 	public int getSize() {
-<span class="fc" id="L56">		return page.getSize();</span>
+<span class="nc" id="L56">		return page.getSize();</span>
 	}
 
 	public int getTotalPages() {

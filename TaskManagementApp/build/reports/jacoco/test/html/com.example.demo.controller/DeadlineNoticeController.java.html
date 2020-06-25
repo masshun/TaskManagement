@@ -17,11 +17,11 @@ import com.example.demo.async.AsyncTask;
 	// １時間ごとに期限チェックの実行 秒分時日月曜日
 	@Scheduled(cron = &quot;0 0 */1  * * *&quot;, zone = &quot;Asia/Tokyo&quot;)
 	public void checkDeadline() {
-<span class="nc" id="L20">		this.doTask();</span>
-<span class="nc" id="L21">	}</span>
+<span class="fc" id="L20">		this.doTask();</span>
+<span class="fc" id="L21">	}</span>
 
 	public void doTask() {
-<span class="nc" id="L24">		asyncTask.run();</span>
-<span class="nc" id="L25">	}</span>
+<span class="fc" id="L24">		asyncTask.run();</span>
+<span class="fc" id="L25">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
