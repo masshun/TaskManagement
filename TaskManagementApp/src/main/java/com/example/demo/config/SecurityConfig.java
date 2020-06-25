@@ -3,8 +3,7 @@ package com.example.demo.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -26,13 +25,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
-	@Bean
-	public AuthenticationProvider authProvider() {
-		// データに登録しているユーザーの資格情報(username,password)とユーザーの状態をチェックして認証処理を行う。情報と状態はUserDetails実装クラスから取得
-		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-		provider.setUserDetailsService(userDetailsServiceImpl);
-		provider.setPasswordEncoder(passwordEncoder());
-		return provider;
+//	@Bean
+//	public AuthenticationProvider authProvider() {
+//		// データに登録しているユーザーの資格情報(username,password)とユーザーの状態をチェックして認証処理を行う。情報と状態はUserDetails実装クラスから取得
+//		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+//		provider.setUserDetailsService(userDetailsServiceImpl);
+//		provider.setPasswordEncoder(passwordEncoder());
+//		return provider;
+//	}
+
+	@Autowired
+	void authenticationManagerBuilder(AuthenticationManagerBuilder builder, UserDetailsServiceImpl service)
+			throws Exception {
+		builder.userDetailsService(service).passwordEncoder(passwordEncoder());
 	}
 
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
