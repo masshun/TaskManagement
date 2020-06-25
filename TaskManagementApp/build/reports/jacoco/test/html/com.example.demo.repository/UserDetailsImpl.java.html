@@ -21,18 +21,18 @@ public class UserDetailsImpl implements UserDetails {
 	Account account;
 
 	public UserDetailsImpl(Account account) {
-<span class="nc" id="L24">		super();</span>
-<span class="nc" id="L25">		this.account = account;</span>
-<span class="nc" id="L26">	}</span>
+<span class="fc" id="L24">		super();</span>
+<span class="fc" id="L25">		this.account = account;</span>
+<span class="fc" id="L26">	}</span>
 
 	@Override
 	public Collection&lt;? extends GrantedAuthority&gt; getAuthorities() {
-<span class="nc" id="L30">		return Collections.singleton(new SimpleGrantedAuthority(&quot;USER&quot;));</span>
+<span class="fc" id="L30">		return Collections.singleton(new SimpleGrantedAuthority(&quot;USER&quot;));</span>
 	}
 
 	@Override
 	public String getPassword() {
-<span class="nc" id="L35">		return account.getPassword();</span>
+<span class="fc" id="L35">		return account.getPassword();</span>
 	}
 
 	public String getEmail() {
@@ -45,27 +45,27 @@ public class UserDetailsImpl implements UserDetails {
 
 	@Override
 	public String getUsername() {
-<span class="nc" id="L48">		return account.getUsername();</span>
+<span class="fc" id="L48">		return account.getUsername();</span>
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-<span class="nc" id="L53">		return true;</span>
+<span class="fc" id="L53">		return true;</span>
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-<span class="nc" id="L58">		return true;</span>
+<span class="fc" id="L58">		return true;</span>
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-<span class="nc" id="L63">		return true;</span>
+<span class="fc" id="L63">		return true;</span>
 	}
 
 	@Override
 	public boolean isEnabled() {
-<span class="nc" id="L68">		return true;</span>
+<span class="fc" id="L68">		return true;</span>
 	}
 
 }
