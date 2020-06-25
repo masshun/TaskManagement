@@ -19,6 +19,7 @@ public class Task implements Serializable {
 	private String content;
 	private String label;
 	private int userAddresseeId;
+	// TODO 可変オブジェクトの修正
 	private Timestamp deadline;
 	private String status;
 
