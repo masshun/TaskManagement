@@ -3,8 +3,7 @@
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -16,76 +15,82 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import com.example.demo.service.userService.UserDetailsServiceImpl;
 
 @Configuration
-<span class="fc" id="L19">public class SecurityConfig extends WebSecurityConfigurerAdapter {</span>
+<span class="fc" id="L18">public class SecurityConfig extends WebSecurityConfigurerAdapter {</span>
 
 	@Autowired
 	private UserDetailsServiceImpl userDetailsServiceImpl;
 
 	@Bean
 	PasswordEncoder passwordEncoder() {
-<span class="fc" id="L26">		return new BCryptPasswordEncoder();</span>
+<span class="fc" id="L25">		return new BCryptPasswordEncoder();</span>
 	}
 
-	@Bean
-	public AuthenticationProvider authProvider() {
-		// データに登録しているユーザーの資格情報(username,password)とユーザーの状態をチェックして認証処理を行う。情報と状態はUserDetails実装クラスから取得
-<span class="fc" id="L32">		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();</span>
-<span class="fc" id="L33">		provider.setUserDetailsService(userDetailsServiceImpl);</span>
-<span class="fc" id="L34">		provider.setPasswordEncoder(passwordEncoder());</span>
-<span class="fc" id="L35">		return provider;</span>
-	}
+//	@Bean
+//	public AuthenticationProvider authProvider() {
+//		// データに登録しているユーザーの資格情報(username,password)とユーザーの状態をチェックして認証処理を行う。情報と状態はUserDetails実装クラスから取得
+//		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+//		provider.setUserDetailsService(userDetailsServiceImpl);
+//		provider.setPasswordEncoder(passwordEncoder());
+//		return provider;
+//	}
+
+	@Autowired
+	void authenticationManagerBuilder(AuthenticationManagerBuilder builder, UserDetailsServiceImpl service)
+			throws Exception {
+<span class="fc" id="L40">		builder.userDetailsService(service).passwordEncoder(passwordEncoder());</span>
+<span class="fc" id="L41">	}</span>
 
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-<span class="nc" id="L39">		registry.addResourceHandler(&quot;static/**&quot;).addResourceLocations(&quot;/resources/static/&quot;);</span>
-<span class="nc" id="L40">	}</span>
+<span class="nc" id="L44">		registry.addResourceHandler(&quot;static/**&quot;).addResourceLocations(&quot;/resources/static/&quot;);</span>
+<span class="nc" id="L45">	}</span>
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		// 静的リソースの除外
 		// 静的リソースへのアクセスには、セキュリティを適用しない
-<span class="fc" id="L46">		web.ignoring().antMatchers(&quot;/js/**&quot;, &quot;/css/**&quot;, &quot;/static/**&quot;);</span>
-<span class="fc" id="L47">	}</span>
+<span class="fc" id="L51">		web.ignoring().antMatchers(&quot;/js/**&quot;, &quot;/css/**&quot;, &quot;/static/**&quot;);</span>
+<span class="fc" id="L52">	}</span>
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		// Webリソース直リンクの禁止
 		// ログイン不要ページの設定
-<span class="fc" id="L53">		http.authorizeRequests()</span>
+<span class="fc" id="L58">		http.authorizeRequests()</span>
 				// ログインページ直リンク許可
-<span class="fc" id="L55">				.antMatchers(&quot;/login/**&quot;).permitAll()</span>
+<span class="fc" id="L60">				.antMatchers(&quot;/login/**&quot;).permitAll()</span>
 				// ユーザー登録画面直リンク許可
-<span class="fc" id="L57">				.antMatchers(&quot;/signup/**&quot;).permitAll().antMatchers(&quot;/validate&quot;).permitAll()</span>
+<span class="fc" id="L62">				.antMatchers(&quot;/signup/**&quot;).permitAll().antMatchers(&quot;/validate&quot;).permitAll()</span>
 				// それ以外は禁止
-<span class="fc" id="L59">				.anyRequest().fullyAuthenticated();</span>
+<span class="fc" id="L64">				.anyRequest().fullyAuthenticated();</span>
 
 		// ログイン処理
-<span class="fc" id="L62">		http.formLogin()</span>
+<span class="fc" id="L67">		http.formLogin()</span>
 				// デフォルトのログインページ取得回避 GetMapping(&quot;/login&quot;)と一致
-<span class="fc" id="L64">				.loginPage(&quot;/login&quot;).failureUrl(&quot;/login&quot;)</span>
+<span class="fc" id="L69">				.loginPage(&quot;/login&quot;).failureUrl(&quot;/login&quot;)</span>
 				// login input nameと一致
-<span class="fc" id="L66">				.usernameParameter(&quot;username&quot;).passwordParameter(&quot;password&quot;);</span>
+<span class="fc" id="L71">				.usernameParameter(&quot;username&quot;).passwordParameter(&quot;password&quot;);</span>
 		// ログイン成功後、ホーム画面に遷移
 		// .defaultSuccessUrl(&quot;/&quot;, true);
-<span class="fc" id="L69">		http.exceptionHandling().accessDeniedPage(&quot;/403&quot;);</span>
+<span class="fc" id="L74">		http.exceptionHandling().accessDeniedPage(&quot;/403&quot;);</span>
 
-<span class="fc" id="L71">		http.logout()</span>
+<span class="fc" id="L76">		http.logout()</span>
 				// デフォはpost これでgetでリクエストが送れる
-<span class="fc" id="L73">				.logoutRequestMatcher(new AntPathRequestMatcher(&quot;/logout&quot;))</span>
+<span class="fc" id="L78">				.logoutRequestMatcher(new AntPathRequestMatcher(&quot;/logout&quot;))</span>
 				// sessionの破棄
-<span class="fc" id="L75">				.invalidateHttpSession(true)</span>
+<span class="fc" id="L80">				.invalidateHttpSession(true)</span>
 				// 認証の解除
-<span class="fc" id="L77">				.clearAuthentication(true)</span>
+<span class="fc" id="L82">				.clearAuthentication(true)</span>
 				// postでログアウトする場合の設定
-<span class="fc" id="L79">				.logoutUrl(&quot;/logout&quot;).logoutSuccessUrl(&quot;/login&quot;);</span>
+<span class="fc" id="L84">				.logoutUrl(&quot;/logout&quot;).logoutSuccessUrl(&quot;/login&quot;);</span>
 
-<span class="fc" id="L81">		http.sessionManagement().invalidSessionUrl(&quot;/login&quot;)</span>
+<span class="fc" id="L86">		http.sessionManagement().invalidSessionUrl(&quot;/login&quot;)</span>
 				// 同時セッション数を制限
-<span class="fc" id="L83">				.maximumSessions(1);</span>
+<span class="fc" id="L88">				.maximumSessions(1);</span>
 
 		// 自動ログイン機能 デフォルトは２週間
-<span class="fc" id="L86">		http.rememberMe().rememberMeParameter(&quot;remember-me&quot;)</span>
+<span class="fc" id="L91">		http.rememberMe().rememberMeParameter(&quot;remember-me&quot;)</span>
 				// アプリ再起動後もCookieを維持する
-<span class="fc" id="L88">				.key(&quot;TaskManagementKey&quot;);</span>
-<span class="fc" id="L89">	}</span>
+<span class="fc" id="L93">				.key(&quot;TaskManagementKey&quot;);</span>
+<span class="fc" id="L94">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
