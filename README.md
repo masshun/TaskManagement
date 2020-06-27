@@ -1,20 +1,31 @@
-# ユーザー間タスク管理アプリ
+## ユーザー間タスク管理アプリ
 登録したユーザー間で頼みごとを依頼し合うCRUDアプリケーション
 
-# メール自動通知機能
-頼みごとを作成した際依頼先にメール通知を送る。
-頼みごとを完了した際に依頼元にメール通知を送る。
-頼みごとの期限が１時間を切ると、依頼先にメール通知を送る。
+## 機能
+- ページネーション
+- 頼みごとの新規登録・閲覧・更新・削除
+- 頼みごとの検索
+- メール認証
+- 頼みごとを作成した際依頼先にメール通知を送る。
+- 頼みごとを完了した際に依頼元にメール通知を送る。
+- 頼みごとの期限が１時間を切ると、依頼先にメール通知を送る。
 
-# アーキテクチャ図
+
+## デプロイまでのアーキテクチャ図
 ![Untitled Diagram](https://user-images.githubusercontent.com/60130295/85916747-9a312400-b88e-11ea-87f0-25ebf7febcba.png)
 
-# 使い方
-```bash
-git clone https://github.com/masshun/TaskManagement.git
-```
+## 開発言語,使用技術
+- Java
+- Spring
+- MySQL
+- HTML
+- CSS
+- JavaScript
+- Git,GitHub
+- Jenkins
+- AWS(S3,CodePipeline,CodeDeploy,EC2,RDS,Route53)
 
-# 環境
+## プロパティ
 application.properties
 ```bash
 spring.datasource.url=jdbc:mysql://localhost:3306/task_management
@@ -33,5 +44,10 @@ spring.mail.properties.mail.smtp.starttls.enable: true
 spring.datasource.schema=classpath:schema.sql
 spring.datasource.initialization-mode=always
 ```
-# その他
+## 使い方
+```bash
+git clone https://github.com/masshun/TaskManagement.git
+```
+
+## その他
 動作確認：GoogleChrome
