@@ -44,7 +44,15 @@ spring.mail.properties.mail.smtp.starttls.enable: true
 spring.datasource.schema=classpath:schema.sql
 spring.datasource.initialization-mode=always
 ```
-## 使い方
+
+## デモプレイ用ログインアカウント
+```bash
+ユーザー名:hoge
+パスワード:password
+```
+
+
+## クローン
 ```bash
 git clone https://github.com/masshun/TaskManagement.git
 ```
