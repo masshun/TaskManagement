@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 
 import lombok.Data;
 
-<span class="pc bpc" id="L11" title="22 of 32 branches missed.">@Data</span>
+<span class="pc bpc" id="L11" title="28 of 40 branches missed.">@Data</span>
 public class AccountForm implements Serializable {
 	// データはSerializeして格納するため、セッション情報はSerializableを実装する必要がある
 	/**
@@ -25,9 +25,13 @@ public class AccountForm implements Serializable {
 	@Pattern(regexp = &quot;[a-zA-Z0-9]*&quot;, message = &quot;半角英数字を入力してください&quot;)
 <span class="fc" id="L26">	private String password;</span>
 
+	@Size(min = 8, max = 255, message = &quot;8文字以上255文字以内で入力してください&quot;)
+	@Pattern(regexp = &quot;[a-zA-Z0-9]*&quot;, message = &quot;半角英数字を入力してください&quot;)
+<span class="fc" id="L30">	private String confPassword;</span>
+
 	@Size(max = 255, message = &quot;255文字以内で入力してください&quot;)
 	@Pattern(regexp = &quot;^([\\w])+([\\w\\._-])*\\@([\\w])+([\\w\\._-])*\\.([a-zA-Z])+$&quot;, message = &quot;正しいメールアドレスを入力してください&quot;)
-<span class="fc" id="L30">	private String email;</span>
+<span class="fc" id="L34">	private String email;</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
