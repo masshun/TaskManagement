@@ -42,15 +42,15 @@ import com.example.demo.service.userService.RegisterUserService;
 	@PostMapping
 	public String postSignUp(@ModelAttribute @Validated AccountForm form, BindingResult bindingResult, Model model,
 			RedirectAttributes redirectAttributes, HttpServletRequest request, String username, String password) {
-<span class="fc bfc" id="L45" title="All 2 branches covered.">		if (bindingResult.hasErrors()) {</span>
+<span class="pc bpc" id="L45" title="1 of 4 branches missed.">		if (bindingResult.hasErrors() || !(form.getPassword().equals(form.getConfPassword()))) {</span>
 <span class="fc" id="L46">			model.addAttribute(&quot;error&quot;, &quot;入力値に誤りがあります&quot;);</span>
 <span class="fc" id="L47">			return &quot;auth/signup&quot;;</span>
 		}
 
-<span class="fc" id="L50">		ConfirmationToken token = registerUserService.setConfirmationToken(form, password);</span>
-<span class="fc" id="L51">		registerUserService.registerMail(form, token, username);</span>
+<span class="nc" id="L50">		ConfirmationToken token = registerUserService.setConfirmationToken(form, password);</span>
+<span class="nc" id="L51">		registerUserService.registerMail(form, token, username);</span>
 
-<span class="fc" id="L53">		return &quot;auth/sendSignupMailNotice&quot;;</span>
+<span class="nc" id="L53">		return &quot;auth/sendSignupMailNotice&quot;;</span>
 	}
 
 	@CrossOrigin
