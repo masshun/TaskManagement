@@ -12,7 +12,10 @@
 
 
 ## デプロイまでのアーキテクチャ図
-![Untitled Diagram](https://user-images.githubusercontent.com/60130295/85916747-9a312400-b88e-11ea-87f0-25ebf7febcba.png)
+![Untitled Diagram (2)](https://user-images.githubusercontent.com/60130295/85918518-7d9ce800-b89e-11ea-9370-f922bc5026bb.png)
+
+## ER図
+![Untitled Diagram (1)](https://user-images.githubusercontent.com/60130295/85918524-94dbd580-b89e-11ea-9d5f-a00cfbd6e7df.png)
 
 ## 開発言語,使用技術
 - Java
