@@ -2,10 +2,10 @@
 登録したユーザー間で頼みごとを依頼し合うCRUDアプリケーション
 
 ## 機能
-- ページネーション
 - 頼みごとの新規登録・閲覧・更新・削除
 - 頼みごとの検索
-- メール認証
+- ページネーション
+- メール認証を用いたサインアップ
 - 頼みごとを作成した際依頼先にメール通知を送る。
 - 頼みごとを完了した際に依頼元にメール通知を送る。
 - 頼みごとの期限が１時間を切ると、依頼先にメール通知を送る。
@@ -28,7 +28,14 @@
 - Jenkins
 - AWS(S3,CodePipeline,CodeDeploy,EC2,RDS,Route53)
 
-## プロパティ
+## デモプレイ用ログインアカウント
+```bash
+URL:
+ユーザー名:hoge
+パスワード:password
+```
+
+## ローカル用プロパティ
 application.properties
 ```bash
 spring.datasource.url=jdbc:mysql://localhost:3306/task_management
@@ -37,7 +44,7 @@ spring.datasource.password=spring1
 spring.session.store-type=jdbc
 
 server.port=9996
-spring.mail.host =smtp.gmail.com
+spring.mail.host=smtp.gmail.com
 spring.mail.username=登録したメールアドレス
 spring.mail.password=二段階認証の際に設定したパスワード
 spring.mail.port=587
@@ -47,13 +54,6 @@ spring.mail.properties.mail.smtp.starttls.enable: true
 spring.datasource.schema=classpath:schema.sql
 spring.datasource.initialization-mode=always
 ```
-
-## デモプレイ用ログインアカウント
-```bash
-ユーザー名:hoge
-パスワード:password
-```
-
 
 ## クローン
 ```bash
