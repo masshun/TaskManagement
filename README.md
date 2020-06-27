@@ -6,6 +6,9 @@
 頼みごとを完了した際に依頼元にメール通知を送る。
 頼みごとの期限が１時間を切ると、依頼先にメール通知を送る。
 
+# アーキテクチャ図
+![Untitled Diagram](https://user-images.githubusercontent.com/60130295/85916747-9a312400-b88e-11ea-87f0-25ebf7febcba.png)
+
 # 使い方
 ```bash
 git clone https://github.com/masshun/TaskManagement.git
