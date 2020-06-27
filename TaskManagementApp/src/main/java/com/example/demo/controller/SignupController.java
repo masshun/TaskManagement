@@ -42,7 +42,7 @@ public class SignupController {
 	@PostMapping
 	public String postSignUp(@ModelAttribute @Validated AccountForm form, BindingResult bindingResult, Model model,
 			RedirectAttributes redirectAttributes, HttpServletRequest request, String username, String password) {
-		if (bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors() || !(form.getPassword().equals(form.getConfPassword()))) {
 			model.addAttribute("error", "入力値に誤りがあります");
 			return "auth/signup";
 		}

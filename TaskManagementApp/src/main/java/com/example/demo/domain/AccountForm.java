@@ -25,6 +25,10 @@ public class AccountForm implements Serializable {
 	@Pattern(regexp = "[a-zA-Z0-9]*", message = "半角英数字を入力してください")
 	private String password;
 
+	@Size(min = 8, max = 255, message = "8文字以上255文字以内で入力してください")
+	@Pattern(regexp = "[a-zA-Z0-9]*", message = "半角英数字を入力してください")
+	private String confPassword;
+
 	@Size(max = 255, message = "255文字以内で入力してください")
 	@Pattern(regexp = "^([\\w])+([\\w\\._-])*\\@([\\w])+([\\w\\._-])*\\.([a-zA-Z])+$", message = "正しいメールアドレスを入力してください")
 	private String email;
