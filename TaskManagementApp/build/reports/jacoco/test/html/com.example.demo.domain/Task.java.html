@@ -19,12 +19,13 @@ import lombok.Setter;
 <span class="fc" id="L19">	private String content;</span>
 <span class="nc" id="L20">	private String label;</span>
 <span class="nc" id="L21">	private int userAddresseeId;</span>
-<span class="nc" id="L22">	private Timestamp deadline;</span>
-<span class="nc" id="L23">	private String status;</span>
+	// TODO 可変オブジェクトの修正
+<span class="nc" id="L23">	private Timestamp deadline;</span>
+<span class="nc" id="L24">	private String status;</span>
 
 	// many to many
-<span class="fc" id="L26">	public List&lt;Account&gt; account;</span>
-<span class="fc" id="L27">	public List&lt;Addressee&gt; addressee;</span>
+<span class="fc" id="L27">	public List&lt;Account&gt; account;</span>
+<span class="fc" id="L28">	public List&lt;Addressee&gt; addressee;</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
