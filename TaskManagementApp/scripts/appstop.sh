@@ -1,0 +1,1 @@
+service TaskManagementApp-0.0.1-SNAPSHOT.jar stop
