@@ -57,7 +57,7 @@ public class RegisterUserService {
 	public void registerMail(AccountForm form, ConfirmationToken confirmationToken, String username) {
 
 		String title = "新規登録 アカウント確認のお願い";
-		String content = username + "さん" + "\n" + "\n" + "以下のリンクにアクセスしてアカウントを認証してください" + "\n" + "http://"
+		String content = username + "さん" + "\n" + "\n" + "以下のリンクにアクセスしてアカウントを認証してください。" + "\n" + "http://"
 				+ prop.get("port") + "signup/validate" + "?id=" + confirmationToken;
 
 		Map<String, String> map = new HashMap<>();
