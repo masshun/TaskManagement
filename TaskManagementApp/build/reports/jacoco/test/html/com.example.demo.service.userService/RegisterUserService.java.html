@@ -57,8 +57,8 @@ import com.example.demo.service.mailService.SendMailService;
 	public void registerMail(AccountForm form, ConfirmationToken confirmationToken, String username) {
 
 <span class="nc" id="L59">		String title = &quot;新規登録 アカウント確認のお願い&quot;;</span>
-<span class="nc" id="L60">		String content = username + &quot;さん&quot; + &quot;\n&quot; + &quot;\n&quot; + &quot;以下のリンクにアクセスしてアカウントを認証してください&quot; + &quot;\n&quot; + &quot;http://&quot;</span>
-<span class="nc" id="L61">				+ prop.get(&quot;port&quot;) + &quot;/signup/validate&quot; + &quot;?id=&quot; + confirmationToken;</span>
+<span class="nc" id="L60">		String content = username + &quot;さん&quot; + &quot;\n&quot; + &quot;\n&quot; + &quot;以下のリンクにアクセスしてアカウントを認証してください。&quot; + &quot;\n&quot; + &quot;http://&quot;</span>
+<span class="nc" id="L61">				+ prop.get(&quot;port&quot;) + &quot;signup/validate&quot; + &quot;?id=&quot; + confirmationToken;</span>
 
 <span class="nc" id="L63">		Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
 <span class="nc" id="L64">		map.put(&quot;from&quot;, prop.get(&quot;mailaddress&quot;));</span>
