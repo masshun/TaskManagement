@@ -38,7 +38,7 @@ public class TaskMapperTest {
 		TaskForm form = getInsertTaskData();
 		taskMapper.save(form);
 		TaskForm actual = taskMapper.findOne(form.getId());
-		assertEquals(actual.toString(), form.toString());
+		assertEquals(form.getTitle(), actual.getTitle());
 	}
 
 	@Test
@@ -48,7 +48,7 @@ public class TaskMapperTest {
 		taskMapper.save(form);
 		taskMapper.updateCompleted(form);
 		TaskForm actual = taskMapper.findOne(form.getId());
-		assertEquals(actual.toString(), form.toString());
+		assertEquals(form.getTitle(), actual.getTitle());
 	}
 
 	@Test
@@ -58,7 +58,7 @@ public class TaskMapperTest {
 		form.setTitle("洗濯物を干す");
 		taskMapper.update(form);
 		TaskForm actual = taskMapper.findOne(form.getId());
-		assertEquals(actual.toString(), form.toString());
+		assertEquals(form.getTitle(), actual.getTitle());
 	}
 
 	@Test
