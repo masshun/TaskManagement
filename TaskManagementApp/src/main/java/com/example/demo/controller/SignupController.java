@@ -62,7 +62,7 @@ public class SignupController {
 		Object obj = httpSession.getAttribute(id);
 		if (obj == null) {
 			redirectAttributes.addFlashAttribute("result", "登録に失敗しました");
-			return "redirect:/";
+			return "redirect:/login";
 		}
 		// ControllerAdviceでダウンキャスト例外
 		ConfirmationToken token = (ConfirmationToken) obj;

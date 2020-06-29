@@ -47,6 +47,9 @@ public class RegisterUserService {
 			if (form.getEmail().equals(m.getEmail())) {
 				throw new MultipleException("すでに登録されているメールアドレスです");
 			}
+			if (form.getUsername().equals(m.getUsername())) {
+				throw new MultipleException("すでに登録されているユーザー名です");
+			}
 		});
 
 		ConfirmationToken token = new ConfirmationToken(passwordEncoder.encode(password), id, form);
@@ -58,7 +61,7 @@ public class RegisterUserService {
 
 		String title = "新規登録 アカウント確認のお願い";
 		String content = username + "さん" + "\n" + "\n" + "以下のリンクにアクセスしてアカウントを認証してください。" + "\n" + "http://"
-				+ prop.get("port") + "signup/validate" + "?id=" + confirmationToken;
+				+ prop.get("port") + "signup/validate" + "?id=" + confirmationToken.getId();
 
 		Map<String, String> map = new HashMap<>();
 		map.put("from", prop.get("mailaddress"));

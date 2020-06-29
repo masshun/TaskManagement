@@ -56,6 +56,7 @@ public class JavaMailSenderTest {
 		properties.put("mail.smtp.starttls.enable", "true");
 
 		this.session = Session.getDefaultInstance(properties, new Authenticator() {
+			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication("matsushun753@gmail.com", "egqfycstvxkxpxfq");// Specify the Username
 																								// and the PassWord
@@ -74,7 +75,7 @@ public class JavaMailSenderTest {
 
 		// メール送信内容を設定
 		MimeMessage message = new MimeMessage(this.session);
-		message.setRecipient(RecipientType.TO, new InternetAddress("togmail.com"));
+		message.setRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress("togmail.com"));
 		message.setFrom(new InternetAddress("fromgmail.com"));
 		message.setSubject("タイトルです");
 		message.setText("本文です");
