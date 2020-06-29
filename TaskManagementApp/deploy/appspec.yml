@@ -6,10 +6,10 @@ files:
     overwrite: yes
 hooks:
   ApplicationStop:
-    - location: TaskManagementApp/scripts/appstop.sh
+    - location: scripts/appstop.sh
       timeout: 300
       runas: root
   ApplicationStart:
-    - location: TaskManagementApp/scripts/appstart.sh
+    - location: scripts/appstart.sh
       timeout: 300
       runas: root
