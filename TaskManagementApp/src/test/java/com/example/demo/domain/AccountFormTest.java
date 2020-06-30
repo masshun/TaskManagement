@@ -8,15 +8,24 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
+@TestPropertySource(locations = "/test.properties")
+@ExtendWith(MockitoExtension.class)
+@Transactional
+@Sql(statements = { "INSERT INTO user(username, password, email) VALUES ('ユーザー1', 'password', 'hoge@email.com')",
+		"INSERT INTO user(username, password, email)VALUES('ユーザー2', 'password', 'hoge2@email.com')",
+		"INSERT INTO user_addressee(name) VALUES('ユーザー1')", "INSERT INTO user_addressee(name)VALUES('ユーザー2')" })
+
 public class AccountFormTest {
 
 	@Autowired

@@ -62,7 +62,7 @@ import com.example.demo.service.userService.RegisterUserService;
 <span class="nc" id="L62">		Object obj = httpSession.getAttribute(id);</span>
 <span class="nc bnc" id="L63" title="All 2 branches missed.">		if (obj == null) {</span>
 <span class="nc" id="L64">			redirectAttributes.addFlashAttribute(&quot;result&quot;, &quot;登録に失敗しました&quot;);</span>
-<span class="nc" id="L65">			return &quot;redirect:/&quot;;</span>
+<span class="nc" id="L65">			return &quot;redirect:/login&quot;;</span>
 		}
 		// ControllerAdviceでダウンキャスト例外
 <span class="nc" id="L68">		ConfirmationToken token = (ConfirmationToken) obj;</span>

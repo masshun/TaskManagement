@@ -22,7 +22,7 @@ import com.example.demo.service.mailService.SendMailService;
 
 @Service
 @Transactional
-<span class="nc" id="L25">public class RegisterUserService {</span>
+<span class="fc" id="L25">public class RegisterUserService {</span>
 
 	@Autowired
 	MailPropConfig prop;
@@ -47,41 +47,44 @@ import com.example.demo.service.mailService.SendMailService;
 <span class="nc bnc" id="L47" title="All 2 branches missed.">			if (form.getEmail().equals(m.getEmail())) {</span>
 <span class="nc" id="L48">				throw new MultipleException(&quot;すでに登録されているメールアドレスです&quot;);</span>
 			}
-<span class="nc" id="L50">		});</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">			if (form.getUsername().equals(m.getUsername())) {</span>
+<span class="nc" id="L51">				throw new MultipleException(&quot;すでに登録されているユーザー名です&quot;);</span>
+			}
+<span class="nc" id="L53">		});</span>
 
-<span class="nc" id="L52">		ConfirmationToken token = new ConfirmationToken(passwordEncoder.encode(password), id, form);</span>
-<span class="nc" id="L53">		httpSession.setAttribute(id, token);</span>
-<span class="nc" id="L54">		return token;</span>
+<span class="nc" id="L55">		ConfirmationToken token = new ConfirmationToken(passwordEncoder.encode(password), id, form);</span>
+<span class="nc" id="L56">		httpSession.setAttribute(id, token);</span>
+<span class="nc" id="L57">		return token;</span>
 	}
 
 	public void registerMail(AccountForm form, ConfirmationToken confirmationToken, String username) {
 
-<span class="nc" id="L59">		String title = &quot;新規登録 アカウント確認のお願い&quot;;</span>
-<span class="nc" id="L60">		String content = username + &quot;さん&quot; + &quot;\n&quot; + &quot;\n&quot; + &quot;以下のリンクにアクセスしてアカウントを認証してください。&quot; + &quot;\n&quot; + &quot;http://&quot;</span>
-<span class="nc" id="L61">				+ prop.get(&quot;port&quot;) + &quot;signup/validate&quot; + &quot;?id=&quot; + confirmationToken;</span>
+<span class="nc" id="L62">		String title = &quot;新規登録 アカウント確認のお願い&quot;;</span>
+<span class="nc" id="L63">		String content = username + &quot;さん&quot; + &quot;\n&quot; + &quot;\n&quot; + &quot;以下のリンクにアクセスしてアカウントを認証してください。&quot; + &quot;\n&quot; + &quot;http://&quot;</span>
+<span class="nc" id="L64">				+ prop.get(&quot;port&quot;) + &quot;signup/validate&quot; + &quot;?id=&quot; + confirmationToken.getId();</span>
 
-<span class="nc" id="L63">		Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L64">		map.put(&quot;from&quot;, prop.get(&quot;mailaddress&quot;));</span>
-<span class="nc" id="L65">		map.put(&quot;title&quot;, title);</span>
-<span class="nc" id="L66">		map.put(&quot;email&quot;, form.getEmail());</span>
-<span class="nc" id="L67">		map.put(&quot;content&quot;, content);</span>
-<span class="nc" id="L68">		mailService.sendMail(map);</span>
+<span class="nc" id="L66">		Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L67">		map.put(&quot;from&quot;, prop.get(&quot;mailaddress&quot;));</span>
+<span class="nc" id="L68">		map.put(&quot;title&quot;, title);</span>
+<span class="nc" id="L69">		map.put(&quot;email&quot;, form.getEmail());</span>
+<span class="nc" id="L70">		map.put(&quot;content&quot;, content);</span>
+<span class="nc" id="L71">		mailService.sendMail(map);</span>
 
-<span class="nc" id="L70">	}</span>
+<span class="nc" id="L73">	}</span>
 
 	public AccountForm createForm(ConfirmationToken token) {
-<span class="nc" id="L73">		AccountForm form = new AccountForm();</span>
-<span class="nc" id="L74">		form.setEmail(token.getAccountForm().getEmail());</span>
-<span class="nc" id="L75">		form.setUsername(token.getAccountForm().getUsername());</span>
-<span class="nc" id="L76">		form.setPassword(token.getPassword());</span>
+<span class="nc" id="L76">		AccountForm form = new AccountForm();</span>
+<span class="nc" id="L77">		form.setEmail(token.getAccountForm().getEmail());</span>
+<span class="nc" id="L78">		form.setUsername(token.getAccountForm().getUsername());</span>
+<span class="nc" id="L79">		form.setPassword(token.getPassword());</span>
 
-<span class="nc" id="L78">		return form;</span>
+<span class="nc" id="L81">		return form;</span>
 	}
 
 	public void registerUser(AccountForm accountForm) {
-<span class="nc" id="L82">		accountForm.setPassword(passwordEncoder.encode(accountForm.getPassword()));</span>
-<span class="nc" id="L83">		accountMapper.save(accountForm);</span>
-<span class="nc" id="L84">		accountMapper.saveAddressee(accountForm);</span>
-<span class="nc" id="L85">	}</span>
+<span class="nc" id="L85">		accountForm.setPassword(passwordEncoder.encode(accountForm.getPassword()));</span>
+<span class="nc" id="L86">		accountMapper.save(accountForm);</span>
+<span class="nc" id="L87">		accountMapper.saveAddressee(accountForm);</span>
+<span class="nc" id="L88">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
