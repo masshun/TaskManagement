@@ -4,24 +4,23 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body class="text-center"
-	style="color: #fff;">
+<body class="text-center" style="color: #fff;">
 	<div class="d-flex w-100 h-100 mx-auto flex-column">
 		<header th:include="layout :: frag_body"></header>
 		<main role="main" class="mb-auto mt-auto">
-			<h1 style="color: #011627;">頼みごとの詳細</h1>
+			<h2 class="mb-0" style="color: #011627;">頼みごとの詳細</h2>
 
 			<div class="container">
 				<div class="row">
 					<div class="col mt-5">
 						<div class="card"
-							th:style="${taskForm.status} eq '未完' ? 'background-color: #E71D36;' : 'background-color: #0080ff;'">
-							<h2 class="card-header"
-								th:text="${taskForm.status} eq '未完' ? 'これから取り組むこと' : '完了したこと'"></h2>
+							th:style="${taskForm.status} eq '未完' ? 'background-color: #8E0C24;' : 'background-color: #4d638c;'">
+							<h4 class="card-header"
+								th:text="${taskForm.status} eq '未完' ? 'これから取り組むこと' : '完了したこと'"></h4>
 							<div class="card-body" style="color: #011627;">
 								<div class="col">
 									<div class="card card-body mb-3">
-										<h2 class="pb-4">
+										<h4 class="pb-4">
 											<i th:if="${taskForm.label} eq 'green'" style="color: green;"
 												class="fas fa-tags pr-2"></i><i
 												th:if="${taskForm.label} eq 'red'" style="color: red;"
@@ -30,15 +29,16 @@
 												class="fas fa-tags pr-2"></i><span
 												class="card-title font-weight-bold"
 												th:text="${taskForm.title}"></span>
-										</h2>
+										</h4>
 										<div class="card-text">
 											<h4>
 												<i class="far fa-clipboard fa-lg pr-2 pb-4"></i><span
 													th:text="${taskForm.content}"></span>
 											</h4>
 											<h4>
-												<i class="far fa-address-book fa-lg pr-2"></i><span
-													th:text="${addressee}" class="pr-5"></span><i
+												<span class="block"> <i
+													class="far fa-address-book fa-lg pr-2"></i><span
+													th:text="${addressee}" class="p-r pr-5"></span></span><i
 													class="far fa-lg fa-clock pr-2"></i><span
 													th:text="${taskForm.deadline}"></span>
 											</h4>

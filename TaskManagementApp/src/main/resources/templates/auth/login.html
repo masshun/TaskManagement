@@ -17,9 +17,8 @@
 				</div>
 			</div>
 			<div style="color: #011627;">
-				<br /> <br />
 				<h4 class="pb-3" th:text="${result}" style="color: red;"></h4>
-				<form class="container pl-5 pr-5" style="width: 47%;" method="post"
+				<form class="mt-auto container pl-5 pr-5 p-reset" style="width: 47%;" method="post"
 					th:action="@{/login}">
 					<p th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
 						th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"

@@ -8,13 +8,11 @@
 	<div class="d-flex w-100 h-100 flex-column">
 		<header th:include="layout :: frag_body"></header>
 		<main role="main" class="mb-auto mt-auto" style="color: #011627;">
-			<h1>頼みごとの編集</h1>
-			<br />
+			<h2>頼みごとの編集</h2>
 			<h2 style="color: red;" th:text="${failed}"></h2>
-			<br />
-			<form class="form-signin m-auto pr-5 pl-5" method="post" action="#"
+			<form class="p-reset form-signin m-auto pr-5 pl-5" method="post" action="#"
 				th:object="${taskForm}" th:action="@{/edit/{id}(id=${taskForm.id})}"
-				style="max-width: 47%;">
+				style="width: 47%;">
 
 				<div class="form-group">
 					<label for="title">タイトル</label> <input id="wrap" type="text"
