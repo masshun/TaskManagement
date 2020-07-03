@@ -1,6 +1,75 @@
 /*
  * Globals
  */
+@media screen and (max-width:1200px) { 
+	
+}
+@media screen and (max-width:480px) {  
+	::placeholder{
+		font-size: 0.7em;
+	}
+	.lead{
+		font-size: 1.0rem;
+	}
+	
+	.jumbotron{
+		margin:0;
+	}
+	
+	.p-reset{
+		width:90% !important ;
+		padding:0;
+	}
+	h1{
+		font-size: 1.9em;
+	}
+	
+	h2, h3{
+		font-size: 1.6em;
+	}
+	
+	.h4, h4{
+		font-size: 1.3em;
+	}
+	.ht{
+		height: 14rem !important;
+	}
+	.block{
+		display: block;
+		padding-bottom: 10px;
+	}
+	
+	.p-r{
+		padding: 0 !important;
+	}
+	
+	body, .size{
+		font-size: 0.8em;
+	}
+	.display-4{
+		font-size: 2.0rem;
+	}
+	
+    h5, .h5{
+		font-size: 0.9rem;
+	}
+	
+	.h6{
+		font-size: 0.9em;
+	}
+	.w-custom{
+		width:80%;
+		margin:auto! important;
+	}
+	.w i, .w span{
+		font-size: 0.8rem;
+	}
+	.w{
+		padding:4px 6px;
+	}
+
+
+}
 
 /* Links */
 a, a:focus, a:hover {

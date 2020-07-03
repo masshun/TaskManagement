@@ -8,11 +8,10 @@
 	<div class="d-flex w-100 h-100 flex-column">
 		<header th:include="layout :: frag_body"></header>
 		<main role="main" class="mt-auto mb-auto" style="color: #011627;">
-			<h1>頼みごとの登録</h1>
-			<br /> <br />
-			<form class="form-signin was-validated mx-auto pr-5 pl-5"
+			<h1 class="pt-1">頼みごとの登録</h1>
+			<form class="p-reset form-signin was-validated m-auto pr-5 pl-5"
 				method="post" action="#" th:action="@{/create}"
-				style="max-width: 47%;" th:object="${taskForm}">
+				style="width: 47%;" th:object="${taskForm}">
 
 				<div class="form-group">
 					<label class="h5" for="title">タイトル</label> <input id="title"
@@ -32,12 +31,12 @@
 				</div>
 				<div class="form-group">
 					<label class="h5" for="exampleFormControlSelect1">ラベル</label> <select
-						onchange="changeItem(this)" class="form-control"
+						onchange="changeItem(this)" style="color: red;" class="form-control"
 						id="exampleFormControlSelect1" name="label">
 						<option th:each="item : ${selectLabel}" th:value="${item.value}"
-							th:text="${item.key}" th:selected="${item.value} eq 'red'">hoge</option>
+							th:text="${item.key}" th:selected="${item.value} eq 'red'" ></option>
 					</select>
-				</div>
+				</div>																			
 				<div class="form-group">
 					<label class="h5" for="userAddresseeId">頼みたいユーザーのID</label> <input
 						id="userAddresseeId" type="number" min="1" class="form-control text-left"
@@ -53,7 +52,7 @@
 						class="err"></small>
 				</div>
 				<input type="hidden" name="userId" th:value="${userId}">
-				<div class="mb-3">
+				<div class="">
 					<button type="submit" class="btn"
 						style="background-color: #011627; color: white;">登録</button>
 					<a href="/" class="btn btn-md ml-2"

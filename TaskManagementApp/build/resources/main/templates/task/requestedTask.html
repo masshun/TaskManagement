@@ -8,19 +8,19 @@
 	style="color: #fff;">
 	<div class="d-flex w-100 h-100 m-auto flex-column">
 		<header th:include="layout :: frag_body"></header>
-		<main role="main" class="mt-auto mb-auto">
-			<h1 class="pt-4" style="color: #011627;">
+		<main role="main" class="mb-auto mt-auto">
+			<h2 class="pt-4" style="color: #011627;">
 				頼みごと一覧
-				<button type="button" class="btn border-white ml-2 rounded-pill"
+				<button type="button" class="w btn border-white ml-2 rounded-pill"
 					data-toggle="collapse" data-target="#collapseExample"
 					aria-expanded="false" aria-controls="collapseExample"
-					style="color: white;">
-					▼<i class="pl-2 fas fa-lg fa-search"></i>
+					style="color: white;"><span>
+					▼</span><i class="pl-2 fas fa-lg fa-search"></i>
 				</button>
-			</h1>
-			<div style="" class="collapse" id="collapseExample">
+			</h2>
+			<div class="collapse" id="collapseExample">
 				<div class="card border-0 card-body mx-auto"
-					style="background: #bac2c6; color: black; width: 50%;">
+					style="background: #bac2c6; color: #011627; width: 50%;">
 					<form method="get" th:action="@{/searchRequestedTask}">
 						<input placeholder="頼みごとのタイトル" type="text" name="param"
 							class="form-control">
@@ -31,21 +31,21 @@
 			</div>
 
 			<div class="container">
-				<div class="row pb-5">
-					<div class="col-lg-6 mt-5">
-						<div class="card" style="background-color: #E71D36;">
+				<div class="row">
+					<div class="col-lg-6 mt-2">
+						<div class="card mx-auto" style="height: 95%; background-color: #8E0C24;">
 							<h5 class="card-header">完了していないこと</h5>
 							<div class="card-body" style="color: #011627;">
 								<div class="col-sm-12">
 									<th:block th:if="${notExecutedTask.empty}">
 										<div class="card card-body mb-3" style="color: #011627;">
-											<h5 class="card-title">これから取り組む頼みごとはありません</h5>
+											<h5 class="card-title size">これから取り組む頼みごとはありません</h5>
 										</div>
 									</th:block>
 									<div th:each="obj : ${notExecutedTask}"
-										class="text-truncate card linkbox card-body mb-3 text-left"
-										style="">
-										<h5 class="pb-2">
+										class="text-truncate card linkbox card-body mb-3 text-left pr-4 pl-4"
+										style="padding: 2%;">
+										<h5>
 											<i th:if="${obj.label} eq 'green'" style="color: green;"
 												class="fas fa-tags pr-2"></i><i
 												th:if="${obj.label} eq 'red'" style="color: red;"
@@ -77,7 +77,7 @@
 							</div>
 							<div class="card-footer">
 								<div th:unless="${notExecutedTask.empty}">
-									<ul class="pagination justify-content-center">
+									<ul class="pagination justify-content-center m-0">
 
 										<li class="page-item"
 											th:classappend="${notExecTaskPage.firstPage}?'disabled':''"
@@ -127,22 +127,21 @@
 						</div>
 					</div>
 
-					<div class="col-lg-6 mt-5">
-						<div class="card" style="background-color: #0080ff;">
+					<div class="col-lg-6 mt-2">
+						<div class="card mx-auto" style="height: 95%; background-color: #4d638c;">
 							<h5 class="card-header">完了したこと</h5>
 							<div class="card-body" style="color: #011627;">
 								<div class="col-sm-12">
 
 									<th:block th:if="${completedTask.empty}">
-										<div class="card card-body mb-3" style="color: #011627;">
-											<h5 th:text="完了した頼みごとはありません" class="card-title"></h5>
+										<div class="card card-body" style="color: #011627;">
+											<h4 th:text="完了した頼みごとはありません" class="card-title size"></h4>
 										</div>
 									</th:block>
 
 									<div th:each="obj : ${completedTask}"
-										class="text-truncate card linkbox card-body mb-3 text-left"
-										style="">
-										<h5 class="pb-2">
+										class="text-truncate card linkbox card-body mb-3 text-left">
+										<h5>
 											<i th:if="${obj.label} eq 'green'" style="color: green;"
 												class="fas fa-tags pr-2"></i><i
 												th:if="${obj.label} eq 'red'" style="color: red;"
@@ -174,7 +173,7 @@
 							</div>
 							<div class="card-footer">
 								<div th:unless="${completedTask.empty}">
-									<ul class="pagination justify-content-center">
+									<ul class="pagination justify-content-center m-0">
 
 										<li class="page-item"
 											th:classappend="${completedTaskPage.firstPage}?'disabled':''"
@@ -206,7 +205,7 @@
 											th:classappend="${completedTaskPage.hasNextPage}? '' : 'disabled'"
 											style="display: inline"><span class="page-link"
 											th:if='${not completedTaskPage.hasNextPage}'>&raquo</span> <a
-											th:if='${ncompletedTaskPage.hasNextPage}' class="page-link"
+											th:if='${completedTaskPage.hasNextPage}' class="page-link"
 											th:href='@{/requestedTask(page=${completedTaskPage.number +1})}'>»</a>
 										</li>
 
@@ -226,11 +225,10 @@
 				</div>
 			</div>
 			<div>
-			<a class="h3 cp_link" style="text-decoration: none; color: #011627;" th:href="@{/receivedTask}">頼まれたこと一覧へ　<i class="fas fa-arrow-right"></i></a>
+			<a class="h4 cp_link" style="text-decoration: none; color: #011627;" th:href="@{/receivedTask}">頼まれたこと一覧へ　<i class="fas fa-arrow-right"></i></a>
 			</div>
 		</main>
 		<footer th:include="layout :: frag_footer"></footer>
-
 	</div>
 </body>
 </html>
