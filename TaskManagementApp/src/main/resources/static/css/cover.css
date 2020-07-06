@@ -1,74 +1,68 @@
 /*
  * Globals
  */
-@media screen and (max-width:1200px) { 
-	
+@media screen and (max-width:675px) {
+	#calendar {
+		height: 650px;
+		max-width: 100% !important;
+	}
 }
-@media screen and (max-width:480px) {  
-	::placeholder{
+
+@media screen and (max-width:480px) {
+	::placeholder {
 		font-size: 0.7em;
 	}
-	.lead{
+	.lead {
 		font-size: 1.0rem;
 	}
-	
-	.jumbotron{
-		margin:0;
+	.jumbotron {
+		margin: 0;
 	}
-	
-	.p-reset{
-		width:90% !important ;
-		padding:0;
+	.p-reset {
+		width: 90% !important;
+		padding: 0;
 	}
-	h1{
+	h1 {
 		font-size: 1.9em;
 	}
-	
-	h2, h3{
+	h2, h3 {
 		font-size: 1.6em;
 	}
-	
-	.h4, h4{
+	.h4, h4 {
 		font-size: 1.3em;
 	}
-	.ht{
+	.ht {
 		height: 14rem !important;
 	}
-	.block{
+	.block {
 		display: block;
 		padding-bottom: 10px;
 	}
-	
-	.p-r{
+	.p-r {
 		padding: 0 !important;
 	}
-	
-	body, .size{
+	body, .size {
 		font-size: 0.8em;
 	}
-	.display-4{
+	.display-4 {
 		font-size: 2.0rem;
 	}
-	
-    h5, .h5{
+	h5, .h5 {
 		font-size: 0.9rem;
 	}
-	
-	.h6{
+	.h6 {
 		font-size: 0.9em;
 	}
-	.w-custom{
-		width:80%;
-		margin:auto! important;
+	.w-custom {
+		width: 80% !important;
+		margin: auto ! important;
 	}
-	.w i, .w span{
+	.w i, .w span {
 		font-size: 0.8rem;
 	}
-	.w{
-		padding:4px 6px;
+	.w {
+		padding: 4px 6px;
 	}
-
-
 }
 
 /* Links */
@@ -124,7 +118,7 @@ body {
 }
 
 .linkbox a:hover {
-	background-color: rgba(46, 196, 182,0.1);
+	background-color: rgba(46, 196, 182, 0.1);
 	text-decoration: none;
 }
 
@@ -136,11 +130,11 @@ input {
 	text-align: center;
 }
 
-.err{
-	color:red;
+.err {
+	color: red;
 }
 
-.fadein{
+.fadeout {
 	opacity: 1;
 	animation-name: fadeout;
 	animation-duration: 3s;
@@ -148,18 +142,19 @@ input {
 	animation-delay: 0.5s;
 }
 
-@keyframes fadeout{
+@keyframes fadeout { 
 	0%{
 		opacity: 1;
 	}
+
 	50%{
 		opacity: 50%;
 	}
+	
 	100%{
 		opacity: 0%;
 	}
 }
-
 .cp_link {
 	position: relative;
 	padding: 0.1em 0.3em;
@@ -167,6 +162,7 @@ input {
 	transition: .3s;
 	color: white;
 }
+
 .cp_link::after {
 	position: absolute;
 	bottom: 0;
@@ -178,6 +174,7 @@ input {
 	transition: .3s;
 	transform: translateX(-50%);
 }
+
 .cp_link:hover::after {
 	width: 100%;
 }
@@ -234,13 +231,26 @@ input {
 	font-weight: 700;
 }
 
+#calendar {
+	max-width: 90%;
+	padding-top: 5%;
+	padding-bottom: 5%;
+	margin: 0;
+}
+
+.fc-day-sun {
+	background-color: #ffecec;
+	color: #f00 !important;
+}
+
+.fc-day-sat {
+	background-color: #eaeaff;
+	color: #00f !important;
+}
+
 /*
  * Footer
  */
 footer {
 	background-color: #011627;
-}
-
-.mastfoot {
-	
 }

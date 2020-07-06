@@ -68,9 +68,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				// デフォルトのログインページ取得回避 GetMapping("/login")と一致
 				.loginPage("/login").failureUrl("/login")
 				// login input nameと一致
-				.usernameParameter("username").passwordParameter("password");
-		// ログイン成功後、ホーム画面に遷移
-		// .defaultSuccessUrl("/", true);
+				.usernameParameter("username").passwordParameter("password")
+				// ログイン成功後、ホーム画面に遷移
+				.defaultSuccessUrl("/", true);
 		http.exceptionHandling().accessDeniedPage("/403");
 
 		http.logout()

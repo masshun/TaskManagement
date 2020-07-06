@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: frag_head">
+</head>
+<body class="text-center">
+	<header th:include="layout :: frag_body"></header>
+	<main class="mt-auto mb-auto" role="main" style="background: white;">
+		<div id='calendar' class="mx-auto"></div>
+	</main>
+	<footer th:fragment="frag_footer" class="mastfoot" style="margin-bottom: 0;">
+		<div>
+			<p style="color: white; padding-bottom: ;" class="mb-0">
+				created by masshun.</p>
+		</div>
+	</footer>
+</body>
+</html>
