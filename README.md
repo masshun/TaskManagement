@@ -20,7 +20,7 @@
 
 ## 開発言語,使用技術
 - Java
-- Spring
+- Spring Framework
 - MySQL
 - HTML
 - CSS
