@@ -135,12 +135,12 @@
 
 									<th:block th:if="${completedTask.empty}">
 										<div class="card card-body" style="color: #011627;">
-											<h4 th:text="完了した頼みごとはありません" class="card-title size"></h4>
+											<h5 th:text="完了した頼みごとはありません" class="card-title size"></h5>
 										</div>
 									</th:block>
 
 									<div th:each="obj : ${completedTask}"
-										class="text-truncate card linkbox card-body mb-3 text-left">
+										class="text-truncate card linkbox card-body mb-3 text-left pr-4 pl-4" style="padding: 2%;">
 										<h5>
 											<i th:if="${obj.label} eq 'green'" style="color: green;"
 												class="fas fa-tags pr-2"></i><i
