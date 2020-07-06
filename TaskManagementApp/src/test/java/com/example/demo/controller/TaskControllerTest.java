@@ -140,14 +140,14 @@ public class TaskControllerTest {
 	@Test
 	void receivedTaskのpost() throws Exception {
 
-		mockMvc.perform(post("/readTask/{id}", 1).param("title", "title").param("content", "hoge").param("label", "red")
+		mockMvc.perform(post("/updateReceivedTask/{id}", 1).param("title", "title").param("content", "hoge").param("label", "red")
 				.param("userAddresseeId", "1").param("status", "完了")).andExpect(redirectedUrl("/"))
 				.andExpect(flash().attribute("successed", "頼みごとが完了しました"));
 	}
 
 	@Test
 	void receivedTaskのpostで未完のままにする() throws Exception {
-		mockMvc.perform(post("/readTask/{id}", 1).param("title", "hoge").param("content", "hoge").param("label", "red")
+		mockMvc.perform(post("/updateReceivedTask/{id}", 1).param("title", "hoge").param("content", "hoge").param("label", "red")
 				.param("userAddresseeId", "1").param("status", "未完")).andExpect(redirectedUrl("/"))
 				.andExpect(flash().attribute("failed", "すでに進行中になっています"));
 	}
@@ -189,7 +189,7 @@ class Task {
 		TaskForm form = new TaskForm();
 		form.setUserId(1);
 		when(taskService.findOne(1)).thenReturn(form);
-		mockMvc.perform(get("/readTask/{id}", 1)).andExpect(status().isOk())
+		mockMvc.perform(get("/updateReceivedTask/{id}", 1)).andExpect(status().isOk())
 				.andExpect(MockMvcResultMatchers.model().attribute("status", statusRadio))
 				.andExpect(MockMvcResultMatchers.model().attribute("task", form));
 	}

@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.security.Principal;
 import java.util.Map;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,6 +45,11 @@ public class TaskController {
 	@GetMapping
 	public String index() {
 		return "index";
+	}
+
+	@GetMapping("/calendar")
+	public String calendar() {
+		return "calendar";
 	}
 
 	@GetMapping("/requestedTask")
@@ -106,8 +112,8 @@ public class TaskController {
 		return "task/receivedTask";
 	}
 
-	@GetMapping("/readTask/{id}")
-	public String readTask(@PathVariable int id, Model model, AccountForm form) {
+	@GetMapping("/updateReceivedTask/{id}")
+	public String updateReceivedTask(@PathVariable int id, Model model, AccountForm form) {
 		TaskForm task = taskService.findOne(id);
 		int senderId = task.getUserId();
 		String sender = user.getSenderName(senderId);
@@ -117,10 +123,10 @@ public class TaskController {
 		model.addAttribute("status", statusRadio);
 		model.addAttribute("form", form);
 		model.addAttribute("task", task);
-		return "task/readReceivedTask";
+		return "task/updateReceivedTask";
 	}
 
-	@PostMapping("/readTask/{id}")
+	@PostMapping("/updateReceivedTask/{id}")
 	public String postCompleted(@PathVariable int id, @ModelAttribute TaskForm task,
 			RedirectAttributes redirectAttributes, Principal p) {
 		task.setId(id);
@@ -131,7 +137,7 @@ public class TaskController {
 
 		// 送り主にメール通知をする
 		taskService.updateCompleted(task);
-		taskNoticeService.sendCompletedNoticeByMail(task, p);
+		taskNoticeService.sendTaskCompletedNoticeByMail(task, p);
 		redirectAttributes.addFlashAttribute("successed", "頼みごとが完了しました");
 		return "redirect:/";
 	}
@@ -151,44 +157,52 @@ public class TaskController {
 	public String createTask(@ModelAttribute @Validated TaskForm taskForm, BindingResult result, Model model,
 			RedirectAttributes redirectAttributes, Principal p) {
 		int userId = user.getLoginUserId(p);
-		if (result.hasErrors() || taskForm.getUserAddresseeId() == userId) {
+		OptionalInt addresseeId = user.getAddresseeId(taskForm.getAddresseeName());
+		if (result.hasErrors() || addresseeId.isEmpty()) {
 			Map<String, String> selectLabel = taskService.getSelectLabel();
 			model.addAttribute("selectLabel", selectLabel);
 			model.addAttribute("userId", userId);
 			model.addAttribute("taskForm", taskForm);
+			model.addAttribute("result", "入力内容に誤りがあります");
 			return "task/createTask";
 		}
+		int id = addresseeId.getAsInt();
+		taskForm.setUserAddresseeId(id);
 		taskForm.setStatus("未完");
 		taskService.save(taskForm);
 
-		taskNoticeService.sendNoticeByMail(taskForm, p);
+		taskNoticeService.sendTaskCreatedNoticeByMail(taskForm, p);
 		redirectAttributes.addFlashAttribute("successed", "登録が完了しました");
 		return "redirect:/";
 	}
 
 	@GetMapping("/readRequestedTask/{id}")
-	public String readTask(@PathVariable int id, Model model) {
+	public String updateReceivedTask(@PathVariable int id, Model model) {
 		TaskForm taskForm = taskService.findOne(id);
 		int addresseeId = taskForm.getUserAddresseeId();
-		String addressee = user.getAddresseeById(addresseeId);
+		Optional<String> addresseeOpt = user.getAddresseeById(addresseeId);
+		String addressee = addresseeOpt.get();
 		model.addAttribute("addressee", addressee);
 		model.addAttribute("taskForm", taskForm);
 		return "task/readRequestedTask";
 	}
 
 	@GetMapping("/edit/{id}")
-	public String editRequiredTask(@PathVariable int id, Model model) {
+	public String editRequestedTask(@PathVariable int id, Model model) {
 		TaskForm taskForm = taskService.findOne(id);
 		Map<String, String> selectLabel = taskService.getSelectLabel();
+		Optional<String> addresseeName = user.getAddresseeById((taskForm.getUserAddresseeId()));
+		model.addAttribute("addresseeName", addresseeName.get());
 		model.addAttribute("selectLabel", selectLabel);
 		model.addAttribute("taskForm", taskForm);
 		return "task/editRequestedTask";
 	}
 
 	@PostMapping("/edit/{id}")
-	public String editRequiredTask(@PathVariable int id, @ModelAttribute @Validated TaskForm taskForm,
+	public String editRequestedTask(@PathVariable int id, @ModelAttribute @Validated TaskForm taskForm,
 			BindingResult result, Model model, RedirectAttributes redirectAttributes, Principal p) {
-		if (result.hasErrors() || taskForm.getUserAddresseeId() == user.getLoginUserId(p)) {
+		OptionalInt addresseeIdOpt = user.getAddresseeId(taskForm.getAddresseeName());
+		if (result.hasErrors() || addresseeIdOpt.isEmpty()) {
 			TaskForm form = taskService.findOne(id);
 			Map<String, String> selectLabel = taskService.getSelectLabel();
 			model.addAttribute("selectLabel", selectLabel);
@@ -196,12 +210,15 @@ public class TaskController {
 			model.addAttribute("failed", "入力値に問題があります");
 			return "task/editRequestedTask";
 		}
+		int addresseeId = addresseeIdOpt.getAsInt();
+		taskForm.setUserAddresseeId(addresseeId);
 		taskForm.setId(id);
 		taskForm.setUserId(user.getLoginUserId(p));
 		// 削除しない限りタスクを完了扱いにはしない
 		taskForm.setStatus("未完");
 
 		taskService.update(taskForm);
+		taskNoticeService.sendTaskEditedNoticeByMail(taskForm, p);
 		redirectAttributes.addFlashAttribute("successed", "更新が完了しました");
 		return "redirect:/";
 	}

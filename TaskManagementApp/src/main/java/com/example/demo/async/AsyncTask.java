@@ -6,6 +6,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,10 +47,11 @@ public class AsyncTask {
 		LocalDateTime now = timestamp.toLocalDateTime();
 
 		int id = 0;
-		String addressee;
+		Optional<String> addressee;
 		LocalDateTime deadline;
 		String email;
 		String taskTitle;
+		String taskContent;
 		String title = "頼まれたことはもう終わりましたか？";
 
 		String port = prop.get("port");
@@ -68,8 +70,9 @@ public class AsyncTask {
 				addressee = getAddressee.getAddresseeById(id);
 				email = getAddressee.getAddreseeMailById(id);
 				taskTitle = t.getTitle();
-				content = addressee + "さん" + "\n" + "頼みごと: " + "\n" + taskTitle
-						+ "の期限が1時間を切りました。以下のリンクにアクセスして頼みごとの内容を確認してください。" + "\n" + "http://" + port + "/";
+				taskContent = t.getContent();
+				content = addressee + "さん" + "\n" + "頼みごと: " + taskTitle + "\n" + "詳細: " + taskContent + "\n"
+						+ "の期限が1時間を切りました。以下のリンクにアクセスして頼みごとの内容を確認してください。" + "\n" + "http://" + port;
 
 				map.put("email", email);
 				map.put("content", content);
