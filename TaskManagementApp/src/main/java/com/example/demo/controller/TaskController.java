@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.security.Principal;
+import java.text.ParseException;
 import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
@@ -188,10 +189,15 @@ public class TaskController {
 	}
 
 	@GetMapping("/edit/{id}")
-	public String editRequestedTask(@PathVariable int id, Model model) {
+	public String editRequestedTask(@PathVariable int id, Model model) throws ParseException {
 		TaskForm taskForm = taskService.findOne(id);
 		Map<String, String> selectLabel = taskService.getSelectLabel();
 		Optional<String> addresseeName = user.getAddresseeById((taskForm.getUserAddresseeId()));
+		String str = taskForm.getDeadline().substring(0, 16);
+		String ad = str.replaceAll(" ", "");
+		StringBuilder sb = new StringBuilder(ad);
+		sb.insert(10, "T");
+		taskForm.setDeadline(sb.toString());
 		model.addAttribute("addresseeName", addresseeName.get());
 		model.addAttribute("selectLabel", selectLabel);
 		model.addAttribute("taskForm", taskForm);
