@@ -53,19 +53,19 @@ com/example/demo/domain/object/FormButton.java
  com.example.demo.domain.object.FormButton
 com/example/demo/repository/UserDetailsImpl.java
  com.example.demo.repository.UserDetailsImpl
-com/example/demo/domain/object/Page.java
- com.example.demo.domain.object.Page
+com/example/demo/controller/SignupController.java
+ com.example.demo.controller.SignupController
 com/example/demo/domain/object/Event.java
  com.example.demo.domain.object.Event
 com/example/demo/TaskManagementAppApplication.java
  com.example.demo.TaskManagementAppApplication
-com/example/demo/exception/MultipleException.java
- com.example.demo.exception.MultipleException
+com/example/demo/service/userService/RegisterUserService.java
+ com.example.demo.service.userService.RegisterUserService
 com/example/demo/controller/LogoutController.java
  com.example.demo.controller.LogoutController
 com/example/demo/async/AsyncTask.java
  com.example.demo.async.AsyncTask
-com/example/demo/service/userService/RegisterUserService.java
- com.example.demo.service.userService.RegisterUserService
-com/example/demo/controller/SignupController.java
- com.example.demo.controller.SignupController
+com/example/demo/domain/object/Page.java
+ com.example.demo.domain.object.Page
+com/example/demo/exception/MultipleException.java
+ com.example.demo.exception.MultipleException

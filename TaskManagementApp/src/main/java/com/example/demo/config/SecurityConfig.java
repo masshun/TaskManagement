@@ -34,10 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //		return provider;
 //	}
 
-	@Autowired
-	void authenticationManagerBuilder(AuthenticationManagerBuilder builder, UserDetailsServiceImpl service)
-			throws Exception {
-		builder.userDetailsService(service).passwordEncoder(passwordEncoder());
+	public void authenticationManagerBuilder(AuthenticationManagerBuilder builder) throws Exception {
+		builder.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());
 	}
 
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

@@ -69,7 +69,7 @@ public class SignupController {
 
 		AccountForm form = registerUserService.createForm(token);
 		registerUserService.registerUser(form);
-		request.login(form.getUsername(), token.getPassword());
+		request.login(form.getUsername(), token.getAccountForm().getPassword());
 
 		redirectAttributes.addFlashAttribute("result", "登録しました");
 		return "redirect:/";

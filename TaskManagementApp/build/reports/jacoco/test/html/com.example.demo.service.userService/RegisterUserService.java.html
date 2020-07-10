@@ -77,14 +77,12 @@ import com.example.demo.service.mailService.SendMailService;
 <span class="nc" id="L77">		form.setEmail(token.getAccountForm().getEmail());</span>
 <span class="nc" id="L78">		form.setUsername(token.getAccountForm().getUsername());</span>
 <span class="nc" id="L79">		form.setPassword(token.getPassword());</span>
-
-<span class="nc" id="L81">		return form;</span>
+<span class="nc" id="L80">		return form;</span>
 	}
 
 	public void registerUser(AccountForm accountForm) {
-		// accountForm.setPassword(passwordEncoder.encode(accountForm.getPassword()));
-<span class="nc" id="L86">		accountMapper.save(accountForm);</span>
-<span class="nc" id="L87">		accountMapper.saveAddressee(accountForm);</span>
-<span class="nc" id="L88">	}</span>
+<span class="nc" id="L84">		accountMapper.save(accountForm);</span>
+<span class="nc" id="L85">		accountMapper.saveAddressee(accountForm);</span>
+<span class="nc" id="L86">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

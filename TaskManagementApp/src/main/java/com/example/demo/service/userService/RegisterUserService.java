@@ -77,12 +77,10 @@ public class RegisterUserService {
 		form.setEmail(token.getAccountForm().getEmail());
 		form.setUsername(token.getAccountForm().getUsername());
 		form.setPassword(token.getPassword());
-
 		return form;
 	}
 
 	public void registerUser(AccountForm accountForm) {
-		// accountForm.setPassword(passwordEncoder.encode(accountForm.getPassword()));
 		accountMapper.save(accountForm);
 		accountMapper.saveAddressee(accountForm);
 	}
