@@ -15,7 +15,7 @@ public interface AccountMapper {
 
 	Account findByUserId(int id);
 
-	boolean save(AccountForm accountForm);
+	void save(AccountForm accountForm);
 
 	boolean saveAddressee(AccountForm accountForm);
 
