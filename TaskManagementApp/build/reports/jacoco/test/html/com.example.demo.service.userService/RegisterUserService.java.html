@@ -82,7 +82,7 @@ import com.example.demo.service.mailService.SendMailService;
 	}
 
 	public void registerUser(AccountForm accountForm) {
-<span class="nc" id="L85">		accountForm.setPassword(passwordEncoder.encode(accountForm.getPassword()));</span>
+		// accountForm.setPassword(passwordEncoder.encode(accountForm.getPassword()));
 <span class="nc" id="L86">		accountMapper.save(accountForm);</span>
 <span class="nc" id="L87">		accountMapper.saveAddressee(accountForm);</span>
 <span class="nc" id="L88">	}</span>

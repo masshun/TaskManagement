@@ -82,7 +82,7 @@ public class RegisterUserService {
 	}
 
 	public void registerUser(AccountForm accountForm) {
-		accountForm.setPassword(passwordEncoder.encode(accountForm.getPassword()));
+		// accountForm.setPassword(passwordEncoder.encode(accountForm.getPassword()));
 		accountMapper.save(accountForm);
 		accountMapper.saveAddressee(accountForm);
 	}
