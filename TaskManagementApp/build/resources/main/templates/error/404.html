@@ -11,7 +11,7 @@
 			<h2 th:text="${status} + '　' + ${error}"></h2>
 			<h2>ページが存在しません</h2>
 			<a href="#"
-				th:href="@{/}" class="btn mt-3"
+				type="button" onclick="history.back()" class="btn mt-3"
 				style="background: white; color: #011627;" role="button"
 				aria-pressed="true">戻る</a>
 		</main>

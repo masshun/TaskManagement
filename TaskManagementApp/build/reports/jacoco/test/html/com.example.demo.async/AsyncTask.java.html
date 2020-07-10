@@ -6,6 +6,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import com.example.demo.service.userService.GetUserInfoService;
 
 //TODO runnnableいるかどうか
 @Component
-<span class="fc" id="L23">public class AsyncTask {</span>
+<span class="fc" id="L24">public class AsyncTask {</span>
 
 	@Autowired
 	TaskService taskService;
@@ -38,48 +39,50 @@ import com.example.demo.service.userService.GetUserInfoService;
 	public void run() {
 		// タスクを全て洗い出す
 
-<span class="nc" id="L41">		List&lt;Task&gt; task = taskService.findAll();</span>
+<span class="nc" id="L42">		List&lt;Task&gt; task = taskService.findAll();</span>
 
 		// タスクの期限が１時間前であるかどうかチェック
-<span class="nc" id="L44">		Timestamp timestamp = new Timestamp(System.currentTimeMillis());</span>
-<span class="nc" id="L45">		List&lt;Task&gt; notExecutedTask = task.stream().filter(s -&gt; s.getStatus().equals(&quot;未完&quot;)).collect(Collectors.toList());</span>
-<span class="nc" id="L46">		LocalDateTime now = timestamp.toLocalDateTime();</span>
+<span class="nc" id="L45">		Timestamp timestamp = new Timestamp(System.currentTimeMillis());</span>
+<span class="nc" id="L46">		List&lt;Task&gt; notExecutedTask = task.stream().filter(s -&gt; s.getStatus().equals(&quot;未完&quot;)).collect(Collectors.toList());</span>
+<span class="nc" id="L47">		LocalDateTime now = timestamp.toLocalDateTime();</span>
 
-<span class="nc" id="L48">		int id = 0;</span>
-		String addressee;
+<span class="nc" id="L49">		int id = 0;</span>
+		Optional&lt;String&gt; addressee;
 		LocalDateTime deadline;
 		String email;
 		String taskTitle;
-<span class="nc" id="L53">		String title = &quot;頼まれたことはもう終わりましたか？&quot;;</span>
+		String taskContent;
+<span class="nc" id="L55">		String title = &quot;頼まれたことはもう終わりましたか？&quot;;</span>
 
-<span class="nc" id="L55">		String port = prop.get(&quot;port&quot;);</span>
-<span class="nc" id="L56">		String from = prop.get(&quot;mailaddress&quot;);</span>
+<span class="nc" id="L57">		String port = prop.get(&quot;port&quot;);</span>
+<span class="nc" id="L58">		String from = prop.get(&quot;mailaddress&quot;);</span>
 		String content;
 
-<span class="nc" id="L59">		Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L60">		map.put(&quot;from&quot;, from);</span>
-<span class="nc" id="L61">		map.put(&quot;title&quot;, title);</span>
+<span class="nc" id="L61">		Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L62">		map.put(&quot;from&quot;, from);</span>
+<span class="nc" id="L63">		map.put(&quot;title&quot;, title);</span>
 
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		for (Task t : notExecutedTask) {</span>
-<span class="nc" id="L64">			deadline = t.getDeadline().toLocalDateTime();</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		for (Task t : notExecutedTask) {</span>
+<span class="nc" id="L66">			deadline = t.getDeadline().toLocalDateTime();</span>
 			// 1時間以内であるかどうか
-<span class="nc bnc" id="L66" title="All 4 branches missed.">			if ((ChronoUnit.HOURS.between(now, deadline) &lt;= 1 &amp;&amp; ChronoUnit.HOURS.between(now, deadline) &gt;= 0)) {</span>
-<span class="nc" id="L67">				id = t.getUserAddresseeId();</span>
-<span class="nc" id="L68">				addressee = getAddressee.getAddresseeById(id);</span>
-<span class="nc" id="L69">				email = getAddressee.getAddreseeMailById(id);</span>
-<span class="nc" id="L70">				taskTitle = t.getTitle();</span>
-<span class="nc" id="L71">				content = addressee + &quot;さん&quot; + &quot;\n&quot; + &quot;頼みごと: &quot; + &quot;\n&quot; + taskTitle</span>
-						+ &quot;の期限が1時間を切りました。以下のリンクにアクセスして頼みごとの内容を確認してください。&quot; + &quot;\n&quot; + &quot;http://&quot; + port + &quot;/&quot;;
+<span class="nc bnc" id="L68" title="All 4 branches missed.">			if ((ChronoUnit.HOURS.between(now, deadline) &lt;= 1 &amp;&amp; ChronoUnit.HOURS.between(now, deadline) &gt;= 0)) {</span>
+<span class="nc" id="L69">				id = t.getUserAddresseeId();</span>
+<span class="nc" id="L70">				addressee = getAddressee.getAddresseeById(id);</span>
+<span class="nc" id="L71">				email = getAddressee.getAddreseeMailById(id);</span>
+<span class="nc" id="L72">				taskTitle = t.getTitle();</span>
+<span class="nc" id="L73">				taskContent = t.getContent();</span>
+<span class="nc" id="L74">				content = addressee + &quot;さん&quot; + &quot;\n&quot; + &quot;頼みごと: &quot; + taskTitle + &quot;\n&quot; + &quot;詳細: &quot; + taskContent + &quot;\n&quot;</span>
+						+ &quot;の期限が1時間を切りました。以下のリンクにアクセスして頼みごとの内容を確認してください。&quot; + &quot;\n&quot; + &quot;http://&quot; + port;
 
-<span class="nc" id="L74">				map.put(&quot;email&quot;, email);</span>
-<span class="nc" id="L75">				map.put(&quot;content&quot;, content);</span>
+<span class="nc" id="L77">				map.put(&quot;email&quot;, email);</span>
+<span class="nc" id="L78">				map.put(&quot;content&quot;, content);</span>
 
 				// １時間を切っていたらsendUserIdのアカウントメールに通知を送る
-<span class="nc" id="L78">				sendingService.sendMail(map);</span>
+<span class="nc" id="L81">				sendingService.sendMail(map);</span>
 
 			}
-<span class="nc" id="L81">		}</span>
-<span class="nc" id="L82">	}</span>
+<span class="nc" id="L84">		}</span>
+<span class="nc" id="L85">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

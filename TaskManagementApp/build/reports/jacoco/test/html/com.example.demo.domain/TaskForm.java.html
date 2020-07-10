@@ -3,10 +3,8 @@
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -17,34 +15,40 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-<span class="fc" id="L20">@Setter</span>
-<span class="fc" id="L21">public class TaskForm implements Serializable {</span>
+<span class="pc" id="L18">@Setter</span>
+<span class="fc" id="L19">public class TaskForm implements Serializable {</span>
 
 	private static final long serialVersionUID = 1L;
 
-<span class="fc" id="L25">	private int id;</span>
-<span class="fc" id="L26">	private int userId;</span>
+<span class="fc" id="L23">	private int id;</span>
+<span class="fc" id="L24">	private int userId;</span>
+<span class="fc" id="L25">	private int userAddresseeId;</span>
+
 	@NotEmpty(message = &quot;必須項目です&quot;)
 	@Size(max = 50, message = &quot;1文字以上50文字以内で入力してください&quot;)
 <span class="fc" id="L29">	private String title;</span>
+
 	@NotEmpty(message = &quot;必須項目です&quot;)
 	@Size(max = 255, message = &quot;1文字以上255文字以内で入力してください&quot;)
-<span class="fc" id="L32">	private String content;</span>
+<span class="fc" id="L33">	private String content;</span>
+
 	@NotEmpty(message = &quot;必須項目です&quot;)
-<span class="fc" id="L34">	private String label;</span>
-	@NotNull(message = &quot;必須項目です&quot;)
-	@Min(value = 1, message = &quot;1以上の数字を入力してください&quot;)
-<span class="fc" id="L37">	private int userAddresseeId;</span>
+<span class="fc" id="L36">	private String label;</span>
+
+	@NotEmpty(message = &quot;必須項目です&quot;)
+	@Size(max = 30, message = &quot;1文字以上30文字以内で入力してください&quot;)
+<span class="nc" id="L40">	private String addresseeName;</span>
+
 	@NotBlank(message = &quot;必須項目です&quot;)
-<span class="fc" id="L39">	private String deadline;</span>
-<span class="fc" id="L40">	private String status;</span>
+<span class="fc" id="L43">	private String deadline;</span>
+<span class="fc" id="L44">	private String status;</span>
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-<span class="nc" id="L44">		SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd'T'HH:mm&quot;);</span>
-<span class="nc" id="L45">		dateFormat.setLenient(false);</span>
-<span class="nc" id="L46">		binder.registerCustomEditor(TaskForm.class, deadline, new CustomDateEditor(dateFormat, false));</span>
-<span class="nc" id="L47">	}</span>
+<span class="nc" id="L48">		SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd'T'HH:mm&quot;);</span>
+<span class="nc" id="L49">		dateFormat.setLenient(false);</span>
+<span class="nc" id="L50">		binder.registerCustomEditor(TaskForm.class, deadline, new CustomDateEditor(dateFormat, false));</span>
+<span class="nc" id="L51">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

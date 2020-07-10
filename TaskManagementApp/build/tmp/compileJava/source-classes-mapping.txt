@@ -24,6 +24,8 @@ com/example/demo/service/taskService/TaskService.java
  com.example.demo.service.taskService.TaskService
 com/example/demo/service/mailService/SendMailService.java
  com.example.demo.service.mailService.SendMailService
+com/example/demo/controller/RestWebController.java
+ com.example.demo.controller.RestWebController
 com/example/demo/service/userService/GetUserInfoService.java
  com.example.demo.service.userService.GetUserInfoService
 com/example/demo/domain/object/TaskList.java
@@ -53,6 +55,8 @@ com/example/demo/repository/UserDetailsImpl.java
  com.example.demo.repository.UserDetailsImpl
 com/example/demo/controller/SignupController.java
  com.example.demo.controller.SignupController
+com/example/demo/domain/object/Event.java
+ com.example.demo.domain.object.Event
 com/example/demo/TaskManagementAppApplication.java
  com.example.demo.TaskManagementAppApplication
 com/example/demo/service/userService/RegisterUserService.java

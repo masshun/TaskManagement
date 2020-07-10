@@ -68,9 +68,9 @@ import com.example.demo.service.userService.UserDetailsServiceImpl;
 				// デフォルトのログインページ取得回避 GetMapping(&quot;/login&quot;)と一致
 <span class="fc" id="L69">				.loginPage(&quot;/login&quot;).failureUrl(&quot;/login&quot;)</span>
 				// login input nameと一致
-<span class="fc" id="L71">				.usernameParameter(&quot;username&quot;).passwordParameter(&quot;password&quot;);</span>
-		// ログイン成功後、ホーム画面に遷移
-		// .defaultSuccessUrl(&quot;/&quot;, true);
+<span class="fc" id="L71">				.usernameParameter(&quot;username&quot;).passwordParameter(&quot;password&quot;)</span>
+				// ログイン成功後、ホーム画面に遷移
+<span class="fc" id="L73">				.defaultSuccessUrl(&quot;/&quot;, true);</span>
 <span class="fc" id="L74">		http.exceptionHandling().accessDeniedPage(&quot;/403&quot;);</span>
 
 <span class="fc" id="L76">		http.logout()</span>

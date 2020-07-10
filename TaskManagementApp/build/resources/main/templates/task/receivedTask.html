@@ -4,9 +4,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body class="text-center"
-	style="color: #fff;">
-	<div class="d-flex w-100 h-100 mx-auto flex-column">
+<body class="text-center" style="color: #fff;">
+	<div class="d-flex w-100 h-100 m-auto flex-column">
 		<header th:include="layout :: frag_body"></header>
 		<main role="main" class="mt-auto mb-auto">
 			<h2 class="pt-4" style="color: #011627;">
@@ -33,7 +32,8 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-6 mt-2">
-						<div class="card mx-auto" style="height: 95%; background-color: #8E0C24;">
+						<div class="card mx-auto"
+							style="height: 95%; background-color: #8E0C24;">
 							<h5 class="card-header">これから取り組むこと</h5>
 							<div class="card-body" style="color: #011627;">
 								<div class="col-sm-12">
@@ -43,7 +43,8 @@
 										</div>
 									</th:block>
 									<div th:each="obj : ${notExecutedTask}"
-										class="text-truncate card linkbox card-body mb-3 text-left pr-4 pl-4" style="padding: 2%;">
+										class="text-truncate card linkbox card-body mb-3 text-left pr-4 pl-4"
+										style="padding: 2%;">
 										<h5>
 											<i th:if="${obj.label} eq 'green'" style="color: green;"
 												class="fas fa-tags pr-2"></i><i
@@ -67,7 +68,8 @@
 													class="far fa-clock pr-2"></i><span
 													th:text="${#dates.format(obj.deadline, 'yyyy-MM-dd HH:mm')}"></span>
 											</p>
-											<a href="#" th:href="@{/readTask/{userId}(userId=${obj.id})}"
+											<a href="#"
+												th:href="@{/updateReceivedTask/{userId}(userId=${obj.id})}"
 												class="btn btn-sm" role="button" aria-pressed="true"></a>
 										</div>
 									</div>
@@ -126,19 +128,21 @@
 					</div>
 
 					<div class="col-lg-6 mt-2">
-						<div class="card mx-auto" style="height: 95%; background-color: #4d638c;">
+						<div class="card mx-auto"
+							style="height: 95%; background-color: #4d638c;">
 							<h5 class="card-header">完了したこと</h5>
 							<div class="card-body" style="color: #011627;">
 								<div class="col-sm-12">
 
 									<th:block th:if="${completedTask.empty}">
 										<div class="card card-body" style="color: #011627;">
-											<h4 th:text="完了した頼みごとはありません" class="card-title size"></h4>
+											<h5 th:text="完了した頼みごとはありません" class="card-title size"></h5>
 										</div>
 									</th:block>
 
 									<div th:each="obj : ${completedTask}"
-										class="text-truncate card linkbox card-body mb-3 text-left">
+										class="text-truncate card linkbox card-body mb-3 text-left pr-4 pl-4"
+										style="padding: 2%;">
 										<h5>
 											<i th:if="${obj.label} eq 'green'" style="color: green;"
 												class="fas fa-tags pr-2"></i><i
@@ -153,19 +157,18 @@
 										<div class="card-text">
 											<p>
 												<i class="far fa-clipboard fa-lg pr-2"></i><span
-													class="text-muted" th:text="${obj.content}"></span>
+													th:text="${obj.content}"></span>
 											</p>
 											<p class="h6 text-right">
 												<i class="fas fa-user-edit pr-2"></i><span
 													th:each="account : ${obj.account}"
 													th:text="${account.username}" class="pr-2"></span> <i
 													class="far fa-clock pr-2"></i><span
-													th:text="${#dates.format(obj.deadline, 'yyyy-MM-dd HH:mm')}"
-													class="text-muted"></span>
-
+													th:text="${#dates.format(obj.deadline, 'yyyy-MM-dd HH:mm')}"></span>
 											</p>
-											<a href="#" th:href="@{/readTask/{id}(id=${obj.id})}"
-												class="btn btn-sm" role="button" aria-pressed="true"></a>
+											<a href="#"
+												th:href="@{/updateReceivedTask/{id}(id=${obj.id})}"
+												role="button" aria-pressed="true"></a>
 										</div>
 									</div>
 								</div>
@@ -224,7 +227,9 @@
 				</div>
 			</div>
 			<div>
-			<a class="h4 cp_link" style="text-decoration: none; color: #011627;" th:href="@{/requestedTask}">頼みごと一覧へ　<i class="fas fa-arrow-right"></i></a>
+				<a class="h4 cp_link" style="text-decoration: none; color: #011627;"
+					th:href="@{/requestedTask}">頼みごと一覧へ <i
+					class="fas fa-arrow-right"></i></a>
 			</div>
 		</main>
 		<footer th:include="layout :: frag_footer"></footer>
