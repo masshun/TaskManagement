@@ -31,7 +31,7 @@
 
 ## デモプレイ用ログインアカウント
 ```bash
-URL:18.181.58.168:9996
+URL:http://task-management-app:9996
 ユーザー名:hoge
 パスワード:password
 ```
