@@ -29,22 +29,21 @@ public class TaskFormTest {
 		taskForm.setDeadline("2020-09-09 12:00:00");
 		taskForm.setLabel("red");
 		taskForm.setStatus("未完");
+		taskForm.setAddresseeName("fuga");
 	}
 
 	@ParameterizedTest
 	@ValueSource(strings = { "氏名", "49文字のあああああ49文字のあああああ49文字のあああああ49文字のあああああ49文字のああああ" })
 	void titleのバリデーション通過(String input) throws Exception {
 		taskForm.setTitle(input);
-		taskForm.setUserAddresseeId(1);
 		validator.validate(taskForm, bindingResult);
-		assertEquals(bindingResult.getFieldError(), null);
+		assertNull(bindingResult.getFieldError());
 	}
 
 	@ParameterizedTest
 	@NullAndEmptySource
 	void titleの空文字(String input) throws Exception {
 		taskForm.setTitle(input);
-		taskForm.setUserAddresseeId(1);
 		validator.validate(taskForm, bindingResult);
 		assertEquals("必須項目です", bindingResult.getFieldError().getDefaultMessage());
 	}
@@ -59,21 +58,29 @@ public class TaskFormTest {
 	}
 
 	@ParameterizedTest
-	@ValueSource(ints = { 1, 100, 10000 })
-	void userAddresseeIdのバリデーション通過(int input) throws Exception {
+	@ValueSource(strings = { "30文字以内のああああ" })
+	void addresseeNameのバリデーション通過(String input) throws Exception {
 		taskForm.setTitle("hoge");
-		taskForm.setUserAddresseeId(input);
+		taskForm.setAddresseeName(input);
 		validator.validate(taskForm, bindingResult);
 		assertNull(bindingResult.getFieldError());
 	}
 
 	@ParameterizedTest
-	@ValueSource(ints = { 0, (int) 0.1 })
-	void userAddresseeIdに0の不正値を入力(int input) throws Exception {
-		taskForm.setTitle("hoge");
-		taskForm.setUserAddresseeId(input);
+	@ValueSource(strings = { "30文字以上のああああああああああああああああああああああああ" })
+	void addresseeNameの文字超過(String input) throws Exception {
+		taskForm.setAddresseeName(input);
 		validator.validate(taskForm, bindingResult);
-		assertEquals("1以上の数字を入力してください", bindingResult.getFieldError().getDefaultMessage());
+		assertEquals("1文字以上30文字以内で入力してください", bindingResult.getFieldError().getDefaultMessage());
+	}
+
+	@ParameterizedTest
+	@NullAndEmptySource
+	void addresseeNameに不正値を入力(String input) throws Exception {
+		taskForm.setTitle("hoge");
+		taskForm.setAddresseeName(input);
+		validator.validate(taskForm, bindingResult);
+		assertEquals("必須項目です", bindingResult.getFieldError().getDefaultMessage());
 	}
 
 }
