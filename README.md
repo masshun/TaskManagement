@@ -5,6 +5,7 @@
 - 頼みごとの新規登録・閲覧・更新・削除
 - 頼みごとの検索
 - ページネーション
+- 認証
 - メール認証を用いたサインアップ
 - 頼まれたことをカレンダーで確認する機能
 - 頼みごとの作成、更新時に依頼相手にメール通知を送る。
@@ -18,6 +19,13 @@
 ## ER図
 ![Untitled Diagram (1)](https://user-images.githubusercontent.com/60130295/85918524-94dbd580-b89e-11ea-9d5f-a00cfbd6e7df.png)
 
+## デモプレイ用ログインアカウント
+```bash
+URL:http://task-management-app:8080
+ユーザー名:hoge
+パスワード:password
+```
+
 ## 開発言語,使用技術
 - Java
 - Spring Framework
@@ -29,12 +37,10 @@
 - Jenkins
 - AWS(S3,CodePipeline,CodeDeploy,EC2,RDS,Route53)
 
-## デモプレイ用ログインアカウント
-```bash
-URL:http://task-management-app:8080
-ユーザー名:hoge
-パスワード:password
-```
+## その他使用技術
+- 多対多のテーブル構造
+- 非同期処理を用いたメール送信
+- 定期実行と非同期を用いて、期限1時間前の頼みごと依頼先にメール通知
 
 ## ローカル用プロパティ
 application.properties
