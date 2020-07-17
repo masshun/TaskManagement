@@ -154,7 +154,7 @@ public class TaskController {
 		return "task/createTask";
 	}
 
-	@PostMapping("/create")
+	@PostMapping("/createTask")
 	public String createTask(@ModelAttribute @Validated TaskForm taskForm, BindingResult result, Model model,
 			RedirectAttributes redirectAttributes, Principal p) {
 		int userId = user.getLoginUserId(p);
