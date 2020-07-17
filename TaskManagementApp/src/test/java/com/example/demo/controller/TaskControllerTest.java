@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
@@ -13,41 +15,51 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.Map;
+import java.util.OptionalInt;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
+import org.springframework.security.web.FilterChainProxy;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.example.demo.domain.TaskForm;
 import com.example.demo.domain.object.PageWrapper;
-import com.example.demo.repository.AccountMapper;
 import com.example.demo.service.taskService.TaskNoticeService;
 import com.example.demo.service.taskService.TaskService;
 import com.example.demo.service.userService.GetUserInfoService;
 import com.example.demo.service.userService.UserDetailsServiceImpl;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@WithMockUser(username = "hoge", password = "password")
+@Transactional
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@TestPropertySource(locations = "classpath:test.properties")
+@Sql(statements = {
+		"INSERT INTO user(username, password, email) VALUES ('ユーザー1', '$2a$10$xRTXvpMWly0oGiu65WZlm.3YL95LGVV2ASFjDhe6WF4.Qji1huIPa', 'hoge@email.com')",
+		"INSERT INTO user(username, password, email) VALUES ('ユーザー2', '$2a$10$xRTXvpMWly0oGiu65WZlm.3YL95LGVV2ASFjDhe6WF4.Qji1huIPa', 'hoge@email.com')",
+		"INSERT INTO user_addressee(name) VALUES('ユーザー1')", "INSERT INTO user_addressee(name) VALUES('ユーザー2')" })
+@WithMockUser(username = "ユーザー1", password = "password")
 public class TaskControllerTest {
-	@Autowired
+
 	private MockMvc mockMvc;
 
 	@Autowired
@@ -60,16 +72,20 @@ public class TaskControllerTest {
 	TaskNoticeService task;
 
 	@Autowired
-	AccountMapper accountMapper;
+	private WebApplicationContext context;
 
 	@Autowired
+	private FilterChainProxy springSecurityFilterChain;
+
+	@InjectMocks
 	private TaskController controller;
 
 	@BeforeEach
-	public void setup() {
-		mockMvc = MockMvcBuilders.standaloneSetup(controller)
-				.setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver()).alwaysDo(log()).build();
+	public void setUp() throws Exception {
+		mockMvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity(springSecurityFilterChain))
+				.alwaysDo(log()).build();
 		MockitoAnnotations.initMocks(this);
+		mockMvc.perform(formLogin("/login").user("ユーザー1").password("password"));
 	}
 
 	@Test
@@ -122,40 +138,50 @@ public class TaskControllerTest {
 		}
 	}
 
-	@Disabled
 	@Test
 	void 頼みごとの新規登録成功() throws Exception {
-		mockMvc.perform(post("/create").param("content", "hoge").param("title", "hoge").param("label", "red")
-				.param("deadline", "2020-09-09 12:00:00").param("userAddresseeId", "1")).andExpect(redirectedUrl("/"))
+		TaskForm taskForm = new TaskForm();
+		taskForm.setAddresseeName("ユーザー2");
+		taskForm.setContent("hoge");
+		taskForm.setDeadline("2020-09-09 12:00:00");
+		taskForm.setTitle("hoge");
+		taskForm.setLabel("red");
+		OptionalInt i = OptionalInt.of(2);
+		when(user.getAddresseeId(taskForm.getAddresseeName())).thenReturn(i);
+		mockMvc.perform(post("/createTask").param("content", "hoge").param("title", "hoge").param("label", "red")
+				.param("deadline", "2020-09-09 12:00:00").param("addresseeName", "ユーザー2")
+				.with(SecurityMockMvcRequestPostProcessors.csrf())).andDo(print()).andExpect(redirectedUrl("/"))
 				.andExpect(flash().attribute("successed", "登録が完了しました"));
 	}
 
 	@Test
 	void 頼みごとの新規登録失敗() throws Exception {
-
-		mockMvc.perform(post("/create").param("content", "")).andExpect(MockMvcResultMatchers.model().hasErrors())
-				.andDo(print()).andExpect(view().name("task/createTask"));
+		mockMvc.perform(post("/createTask").param("content", "").param("title", "hoge").param("label", "red")
+				.param("deadline", "2020-09-09 12:00:00").param("addresseeName", "ユーザー1")
+				.with(SecurityMockMvcRequestPostProcessors.csrf())).andExpect(MockMvcResultMatchers.model().hasErrors())
+				.andExpect(view().name("task/createTask"));
 	}
 
 	@Test
 	void receivedTaskのpost() throws Exception {
-
-		mockMvc.perform(post("/updateReceivedTask/{id}", 1).param("title", "title").param("content", "hoge").param("label", "red")
-				.param("userAddresseeId", "1").param("status", "完了")).andExpect(redirectedUrl("/"))
+		mockMvc.perform(post("/updateReceivedTask/{id}", 1).param("title", "title").param("content", "hoge")
+				.param("label", "red").param("addresseeName", "foo").param("status", "完了")
+				.with(SecurityMockMvcRequestPostProcessors.csrf())).andExpect(redirectedUrl("/"))
 				.andExpect(flash().attribute("successed", "頼みごとが完了しました"));
 	}
 
 	@Test
 	void receivedTaskのpostで未完のままにする() throws Exception {
-		mockMvc.perform(post("/updateReceivedTask/{id}", 1).param("title", "hoge").param("content", "hoge").param("label", "red")
-				.param("userAddresseeId", "1").param("status", "未完")).andExpect(redirectedUrl("/"))
+		mockMvc.perform(post("/updateReceivedTask/{id}", 1).param("title", "hoge").param("content", "hoge")
+				.param("label", "red").param("addresseeName", "foo").param("status", "未完")
+				.with(SecurityMockMvcRequestPostProcessors.csrf())).andDo(print()).andExpect(redirectedUrl("/"))
 				.andExpect(flash().attribute("failed", "すでに進行中になっています"));
 	}
 
 	@Test
 	void delete() throws Exception {
-		mockMvc.perform(post("/delete/{id}", 1)).andExpect(redirectedUrl("/"))
-				.andExpect(flash().attribute("successed", "削除が完了しました"));
+		mockMvc.perform(post("/delete/{id}", 1).with(SecurityMockMvcRequestPostProcessors.csrf()))
+				.andExpect(redirectedUrl("/")).andExpect(flash().attribute("successed", "削除が完了しました"));
 
 	}
 }
