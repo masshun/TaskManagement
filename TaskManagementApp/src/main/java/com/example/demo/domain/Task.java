@@ -21,6 +21,15 @@ public class Task implements Serializable {
 	private int userAddresseeId;
 	// TODO 可変オブジェクトの修正
 	private Timestamp deadline;
+
+	public Timestamp getDeadline() {
+		return this.deadline;
+	}
+
+	public void setDeadline(Timestamp deadline) {
+		this.deadline = deadline;
+	}
+
 	private String status;
 
 	// many to many

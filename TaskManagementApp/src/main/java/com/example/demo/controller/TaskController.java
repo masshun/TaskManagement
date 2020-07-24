@@ -178,7 +178,7 @@ public class TaskController {
 	}
 
 	@GetMapping("/readRequestedTask/{id}")
-	public String updateReceivedTask(@PathVariable int id, Model model) {
+	public String readRequestedTask(@PathVariable int id, Model model) {
 		TaskForm taskForm = taskService.findOne(id);
 		int addresseeId = taskForm.getUserAddresseeId();
 		Optional<String> addresseeOpt = user.getAddresseeById(addresseeId);
@@ -193,6 +193,7 @@ public class TaskController {
 		TaskForm taskForm = taskService.findOne(id);
 		Map<String, String> selectLabel = taskService.getSelectLabel();
 		Optional<String> addresseeName = user.getAddresseeById((taskForm.getUserAddresseeId()));
+		// TODO Formクラスで行う
 		String str = taskForm.getDeadline().substring(0, 16);
 		String ad = str.replaceAll(" ", "");
 		StringBuilder sb = new StringBuilder(ad);

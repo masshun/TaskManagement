@@ -14,17 +14,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import java.util.Map;
+import java.util.Optional;
 import java.util.OptionalInt;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -48,7 +45,6 @@ import com.example.demo.domain.object.PageWrapper;
 import com.example.demo.service.taskService.TaskNoticeService;
 import com.example.demo.service.taskService.TaskService;
 import com.example.demo.service.userService.GetUserInfoService;
-import com.example.demo.service.userService.UserDetailsServiceImpl;
 
 @Transactional
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -89,12 +85,17 @@ public class TaskControllerTest {
 	}
 
 	@Test
-	void indexにgetリクエストする() throws Exception {
+	void indexのget() throws Exception {
 		mockMvc.perform(get("/")).andExpect(status().isOk()).andExpect(view().name("index"));
 	}
 
 	@Test
-	void requestedTaskにgetリクエストする() {
+	void calendarのget() throws Exception {
+		mockMvc.perform(get("/calendar")).andExpect(status().isOk()).andExpect(view().name("calendar"));
+	}
+
+	@Test
+	void requestedTaskのget() {
 		try {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			int userId = user.getLoginUserId(auth);
@@ -116,7 +117,7 @@ public class TaskControllerTest {
 	}
 
 	@Test
-	void receivedTaskにgetリクエストする() {
+	void receivedTaskのget() {
 		try {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -139,7 +140,7 @@ public class TaskControllerTest {
 	}
 
 	@Test
-	void 頼みごとの新規登録成功() throws Exception {
+	void createの成功() throws Exception {
 		TaskForm taskForm = new TaskForm();
 		taskForm.setAddresseeName("ユーザー2");
 		taskForm.setContent("hoge");
@@ -150,12 +151,12 @@ public class TaskControllerTest {
 		when(user.getAddresseeId(taskForm.getAddresseeName())).thenReturn(i);
 		mockMvc.perform(post("/createTask").param("content", "hoge").param("title", "hoge").param("label", "red")
 				.param("deadline", "2020-09-09 12:00:00").param("addresseeName", "ユーザー2")
-				.with(SecurityMockMvcRequestPostProcessors.csrf())).andDo(print()).andExpect(redirectedUrl("/"))
+				.with(SecurityMockMvcRequestPostProcessors.csrf())).andExpect(redirectedUrl("/"))
 				.andExpect(flash().attribute("successed", "登録が完了しました"));
 	}
 
 	@Test
-	void 頼みごとの新規登録失敗() throws Exception {
+	void createの失敗() throws Exception {
 		mockMvc.perform(post("/createTask").param("content", "").param("title", "hoge").param("label", "red")
 				.param("deadline", "2020-09-09 12:00:00").param("addresseeName", "ユーザー1")
 				.with(SecurityMockMvcRequestPostProcessors.csrf())).andExpect(MockMvcResultMatchers.model().hasErrors())
@@ -174,7 +175,7 @@ public class TaskControllerTest {
 	void receivedTaskのpostで未完のままにする() throws Exception {
 		mockMvc.perform(post("/updateReceivedTask/{id}", 1).param("title", "hoge").param("content", "hoge")
 				.param("label", "red").param("addresseeName", "foo").param("status", "未完")
-				.with(SecurityMockMvcRequestPostProcessors.csrf())).andDo(print()).andExpect(redirectedUrl("/"))
+				.with(SecurityMockMvcRequestPostProcessors.csrf())).andExpect(redirectedUrl("/"))
 				.andExpect(flash().attribute("failed", "すでに進行中になっています"));
 	}
 
@@ -182,54 +183,54 @@ public class TaskControllerTest {
 	void delete() throws Exception {
 		mockMvc.perform(post("/delete/{id}", 1).with(SecurityMockMvcRequestPostProcessors.csrf()))
 				.andExpect(redirectedUrl("/")).andExpect(flash().attribute("successed", "削除が完了しました"));
-
-	}
-}
-
-@Nested
-@WebMvcTest(TaskController.class)
-@WithMockUser(username = "hoge", password = "password")
-class Task {
-
-	@Autowired
-	private MockMvc mockMvc;
-
-	@MockBean
-	TaskService taskService;
-
-	@MockBean
-	GetUserInfoService user;
-
-	@MockBean
-	TaskNoticeService taskNoticeService;
-
-	@MockBean
-	UserDetailsServiceImpl impl;
-
-	@Mock
-	TaskForm taskForm;
-
-	@Test
-	void readReceivedTaskのget() throws Exception {
-		Map<String, String> statusRadio = taskService.getStatusRadio();
-		TaskForm form = new TaskForm();
-		form.setUserId(1);
-		when(taskService.findOne(1)).thenReturn(form);
-		mockMvc.perform(get("/updateReceivedTask/{id}", 1)).andExpect(status().isOk())
-				.andExpect(MockMvcResultMatchers.model().attribute("status", statusRadio))
-				.andExpect(MockMvcResultMatchers.model().attribute("task", form));
 	}
 
 	@Test
 	void editのget() throws Exception {
-		TaskForm form = new TaskForm();
-		form.setUserId(1);
-		when(taskService.findOne(1)).thenReturn(form);
-		Map<String, String> selectLabel = taskService.getSelectLabel();
+		TaskForm taskForm = getTaskForm();
+		taskService.save(taskForm);
+		String addresseeName = "ユーザー1";
+		Optional<String> addresseeNameOpt = Optional.of(addresseeName);
+		when(user.getAddresseeById(taskForm.getUserAddresseeId())).thenReturn(addresseeNameOpt);
 		mockMvc.perform(get("/edit/{id}", 1)).andExpect(status().isOk())
-				.andExpect(MockMvcResultMatchers.model().attribute("selectLabel", selectLabel))
-				.andExpect(MockMvcResultMatchers.model().attribute("taskForm", form))
 				.andExpect(view().name("task/editRequestedTask"));
 	}
 
+	@Test
+	void editのpost() throws Exception {
+		TaskForm taskForm = getTaskForm();
+		taskService.save(taskForm);
+		int id = taskForm.getId();
+		OptionalInt i = OptionalInt.of(id);
+		when(user.getAddresseeId(taskForm.getAddresseeName())).thenReturn(i);
+		mockMvc.perform(post("/edit/{id}", id).param("title", "hoge").param("content", "hoge")
+				.param("addresseeName", "ユーザー1").param("deadline", "2020-09-09 12:00:00").param("label", "red")
+				.with(SecurityMockMvcRequestPostProcessors.csrf())).andExpect(redirectedUrl("/"));
+	}
+
+	@Test
+	void editのpost失敗() throws Exception {
+		TaskForm taskForm = getTaskForm();
+		taskService.save(taskForm);
+		int id = taskForm.getId();
+		OptionalInt i = OptionalInt.of(id);
+		when(user.getAddresseeId(taskForm.getAddresseeName())).thenReturn(i);
+		mockMvc.perform(post("/edit/{id}", id).param("title", "").param("content", "hoge")
+				.param("addresseeName", "ユーザー1").param("deadline", "2020-09-09 12:00:00").param("label", "red")
+				.with(SecurityMockMvcRequestPostProcessors.csrf())).andDo(print())
+				.andExpect(view().name("task/editRequestedTask"));
+	}
+
+	public TaskForm getTaskForm() {
+		TaskForm taskForm = new TaskForm();
+		taskForm.setAddresseeName("ユーザー1");
+		taskForm.setContent("hoge");
+		taskForm.setDeadline("2020-09-09 12:00:00");
+		taskForm.setTitle("hoge");
+		taskForm.setLabel("red");
+		taskForm.setUserId(2);
+		taskForm.setUserAddresseeId(15);
+		taskForm.setStatus("未完");
+		return taskForm;
+	}
 }
