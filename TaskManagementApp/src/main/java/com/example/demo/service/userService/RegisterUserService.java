@@ -40,10 +40,10 @@ public class RegisterUserService {
 	SendMailService mailService;
 
 	public ConfirmationToken setConfirmationToken(AccountForm form, String password) {
-		String id = UUID.randomUUID().toString();
-		List<Account> account = accountMapper.findAll();
+		String randomId = UUID.randomUUID().toString();
+		List<Account> accountList = accountMapper.findAll();
 
-		account.forEach(m -> {
+		accountList.forEach(m -> {
 			if (form.getEmail().equals(m.getEmail())) {
 				throw new MultipleException("すでに登録されているメールアドレスです");
 			}
@@ -52,8 +52,8 @@ public class RegisterUserService {
 			}
 		});
 
-		ConfirmationToken token = new ConfirmationToken(passwordEncoder.encode(password), id, form);
-		httpSession.setAttribute(id, token);
+		ConfirmationToken token = new ConfirmationToken(passwordEncoder.encode(password), randomId, form);
+		httpSession.setAttribute(randomId, token);
 		return token;
 	}
 
@@ -61,7 +61,7 @@ public class RegisterUserService {
 
 		String title = "新規登録 アカウント確認のお願い";
 		String content = username + "さん" + "\n" + "\n" + "以下のリンクにアクセスしてアカウントを認証してください。" + "\n" + "http://"
-				+ prop.get("port") + "signup/validate" + "?id=" + confirmationToken.getId();
+				+ prop.get("port") + "signup/validate" + "?id=" + confirmationToken.getRandomId();
 
 		Map<String, String> map = new HashMap<>();
 		map.put("from", prop.get("mailaddress"));
@@ -76,11 +76,12 @@ public class RegisterUserService {
 		AccountForm form = new AccountForm();
 		form.setEmail(token.getAccountForm().getEmail());
 		form.setUsername(token.getAccountForm().getUsername());
-		form.setPassword(token.getPassword());
+		form.setPassword(token.getEncodedPassword());
 		return form;
 	}
 
 	public void registerUser(AccountForm accountForm) {
+		// TODO 1回の呼び出しに変更する
 		accountMapper.save(accountForm);
 		accountMapper.saveAddressee(accountForm);
 	}

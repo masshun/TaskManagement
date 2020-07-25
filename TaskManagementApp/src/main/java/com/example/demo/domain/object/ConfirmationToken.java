@@ -11,20 +11,17 @@ import lombok.Setter;
 @Setter
 public class ConfirmationToken implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	private String password;
+	private String encodedPassword;
 
-	private String id;
+	private String randomId;
 
 	private AccountForm accountForm;
 
-	public ConfirmationToken(String password, String id, AccountForm accountForm) {
-		this.password = password;
-		this.id = id;
+	public ConfirmationToken(String encodedPassword, String randomId, AccountForm accountForm) {
+		this.encodedPassword = encodedPassword;
+		this.randomId = randomId;
 		this.accountForm = accountForm;
 	}
 

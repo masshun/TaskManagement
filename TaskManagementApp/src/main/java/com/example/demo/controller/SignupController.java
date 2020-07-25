@@ -48,6 +48,7 @@ public class SignupController {
 		}
 
 		ConfirmationToken token = registerUserService.setConfirmationToken(form, password);
+		// TODO usernameいらない
 		registerUserService.registerMail(form, token, username);
 
 		return "auth/sendSignupMailNotice";
@@ -56,20 +57,22 @@ public class SignupController {
 	@CrossOrigin
 	@GetMapping("/validate")
 	public String validate(RedirectAttributes redirectAttributes, @RequestParam("id") String id,
-			HttpServletRequest request, String password) throws ServletException {
+			HttpServletRequest request) throws ServletException {
 
 		// UUIDに該当する一時テーブルのユーザー情報を登録
-		Object obj = httpSession.getAttribute(id);
-		if (obj == null) {
+		Object sessionUserData = httpSession.getAttribute(id);
+		if (sessionUserData == null) {
 			redirectAttributes.addFlashAttribute("result", "登録に失敗しました");
 			return "redirect:/login";
 		}
 		// ControllerAdviceでダウンキャスト例外
-		ConfirmationToken token = (ConfirmationToken) obj;
+		ConfirmationToken sessionUserDataToConfToken = (ConfirmationToken) sessionUserData;
 
-		AccountForm form = registerUserService.createForm(token);
-		registerUserService.registerUser(form);
-		request.login(form.getUsername(), token.getAccountForm().getPassword());
+		AccountForm accountForm = registerUserService.createForm(sessionUserDataToConfToken);
+		registerUserService.registerUser(accountForm);
+		String formUsername = accountForm.getUsername();
+		String formRawPassword = sessionUserDataToConfToken.getAccountForm().getPassword();
+		request.login(formUsername, formRawPassword);
 
 		redirectAttributes.addFlashAttribute("result", "登録しました");
 		return "redirect:/";
