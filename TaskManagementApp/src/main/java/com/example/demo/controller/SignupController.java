@@ -50,7 +50,7 @@ public class SignupController {
 		ConfirmationToken confToken = registerUserService.setConfirmationToken(form);
 		registerUserService.authenticateByMail(confToken);
 
-		return "auth/noticeHasBeSendMail";
+		return "auth/noticeMailHasBeenSend";
 	}
 
 	@CrossOrigin

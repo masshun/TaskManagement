@@ -95,7 +95,7 @@ public class SignupControllerTest {
 		mockMvc.perform(
 				post("/signup").param("username", "foo").param("password", "password").flashAttr("accountForm", ac))
 				.andExpect(model().attribute("accountForm", ac)).andExpect(model().hasNoErrors()).andDo(print())
-				.andExpect(view().name("auth/sendSignupMailNotice"));
+				.andExpect(view().name("auth/noticeMailHasBeenSend"));
 	}
 
 	@Test
@@ -103,5 +103,7 @@ public class SignupControllerTest {
 		mockMvc.perform(post("/signup")).andExpect(MockMvcResultMatchers.model().attribute("error", "入力値に誤りがあります"))
 				.andExpect(view().name("auth/signup"));
 	}
+
+	// TODO validateのget
 
 }
