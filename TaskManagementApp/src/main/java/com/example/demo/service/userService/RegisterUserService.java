@@ -39,45 +39,50 @@ public class RegisterUserService {
 	@Autowired
 	SendMailService mailService;
 
-	public ConfirmationToken setConfirmationToken(AccountForm form, String password) {
+	public ConfirmationToken setConfirmationToken(AccountForm accountForm) {
 		String randomId = UUID.randomUUID().toString();
 		List<Account> accountList = accountMapper.findAll();
 
 		accountList.forEach(m -> {
-			if (form.getEmail().equals(m.getEmail())) {
+			if (accountForm.getEmail().equals(m.getEmail())) {
 				throw new MultipleException("すでに登録されているメールアドレスです");
 			}
-			if (form.getUsername().equals(m.getUsername())) {
+			if (accountForm.getUsername().equals(m.getUsername())) {
 				throw new MultipleException("すでに登録されているユーザー名です");
 			}
 		});
-
-		ConfirmationToken token = new ConfirmationToken(passwordEncoder.encode(password), randomId, form);
-		httpSession.setAttribute(randomId, token);
-		return token;
+		
+		//DB登録用のエンコードパスワードを別個用意し、自動ログイン用のエンコードされていないパスワードをaccountFormに格納している
+		String encodedPassword = passwordEncoder.encode(accountForm.getPassword());
+		ConfirmationToken confToken = new ConfirmationToken(encodedPassword, randomId, accountForm);
+		httpSession.setAttribute(randomId, confToken);
+		return confToken;
 	}
 
-	public void registerMail(AccountForm form, ConfirmationToken confirmationToken, String username) {
-
+	public void authenticateByMail(ConfirmationToken confToken) {
 		String title = "新規登録 アカウント確認のお願い";
-		String content = username + "さん" + "\n" + "\n" + "以下のリンクにアクセスしてアカウントを認証してください。" + "\n" + "http://"
-				+ prop.get("port") + "signup/validate" + "?id=" + confirmationToken.getRandomId();
-
-		Map<String, String> map = new HashMap<>();
-		map.put("from", prop.get("mailaddress"));
-		map.put("title", title);
-		map.put("email", form.getEmail());
-		map.put("content", content);
-		mailService.sendMail(map);
-
+		String content = 
+				confToken.getAccountForm().getUsername() + "さん" + 
+				"\n" + 
+				"\n" + 
+				"以下のリンクにアクセスしてアカウントを認証してください。" + 
+				"\n" + 
+				"http://" + prop.get("port") + "signup/validate" + "?id=" + confToken.getId();
+		
+		Map<String, String> mailMap = new HashMap<>();
+		mailMap.put("from", prop.get("mailaddress"));
+		mailMap.put("title", title);
+		mailMap.put("email", confToken.getAccountForm().getEmail());
+		mailMap.put("content", content);
+		mailService.sendMail(mailMap);
 	}
 
 	public AccountForm createForm(ConfirmationToken token) {
-		AccountForm form = new AccountForm();
-		form.setEmail(token.getAccountForm().getEmail());
-		form.setUsername(token.getAccountForm().getUsername());
-		form.setPassword(token.getEncodedPassword());
-		return form;
+		AccountForm accountform = new AccountForm();
+		accountform.setEmail(token.getAccountForm().getEmail());
+		accountform.setUsername(token.getAccountForm().getUsername());
+		accountform.setPassword(token.getEncodedPassword());
+		return accountform;
 	}
 
 	public void registerUser(AccountForm accountForm) {

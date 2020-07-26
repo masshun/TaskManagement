@@ -41,35 +41,36 @@ public class SignupController {
 
 	@PostMapping
 	public String postSignUp(@ModelAttribute @Validated AccountForm form, BindingResult bindingResult, Model model,
-			RedirectAttributes redirectAttributes, HttpServletRequest request, String username, String password) {
+			RedirectAttributes redirectAttributes, HttpServletRequest request) {
 		if (bindingResult.hasErrors() || !(form.getPassword().equals(form.getConfPassword()))) {
 			model.addAttribute("error", "入力値に誤りがあります");
 			return "auth/signup";
 		}
 
-		ConfirmationToken token = registerUserService.setConfirmationToken(form, password);
-		// TODO usernameいらない
-		registerUserService.registerMail(form, token, username);
+		ConfirmationToken confToken = registerUserService.setConfirmationToken(form);
+		registerUserService.authenticateByMail(confToken);
 
-		return "auth/sendSignupMailNotice";
+		return "auth/noticeHasBeSendMail";
 	}
 
 	@CrossOrigin
 	@GetMapping("/validate")
 	public String validate(RedirectAttributes redirectAttributes, @RequestParam("id") String id,
 			HttpServletRequest request) throws ServletException {
-
 		// UUIDに該当する一時テーブルのユーザー情報を登録
 		Object sessionUserData = httpSession.getAttribute(id);
 		if (sessionUserData == null) {
 			redirectAttributes.addFlashAttribute("result", "登録に失敗しました");
 			return "redirect:/login";
 		}
+
 		// ControllerAdviceでダウンキャスト例外
 		ConfirmationToken sessionUserDataToConfToken = (ConfirmationToken) sessionUserData;
 
 		AccountForm accountForm = registerUserService.createForm(sessionUserDataToConfToken);
 		registerUserService.registerUser(accountForm);
+
+		// 自動ログイン
 		String formUsername = accountForm.getUsername();
 		String formRawPassword = sessionUserDataToConfToken.getAccountForm().getPassword();
 		request.login(formUsername, formRawPassword);

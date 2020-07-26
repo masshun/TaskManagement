@@ -15,13 +15,13 @@ public class ConfirmationToken implements Serializable {
 
 	private String encodedPassword;
 
-	private String randomId;
+	private String id;
 
 	private AccountForm accountForm;
 
 	public ConfirmationToken(String encodedPassword, String randomId, AccountForm accountForm) {
 		this.encodedPassword = encodedPassword;
-		this.randomId = randomId;
+		this.id = randomId;
 		this.accountForm = accountForm;
 	}
 
