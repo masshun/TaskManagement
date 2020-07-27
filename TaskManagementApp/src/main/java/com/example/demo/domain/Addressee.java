@@ -2,9 +2,11 @@ package com.example.demo.domain;
 
 import java.io.Serializable;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class Addressee implements Serializable {
 
 	private static final long serialVersionUID = 1L;

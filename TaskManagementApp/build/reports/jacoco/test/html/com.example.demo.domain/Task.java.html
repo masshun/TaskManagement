@@ -20,12 +20,21 @@ import lombok.Setter;
 <span class="nc" id="L20">	private String label;</span>
 <span class="nc" id="L21">	private int userAddresseeId;</span>
 	// TODO 可変オブジェクトの修正
-<span class="nc" id="L23">	private Timestamp deadline;</span>
-<span class="nc" id="L24">	private String status;</span>
+	private Timestamp deadline;
+
+	public Timestamp getDeadline() {
+<span class="nc" id="L26">		return this.deadline;</span>
+	}
+
+	public void setDeadline(Timestamp deadline) {
+<span class="fc" id="L30">		this.deadline = deadline;</span>
+<span class="fc" id="L31">	}</span>
+
+<span class="nc" id="L33">	private String status;</span>
 
 	// many to many
-<span class="fc" id="L27">	public List&lt;Account&gt; account;</span>
-<span class="fc" id="L28">	public List&lt;Addressee&gt; addressee;</span>
+<span class="fc" id="L36">	public List&lt;Account&gt; account;</span>
+<span class="fc" id="L37">	public List&lt;Addressee&gt; addressee;</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

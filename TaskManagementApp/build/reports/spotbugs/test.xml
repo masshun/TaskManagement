@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<BugCollection version="4.0.5" sequence="0" timestamp="1594482987377" analysisTimestamp="1594482987383" release="0.0.1-SNAPSHOT">
+<BugCollection version="4.0.5" sequence="0" timestamp="1595833600556" analysisTimestamp="1595833600560" release="0.0.1-SNAPSHOT">
   <Project projectName="TaskManagementApp (spotbugsTest)">
     <Jar>/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/test/com/example/demo/TaskManagementAppApplicationTests.class</Jar>
     <Jar>/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/test/com/example/demo/repository/TaskMapperTest.class</Jar>
@@ -8,7 +8,6 @@
     <Jar>/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/test/com/example/demo/controller/LoginAndLogoutControllerTest.class</Jar>
     <Jar>/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/test/com/example/demo/controller/TaskControllerTest.class</Jar>
     <Jar>/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/test/com/example/demo/controller/SignupControllerTest.class</Jar>
-    <Jar>/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/test/com/example/demo/controller/Task.class</Jar>
     <Jar>/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/test/com/example/demo/service/JavaMailSenderTest$1.class</Jar>
     <Jar>/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/test/com/example/demo/service/JavaMailSenderTest.class</Jar>
     <Jar>/Users/matsushitashun/git/TaskManagement/TaskManagementApp/build/classes/java/test/com/example/demo/domain/TaskFormTest.class</Jar>
@@ -136,64 +135,28 @@
     <SrcDir>/Users/matsushitashun/git/TaskManagement/TaskManagementApp/src/test/resources</SrcDir>
     <SrcDir>/Users/matsushitashun/git/TaskManagement/TaskManagementApp/src/test/java</SrcDir>
   </Project>
-  <BugInstance type="UUF_UNUSED_FIELD" priority="2" rank="18" abbrev="UuF" category="PERFORMANCE" instanceHash="6c025d59ea85c53326f8d70addf47f77" instanceOccurrenceNum="0" instanceOccurrenceMax="0">
-    <ShortMessage>未使用のフィールド</ShortMessage>
-    <LongMessage>未使用のフィールド: com.example.demo.controller.SignupControllerTest.session</LongMessage>
-    <Class classname="com.example.demo.controller.SignupControllerTest" primary="true">
-      <SourceLine classname="com.example.demo.controller.SignupControllerTest" start="44" end="97" sourcefile="SignupControllerTest.java" sourcepath="com/example/demo/controller/SignupControllerTest.java" relSourcepath="java/com/example/demo/controller/SignupControllerTest.java">
-        <Message>該当箇所 SignupControllerTest.java:[lines 44-97]</Message>
-      </SourceLine>
-      <Message>クラス com.example.demo.controller.SignupControllerTest</Message>
-    </Class>
-    <Field classname="com.example.demo.controller.SignupControllerTest" name="session" signature="Lorg/springframework/mock/web/MockHttpSession;" isStatic="false" primary="true">
-      <SourceLine classname="com.example.demo.controller.SignupControllerTest" sourcefile="SignupControllerTest.java" sourcepath="com/example/demo/controller/SignupControllerTest.java" relSourcepath="java/com/example/demo/controller/SignupControllerTest.java">
-        <Message>該当場所 SignupControllerTest.java</Message>
-      </SourceLine>
-      <Message>フィールド com.example.demo.controller.SignupControllerTest.session</Message>
-    </Field>
-    <SourceLine classname="com.example.demo.controller.SignupControllerTest" sourcefile="SignupControllerTest.java" sourcepath="com/example/demo/controller/SignupControllerTest.java" relSourcepath="java/com/example/demo/controller/SignupControllerTest.java" synthetic="true">
-      <Message>該当場所 SignupControllerTest.java</Message>
-    </SourceLine>
-  </BugInstance>
-  <BugCategory category="PERFORMANCE">
-    <Description>Performance</Description>
-  </BugCategory>
-  <BugPattern type="UUF_UNUSED_FIELD" abbrev="UuF" category="PERFORMANCE">
-    <ShortDescription>未使用のフィールド</ShortDescription>
-    <Details><![CDATA[
-
-<p>
-このフィールドは決して使用されません。クラスから除去することを検討してください。
-</p>
-
-    ]]></Details>
-  </BugPattern>
-  <BugCode abbrev="UuF">
-    <Description>未使用フィールド</Description>
-  </BugCode>
   <Errors errors="0" missingClasses="0"></Errors>
-  <FindBugsSummary timestamp="Sun, 12 Jul 2020 00:56:27 +0900" total_classes="11" referenced_classes="130" total_bugs="1" total_size="479" num_packages="5" java_version="11.0.6" vm_version="11.0.6+8-LTS" cpu_seconds="3.77" clock_seconds="1.58" peak_mbytes="214.56" alloc_mbytes="512.00" gc_seconds="0.29" priority_2="1">
+  <FindBugsSummary timestamp="Mon, 27 Jul 2020 16:06:40 +0900" total_classes="10" referenced_classes="132" total_bugs="0" total_size="524" num_packages="5" java_version="11.0.6" vm_version="11.0.6+8-LTS" cpu_seconds="4.64" clock_seconds="1.88" peak_mbytes="208.26" alloc_mbytes="512.00" gc_seconds="0.20">
     <FileStats path="com/example/demo/TaskManagementAppApplicationTests.java" bugCount="0" size="5"/>
-    <FileStats path="com/example/demo/controller/LoginAndLogoutControllerTest.java" bugCount="0" size="20"/>
-    <FileStats path="com/example/demo/controller/SignupControllerTest.java" bugCount="1" size="32" bugHash="3032bf4f4ee2998271f14d78d45b02be"/>
-    <FileStats path="com/example/demo/controller/TaskControllerTest.java" bugCount="0" size="100"/>
+    <FileStats path="com/example/demo/controller/LoginAndLogoutControllerTest.java" bugCount="0" size="25"/>
+    <FileStats path="com/example/demo/controller/SignupControllerTest.java" bugCount="0" size="38"/>
+    <FileStats path="com/example/demo/controller/TaskControllerTest.java" bugCount="0" size="130"/>
     <FileStats path="com/example/demo/domain/AccountFormTest.java" bugCount="0" size="78"/>
-    <FileStats path="com/example/demo/domain/TaskFormTest.java" bugCount="0" size="44"/>
+    <FileStats path="com/example/demo/domain/TaskFormTest.java" bugCount="0" size="48"/>
     <FileStats path="com/example/demo/repository/AccountMapperTest.java" bugCount="0" size="55"/>
     <FileStats path="com/example/demo/repository/TaskMapperTest.java" bugCount="0" size="89"/>
     <FileStats path="com/example/demo/service/JavaMailSenderTest.java" bugCount="0" size="56"/>
     <PackageStats package="com.example.demo" total_bugs="0" total_types="1" total_size="5">
       <ClassStats class="com.example.demo.TaskManagementAppApplicationTests" sourceFile="TaskManagementAppApplicationTests.java" interface="false" size="5" bugs="0"/>
     </PackageStats>
-    <PackageStats package="com.example.demo.controller" total_bugs="1" total_types="4" total_size="152" priority_2="1">
-      <ClassStats class="com.example.demo.controller.LoginAndLogoutControllerTest" sourceFile="LoginAndLogoutControllerTest.java" interface="false" size="20" bugs="0"/>
-      <ClassStats class="com.example.demo.controller.SignupControllerTest" sourceFile="SignupControllerTest.java" interface="false" size="32" bugs="1" priority_2="1"/>
-      <ClassStats class="com.example.demo.controller.Task" sourceFile="TaskControllerTest.java" interface="false" size="28" bugs="0"/>
-      <ClassStats class="com.example.demo.controller.TaskControllerTest" sourceFile="TaskControllerTest.java" interface="false" size="72" bugs="0"/>
+    <PackageStats package="com.example.demo.controller" total_bugs="0" total_types="3" total_size="193">
+      <ClassStats class="com.example.demo.controller.LoginAndLogoutControllerTest" sourceFile="LoginAndLogoutControllerTest.java" interface="false" size="25" bugs="0"/>
+      <ClassStats class="com.example.demo.controller.SignupControllerTest" sourceFile="SignupControllerTest.java" interface="false" size="38" bugs="0"/>
+      <ClassStats class="com.example.demo.controller.TaskControllerTest" sourceFile="TaskControllerTest.java" interface="false" size="130" bugs="0"/>
     </PackageStats>
-    <PackageStats package="com.example.demo.domain" total_bugs="0" total_types="2" total_size="122">
+    <PackageStats package="com.example.demo.domain" total_bugs="0" total_types="2" total_size="126">
       <ClassStats class="com.example.demo.domain.AccountFormTest" sourceFile="AccountFormTest.java" interface="false" size="78" bugs="0"/>
-      <ClassStats class="com.example.demo.domain.TaskFormTest" sourceFile="TaskFormTest.java" interface="false" size="44" bugs="0"/>
+      <ClassStats class="com.example.demo.domain.TaskFormTest" sourceFile="TaskFormTest.java" interface="false" size="48" bugs="0"/>
     </PackageStats>
     <PackageStats package="com.example.demo.repository" total_bugs="0" total_types="2" total_size="144">
       <ClassStats class="com.example.demo.repository.AccountMapperTest" sourceFile="AccountMapperTest.java" interface="false" size="55" bugs="0"/>
@@ -204,15 +167,21 @@
       <ClassStats class="com.example.demo.service.JavaMailSenderTest$1" sourceFile="JavaMailSenderTest.java" interface="false" size="6" bugs="0"/>
     </PackageStats>
     <FindBugsProfile>
-      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="267" invocations="1064" avgMicrosecondsPerInvocation="251" maxMicrosecondsPerInvocation="6883" standardDeviationMicrosecondsPerInvocation="611"/>
-      <ClassProfile name="edu.umd.cs.findbugs.classfile.impl.ZipCodeBaseFactory" totalMilliseconds="261" invocations="118" avgMicrosecondsPerInvocation="2215" maxMicrosecondsPerInvocation="113384" standardDeviationMicrosecondsPerInvocation="13832"/>
-      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="201" invocations="1077" avgMicrosecondsPerInvocation="187" maxMicrosecondsPerInvocation="14789" standardDeviationMicrosecondsPerInvocation="607"/>
-      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="79" invocations="130" avgMicrosecondsPerInvocation="610" maxMicrosecondsPerInvocation="19999" standardDeviationMicrosecondsPerInvocation="1910"/>
-      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNoSideEffectMethods" totalMilliseconds="53" invocations="130" avgMicrosecondsPerInvocation="410" maxMicrosecondsPerInvocation="4388" standardDeviationMicrosecondsPerInvocation="713"/>
-      <ClassProfile name="edu.umd.cs.findbugs.OpcodeStack$JumpInfoFactory" totalMilliseconds="28" invocations="228" avgMicrosecondsPerInvocation="126" maxMicrosecondsPerInvocation="1323" standardDeviationMicrosecondsPerInvocation="183"/>
-      <ClassProfile name="edu.umd.cs.findbugs.util.TopologicalSort" totalMilliseconds="27" invocations="1024" avgMicrosecondsPerInvocation="27" maxMicrosecondsPerInvocation="908" standardDeviationMicrosecondsPerInvocation="56"/>
-      <ClassProfile name="edu.umd.cs.findbugs.ba.npe.NullDerefAndRedundantComparisonFinder" totalMilliseconds="22" invocations="73" avgMicrosecondsPerInvocation="313" maxMicrosecondsPerInvocation="2781" standardDeviationMicrosecondsPerInvocation="483"/>
-      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteDirectlyRelevantTypeQualifiers" totalMilliseconds="22" invocations="130" avgMicrosecondsPerInvocation="175" maxMicrosecondsPerInvocation="4851" standardDeviationMicrosecondsPerInvocation="473"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="333" invocations="1074" avgMicrosecondsPerInvocation="310" maxMicrosecondsPerInvocation="15765" standardDeviationMicrosecondsPerInvocation="973"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="168" invocations="1086" avgMicrosecondsPerInvocation="155" maxMicrosecondsPerInvocation="9932" standardDeviationMicrosecondsPerInvocation="394"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.impl.ZipCodeBaseFactory" totalMilliseconds="160" invocations="118" avgMicrosecondsPerInvocation="1356" maxMicrosecondsPerInvocation="116706" standardDeviationMicrosecondsPerInvocation="10674"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="95" invocations="132" avgMicrosecondsPerInvocation="726" maxMicrosecondsPerInvocation="9067" standardDeviationMicrosecondsPerInvocation="1517"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNoSideEffectMethods" totalMilliseconds="84" invocations="132" avgMicrosecondsPerInvocation="638" maxMicrosecondsPerInvocation="6650" standardDeviationMicrosecondsPerInvocation="1206"/>
+      <ClassProfile name="edu.umd.cs.findbugs.util.TopologicalSort" totalMilliseconds="55" invocations="1033" avgMicrosecondsPerInvocation="53" maxMicrosecondsPerInvocation="6288" standardDeviationMicrosecondsPerInvocation="217"/>
+      <ClassProfile name="edu.umd.cs.findbugs.OpcodeStack$JumpInfoFactory" totalMilliseconds="55" invocations="232" avgMicrosecondsPerInvocation="237" maxMicrosecondsPerInvocation="7085" standardDeviationMicrosecondsPerInvocation="590"/>
+      <ClassProfile name="edu.umd.cs.findbugs.ba.npe.NullDerefAndRedundantComparisonFinder" totalMilliseconds="39" invocations="77" avgMicrosecondsPerInvocation="517" maxMicrosecondsPerInvocation="3100" standardDeviationMicrosecondsPerInvocation="523"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.JavaClassAnalysisEngine" totalMilliseconds="33" invocations="229" avgMicrosecondsPerInvocation="144" maxMicrosecondsPerInvocation="5602" standardDeviationMicrosecondsPerInvocation="550"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.IsNullValueDataflowFactory" totalMilliseconds="27" invocations="77" avgMicrosecondsPerInvocation="362" maxMicrosecondsPerInvocation="1704" standardDeviationMicrosecondsPerInvocation="309"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.UnconditionalValueDerefDataflowFactory" totalMilliseconds="27" invocations="77" avgMicrosecondsPerInvocation="356" maxMicrosecondsPerInvocation="2439" standardDeviationMicrosecondsPerInvocation="393"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.CFGFactory" totalMilliseconds="26" invocations="77" avgMicrosecondsPerInvocation="344" maxMicrosecondsPerInvocation="2815" standardDeviationMicrosecondsPerInvocation="362"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.TypeDataflowFactory" totalMilliseconds="25" invocations="77" avgMicrosecondsPerInvocation="335" maxMicrosecondsPerInvocation="2008" standardDeviationMicrosecondsPerInvocation="325"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteDirectlyRelevantTypeQualifiers" totalMilliseconds="25" invocations="132" avgMicrosecondsPerInvocation="192" maxMicrosecondsPerInvocation="2586" standardDeviationMicrosecondsPerInvocation="361"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ValueNumberDataflowFactory" totalMilliseconds="24" invocations="80" avgMicrosecondsPerInvocation="310" maxMicrosecondsPerInvocation="964" standardDeviationMicrosecondsPerInvocation="214"/>
     </FindBugsProfile>
   </FindBugsSummary>
   <ClassFeatures></ClassFeatures>

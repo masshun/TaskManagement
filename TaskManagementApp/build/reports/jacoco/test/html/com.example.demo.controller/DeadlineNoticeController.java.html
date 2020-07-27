@@ -14,7 +14,7 @@ import com.example.demo.async.AsyncTask;
 	@Autowired
 	private AsyncTask asyncTask;
 
-	// １時間ごとに期限チェックの実行 秒分時日月曜日
+	// 1時間ごとに期限チェックの実行 秒分時日月曜日
 	@Scheduled(cron = &quot;0 0 */1  * * *&quot;, zone = &quot;Asia/Tokyo&quot;)
 	public void checkDeadline() {
 <span class="nc" id="L20">		this.doTask();</span>

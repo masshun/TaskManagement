@@ -14,7 +14,7 @@ public class DeadlineNoticeController {
 	@Autowired
 	private AsyncTask asyncTask;
 
-	// １時間ごとに期限チェックの実行 秒分時日月曜日
+	// 1時間ごとに期限チェックの実行 秒分時日月曜日
 	@Scheduled(cron = "0 0 */1  * * *", zone = "Asia/Tokyo")
 	public void checkDeadline() {
 		this.doTask();

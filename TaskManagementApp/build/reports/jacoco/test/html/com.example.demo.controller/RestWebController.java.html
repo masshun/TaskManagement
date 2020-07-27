@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.domain.object.Event;
 import com.example.demo.service.taskService.TaskService;
 import com.example.demo.service.userService.GetUserInfoService;
+import com.example.demo.utility.Event;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController

@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.domain.AccountForm;
-import com.example.demo.domain.object.ConfirmationToken;
 import com.example.demo.service.userService.RegisterUserService;
+import com.example.demo.utility.ConfirmationToken;
 
 @Controller
 @Transactional
@@ -41,38 +41,42 @@ import com.example.demo.service.userService.RegisterUserService;
 
 	@PostMapping
 	public String postSignUp(@ModelAttribute @Validated AccountForm form, BindingResult bindingResult, Model model,
-			RedirectAttributes redirectAttributes, HttpServletRequest request, String username, String password) {
+			RedirectAttributes redirectAttributes, HttpServletRequest request) {
 <span class="pc bpc" id="L45" title="1 of 4 branches missed.">		if (bindingResult.hasErrors() || !(form.getPassword().equals(form.getConfPassword()))) {</span>
 <span class="fc" id="L46">			model.addAttribute(&quot;error&quot;, &quot;入力値に誤りがあります&quot;);</span>
 <span class="fc" id="L47">			return &quot;auth/signup&quot;;</span>
 		}
 
-<span class="nc" id="L50">		ConfirmationToken token = registerUserService.setConfirmationToken(form, password);</span>
-<span class="nc" id="L51">		registerUserService.registerMail(form, token, username);</span>
+<span class="fc" id="L50">		ConfirmationToken confToken = registerUserService.setConfirmationToken(form);</span>
+<span class="fc" id="L51">		registerUserService.authenticateByMail(confToken);</span>
 
-<span class="nc" id="L53">		return &quot;auth/sendSignupMailNotice&quot;;</span>
+<span class="fc" id="L53">		return &quot;auth/noticeMailHasBeenSend&quot;;</span>
 	}
 
 	@CrossOrigin
 	@GetMapping(&quot;/validate&quot;)
 	public String validate(RedirectAttributes redirectAttributes, @RequestParam(&quot;id&quot;) String id,
-			HttpServletRequest request, String password) throws ServletException {
-
+			HttpServletRequest request) throws ServletException {
 		// UUIDに該当する一時テーブルのユーザー情報を登録
-<span class="nc" id="L62">		Object obj = httpSession.getAttribute(id);</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (obj == null) {</span>
-<span class="nc" id="L64">			redirectAttributes.addFlashAttribute(&quot;result&quot;, &quot;登録に失敗しました&quot;);</span>
-<span class="nc" id="L65">			return &quot;redirect:/login&quot;;</span>
+<span class="nc" id="L61">		Object sessionUserData = httpSession.getAttribute(id);</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (sessionUserData == null) {</span>
+<span class="nc" id="L63">			redirectAttributes.addFlashAttribute(&quot;result&quot;, &quot;登録に失敗しました&quot;);</span>
+<span class="nc" id="L64">			return &quot;redirect:/login&quot;;</span>
 		}
+
 		// ControllerAdviceでダウンキャスト例外
-<span class="nc" id="L68">		ConfirmationToken token = (ConfirmationToken) obj;</span>
+<span class="nc" id="L68">		ConfirmationToken sessionUserDataToConfToken = (ConfirmationToken) sessionUserData;</span>
 
-<span class="nc" id="L70">		AccountForm form = registerUserService.createForm(token);</span>
-<span class="nc" id="L71">		registerUserService.registerUser(form);</span>
-<span class="nc" id="L72">		request.login(form.getUsername(), token.getAccountForm().getPassword());</span>
+<span class="nc" id="L70">		AccountForm accountForm = registerUserService.createForm(sessionUserDataToConfToken);</span>
+<span class="nc" id="L71">		registerUserService.registerUser(accountForm);</span>
 
-<span class="nc" id="L74">		redirectAttributes.addFlashAttribute(&quot;result&quot;, &quot;登録しました&quot;);</span>
-<span class="nc" id="L75">		return &quot;redirect:/&quot;;</span>
+		// 自動ログイン
+<span class="nc" id="L74">		String formUsername = accountForm.getUsername();</span>
+<span class="nc" id="L75">		String formRawPassword = sessionUserDataToConfToken.getAccountForm().getPassword();</span>
+<span class="nc" id="L76">		request.login(formUsername, formRawPassword);</span>
+
+<span class="nc" id="L78">		redirectAttributes.addFlashAttribute(&quot;result&quot;, &quot;登録しました&quot;);</span>
+<span class="nc" id="L79">		return &quot;redirect:/&quot;;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

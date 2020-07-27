@@ -18,16 +18,16 @@ import com.example.demo.repository.UserDetailsImpl;
 
 	@Override
 	public UserDetailsImpl loadUserByUsername(String username) throws UsernameNotFoundException {
-<span class="nc" id="L21">		Account account = accountMapper.findByUsername(username);</span>
+<span class="fc" id="L21">		Account account = accountMapper.findByUsername(username);</span>
 		// accountがnullになっている
-<span class="nc bnc" id="L23" title="All 2 branches missed.">		if (account == null) {</span>
-<span class="nc" id="L24">			throw new UsernameNotFoundException(&quot;User 404&quot;);</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">		if (account == null) {</span>
+<span class="fc" id="L24">			throw new UsernameNotFoundException(&quot;User 404&quot;);</span>
 		}
-<span class="nc bnc" id="L26" title="All 2 branches missed.">		if (!account.getUsername().equals(username)) {</span>
+<span class="pc bpc" id="L26" title="1 of 2 branches missed.">		if (!account.getUsername().equals(username)) {</span>
 <span class="nc" id="L27">			throw new UsernameNotFoundException(&quot;ユーザー名およびパスワードと一致しません&quot;);</span>
 		}
 		// DBからユーザー情報を取得
-<span class="nc" id="L30">		return new UserDetailsImpl(account);</span>
+<span class="fc" id="L30">		return new UserDetailsImpl(account);</span>
 	}
 
 }

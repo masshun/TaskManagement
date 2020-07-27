@@ -24,11 +24,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.demo.domain.AccountForm;
 import com.example.demo.domain.Task;
 import com.example.demo.domain.TaskForm;
-import com.example.demo.domain.object.PageWrapper;
-import com.example.demo.domain.object.SearchForm;
 import com.example.demo.service.taskService.TaskNoticeService;
 import com.example.demo.service.taskService.TaskService;
 import com.example.demo.service.userService.GetUserInfoService;
+import com.example.demo.utility.PageWrapper;
+import com.example.demo.utility.SearchForm;
 
 @Controller
 @RequestMapping(&quot;/&quot;)
@@ -45,102 +45,102 @@ import com.example.demo.service.userService.GetUserInfoService;
 
 	@GetMapping
 	public String index() {
-<span class="nc" id="L48">		return &quot;index&quot;;</span>
+<span class="fc" id="L48">		return &quot;index&quot;;</span>
 	}
 
 	@GetMapping(&quot;/calendar&quot;)
 	public String calendar() {
-<span class="nc" id="L53">		return &quot;calendar&quot;;</span>
+<span class="fc" id="L53">		return &quot;calendar&quot;;</span>
 	}
 
 	@GetMapping(&quot;/requestedTask&quot;)
 	public String requestedTask(Model model, Principal p, @RequestParam(&quot;page&quot;) Optional&lt;Integer&gt; page,
 			@RequestParam(&quot;size&quot;) Optional&lt;Integer&gt; size) {
-<span class="nc" id="L59">		int userId = user.getLoginUserId(p);</span>
-<span class="nc" id="L60">		String param = null;</span>
-<span class="nc" id="L61">		taskService.setRequestedTask(userId, param);</span>
+<span class="fc" id="L59">		int userId = user.getLoginUserId(p);</span>
+<span class="fc" id="L60">		String param = null;</span>
+<span class="fc" id="L61">		taskService.setRequestedTask(userId, param);</span>
 
-<span class="nc" id="L63">		int currentPage = page.orElse(1);</span>
-<span class="nc" id="L64">		int pageSize = size.orElse(2);</span>
+<span class="fc" id="L63">		int currentPage = page.orElse(1);</span>
+<span class="fc" id="L64">		int pageSize = size.orElse(2);</span>
 
-<span class="nc" id="L66">		Page&lt;Task&gt; notExecutedTask = taskService.getNotExecutedTask(PageRequest.of(currentPage - 1, pageSize));</span>
-<span class="nc" id="L67">		Page&lt;Task&gt; completedTask = taskService.getCompletedTask(PageRequest.of(currentPage - 1, pageSize));</span>
+<span class="fc" id="L66">		Page&lt;Task&gt; notExecutedTask = taskService.getNotExecutedTask(PageRequest.of(currentPage - 1, pageSize));</span>
+<span class="fc" id="L67">		Page&lt;Task&gt; completedTask = taskService.getCompletedTask(PageRequest.of(currentPage - 1, pageSize));</span>
 
-<span class="nc" id="L69">		PageWrapper&lt;Task&gt; notExecTaskPageWrapper = taskService.getNotExecTaskPage(notExecutedTask);</span>
-<span class="nc" id="L70">		PageWrapper&lt;Task&gt; completedTaskWrapper = new PageWrapper&lt;Task&gt;(completedTask);</span>
-<span class="nc" id="L71">		int totalNotExecutedTaskPages = notExecutedTask.getTotalPages();</span>
-<span class="nc" id="L72">		int totalCompletedTaskPages = completedTask.getTotalPages();</span>
+<span class="fc" id="L69">		PageWrapper&lt;Task&gt; notExecTaskPageWrapper = taskService.getNotExecTaskPage(notExecutedTask);</span>
+<span class="fc" id="L70">		PageWrapper&lt;Task&gt; completedTaskWrapper = new PageWrapper&lt;Task&gt;(completedTask);</span>
+<span class="fc" id="L71">		int totalNotExecutedTaskPages = notExecutedTask.getTotalPages();</span>
+<span class="fc" id="L72">		int totalCompletedTaskPages = completedTask.getTotalPages();</span>
 
-<span class="nc" id="L74">		model.addAttribute(&quot;notExecutedTask&quot;, notExecutedTask);</span>
-<span class="nc" id="L75">		model.addAttribute(&quot;completedTask&quot;, completedTask);</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (totalNotExecutedTaskPages &gt; 0) {</span>
+<span class="fc" id="L74">		model.addAttribute(&quot;notExecutedTask&quot;, notExecutedTask);</span>
+<span class="fc" id="L75">		model.addAttribute(&quot;completedTask&quot;, completedTask);</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (totalNotExecutedTaskPages &gt; 0) {</span>
 <span class="nc" id="L77">			model.addAttribute(&quot;notExecTaskPage&quot;, notExecTaskPageWrapper);</span>
 		}
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (totalCompletedTaskPages &gt; 0) {</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (totalCompletedTaskPages &gt; 0) {</span>
 <span class="nc" id="L80">			model.addAttribute(&quot;completedTaskPage&quot;, completedTaskWrapper);</span>
 		}
 
-<span class="nc" id="L83">		return &quot;task/requestedTask&quot;;</span>
+<span class="fc" id="L83">		return &quot;task/requestedTask&quot;;</span>
 	}
 
 	@GetMapping(&quot;/receivedTask&quot;)
 	public String receivedTask(Model model, Principal p, @RequestParam(&quot;page&quot;) Optional&lt;Integer&gt; page,
 			@RequestParam(&quot;size&quot;) Optional&lt;Integer&gt; size) {
-<span class="nc" id="L89">		int userId = user.getLoginUserId(p);</span>
-<span class="nc" id="L90">		String param = null;</span>
-<span class="nc" id="L91">		taskService.setReceivedTask(userId, param);</span>
+<span class="fc" id="L89">		int userId = user.getLoginUserId(p);</span>
+<span class="fc" id="L90">		String param = null;</span>
+<span class="fc" id="L91">		taskService.setReceivedTask(userId, param);</span>
 
-<span class="nc" id="L93">		int currentPage = page.orElse(1);</span>
-<span class="nc" id="L94">		int pageSize = size.orElse(2);</span>
+<span class="fc" id="L93">		int currentPage = page.orElse(1);</span>
+<span class="fc" id="L94">		int pageSize = size.orElse(2);</span>
 
-<span class="nc" id="L96">		Page&lt;Task&gt; notExecutedTask = taskService.getNotExecutedTask(PageRequest.of(currentPage - 1, pageSize));</span>
-<span class="nc" id="L97">		Page&lt;Task&gt; completedTask = taskService.getCompletedTask(PageRequest.of(currentPage - 1, pageSize));</span>
+<span class="fc" id="L96">		Page&lt;Task&gt; notExecutedTask = taskService.getNotExecutedTask(PageRequest.of(currentPage - 1, pageSize));</span>
+<span class="fc" id="L97">		Page&lt;Task&gt; completedTask = taskService.getCompletedTask(PageRequest.of(currentPage - 1, pageSize));</span>
 
-<span class="nc" id="L99">		PageWrapper&lt;Task&gt; notExecTaskPageWrapper = new PageWrapper&lt;Task&gt;(notExecutedTask);</span>
-<span class="nc" id="L100">		PageWrapper&lt;Task&gt; completedTaskWrapper = new PageWrapper&lt;Task&gt;(completedTask);</span>
-<span class="nc" id="L101">		int totalNotExecutedTaskPages = notExecutedTask.getTotalPages();</span>
-<span class="nc" id="L102">		int totalCompletedTaskPages = completedTask.getTotalPages();</span>
+<span class="fc" id="L99">		PageWrapper&lt;Task&gt; notExecTaskPageWrapper = new PageWrapper&lt;Task&gt;(notExecutedTask);</span>
+<span class="fc" id="L100">		PageWrapper&lt;Task&gt; completedTaskWrapper = new PageWrapper&lt;Task&gt;(completedTask);</span>
+<span class="fc" id="L101">		int totalNotExecutedTaskPages = notExecutedTask.getTotalPages();</span>
+<span class="fc" id="L102">		int totalCompletedTaskPages = completedTask.getTotalPages();</span>
 
-<span class="nc" id="L104">		model.addAttribute(&quot;notExecutedTask&quot;, notExecutedTask);</span>
-<span class="nc" id="L105">		model.addAttribute(&quot;completedTask&quot;, completedTask);</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (totalNotExecutedTaskPages &gt; 0) {</span>
+<span class="fc" id="L104">		model.addAttribute(&quot;notExecutedTask&quot;, notExecutedTask);</span>
+<span class="fc" id="L105">		model.addAttribute(&quot;completedTask&quot;, completedTask);</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (totalNotExecutedTaskPages &gt; 0) {</span>
 <span class="nc" id="L107">			model.addAttribute(&quot;notExecTaskPage&quot;, notExecTaskPageWrapper);</span>
 		}
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (totalCompletedTaskPages &gt; 0) {</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (totalCompletedTaskPages &gt; 0) {</span>
 <span class="nc" id="L110">			model.addAttribute(&quot;completedTaskPage&quot;, completedTaskWrapper);</span>
 		}
 
-<span class="nc" id="L113">		return &quot;task/receivedTask&quot;;</span>
+<span class="fc" id="L113">		return &quot;task/receivedTask&quot;;</span>
 	}
 
 	@GetMapping(&quot;/updateReceivedTask/{id}&quot;)
 	public String updateReceivedTask(@PathVariable int id, Model model, AccountForm form) {
-<span class="fc" id="L118">		TaskForm task = taskService.findOne(id);</span>
-<span class="fc" id="L119">		int senderId = task.getUserId();</span>
-<span class="fc" id="L120">		String sender = user.getSenderName(senderId);</span>
+<span class="nc" id="L118">		TaskForm task = taskService.findOne(id);</span>
+<span class="nc" id="L119">		int senderId = task.getUserId();</span>
+<span class="nc" id="L120">		String sender = user.getSenderName(senderId);</span>
 
-<span class="fc" id="L122">		Map&lt;String, String&gt; statusRadio = taskService.getStatusRadio();</span>
-<span class="fc" id="L123">		model.addAttribute(&quot;sender&quot;, sender);</span>
-<span class="fc" id="L124">		model.addAttribute(&quot;status&quot;, statusRadio);</span>
-<span class="fc" id="L125">		model.addAttribute(&quot;form&quot;, form);</span>
-<span class="fc" id="L126">		model.addAttribute(&quot;task&quot;, task);</span>
-<span class="fc" id="L127">		return &quot;task/updateReceivedTask&quot;;</span>
+<span class="nc" id="L122">		Map&lt;String, String&gt; statusRadio = taskService.getStatusRadio();</span>
+<span class="nc" id="L123">		model.addAttribute(&quot;sender&quot;, sender);</span>
+<span class="nc" id="L124">		model.addAttribute(&quot;status&quot;, statusRadio);</span>
+<span class="nc" id="L125">		model.addAttribute(&quot;form&quot;, form);</span>
+<span class="nc" id="L126">		model.addAttribute(&quot;task&quot;, task);</span>
+<span class="nc" id="L127">		return &quot;task/updateReceivedTask&quot;;</span>
 	}
 
 	@PostMapping(&quot;/updateReceivedTask/{id}&quot;)
 	public String postCompleted(@PathVariable int id, @ModelAttribute TaskForm task,
 			RedirectAttributes redirectAttributes, Principal p) {
-<span class="nc" id="L133">		task.setId(id);</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (task.getStatus().equals(&quot;未完&quot;)) {</span>
-<span class="nc" id="L135">			redirectAttributes.addFlashAttribute(&quot;failed&quot;, &quot;すでに進行中になっています&quot;);</span>
-<span class="nc" id="L136">			return &quot;redirect:/&quot;;</span>
+<span class="fc" id="L133">		task.setId(id);</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		if (task.getStatus().equals(&quot;未完&quot;)) {</span>
+<span class="fc" id="L135">			redirectAttributes.addFlashAttribute(&quot;failed&quot;, &quot;すでに進行中になっています&quot;);</span>
+<span class="fc" id="L136">			return &quot;redirect:/&quot;;</span>
 		}
 
 		// 送り主にメール通知をする
-<span class="nc" id="L140">		taskService.updateCompleted(task);</span>
-<span class="nc" id="L141">		taskNoticeService.sendTaskCompletedNoticeByMail(task, p);</span>
-<span class="nc" id="L142">		redirectAttributes.addFlashAttribute(&quot;successed&quot;, &quot;頼みごとが完了しました&quot;);</span>
-<span class="nc" id="L143">		return &quot;redirect:/&quot;;</span>
+<span class="fc" id="L140">		taskService.updateCompleted(task);</span>
+<span class="fc" id="L141">		taskNoticeService.sendTaskCompletedNoticeByMail(task, p);</span>
+<span class="fc" id="L142">		redirectAttributes.addFlashAttribute(&quot;successed&quot;, &quot;頼みごとが完了しました&quot;);</span>
+<span class="fc" id="L143">		return &quot;redirect:/&quot;;</span>
 	}
 
 	@GetMapping(&quot;/createTask&quot;)
@@ -154,31 +154,31 @@ import com.example.demo.service.userService.GetUserInfoService;
 <span class="nc" id="L154">		return &quot;task/createTask&quot;;</span>
 	}
 
-	@PostMapping(&quot;/create&quot;)
+	@PostMapping(&quot;/createTask&quot;)
 	public String createTask(@ModelAttribute @Validated TaskForm taskForm, BindingResult result, Model model,
 			RedirectAttributes redirectAttributes, Principal p) {
-<span class="nc" id="L160">		int userId = user.getLoginUserId(p);</span>
-<span class="nc" id="L161">		OptionalInt addresseeId = user.getAddresseeId(taskForm.getAddresseeName());</span>
-<span class="nc bnc" id="L162" title="All 4 branches missed.">		if (result.hasErrors() || addresseeId.isEmpty()) {</span>
-<span class="nc" id="L163">			Map&lt;String, String&gt; selectLabel = taskService.getSelectLabel();</span>
-<span class="nc" id="L164">			model.addAttribute(&quot;selectLabel&quot;, selectLabel);</span>
-<span class="nc" id="L165">			model.addAttribute(&quot;userId&quot;, userId);</span>
-<span class="nc" id="L166">			model.addAttribute(&quot;taskForm&quot;, taskForm);</span>
-<span class="nc" id="L167">			model.addAttribute(&quot;result&quot;, &quot;入力内容に誤りがあります&quot;);</span>
-<span class="nc" id="L168">			return &quot;task/createTask&quot;;</span>
+<span class="fc" id="L160">		int userId = user.getLoginUserId(p);</span>
+<span class="fc" id="L161">		OptionalInt addresseeId = user.getAddresseeId(taskForm.getAddresseeName());</span>
+<span class="pc bpc" id="L162" title="1 of 4 branches missed.">		if (result.hasErrors() || addresseeId.isEmpty()) {</span>
+<span class="fc" id="L163">			Map&lt;String, String&gt; selectLabel = taskService.getSelectLabel();</span>
+<span class="fc" id="L164">			model.addAttribute(&quot;selectLabel&quot;, selectLabel);</span>
+<span class="fc" id="L165">			model.addAttribute(&quot;userId&quot;, userId);</span>
+<span class="fc" id="L166">			model.addAttribute(&quot;taskForm&quot;, taskForm);</span>
+<span class="fc" id="L167">			model.addAttribute(&quot;result&quot;, &quot;入力内容に誤りがあります&quot;);</span>
+<span class="fc" id="L168">			return &quot;task/createTask&quot;;</span>
 		}
-<span class="nc" id="L170">		int id = addresseeId.getAsInt();</span>
-<span class="nc" id="L171">		taskForm.setUserAddresseeId(id);</span>
-<span class="nc" id="L172">		taskForm.setStatus(&quot;未完&quot;);</span>
-<span class="nc" id="L173">		taskService.save(taskForm);</span>
+<span class="fc" id="L170">		int id = addresseeId.getAsInt();</span>
+<span class="fc" id="L171">		taskForm.setUserAddresseeId(id);</span>
+<span class="fc" id="L172">		taskForm.setStatus(&quot;未完&quot;);</span>
+<span class="fc" id="L173">		taskService.save(taskForm);</span>
 
-<span class="nc" id="L175">		taskNoticeService.sendTaskCreatedNoticeByMail(taskForm, p);</span>
-<span class="nc" id="L176">		redirectAttributes.addFlashAttribute(&quot;successed&quot;, &quot;登録が完了しました&quot;);</span>
-<span class="nc" id="L177">		return &quot;redirect:/&quot;;</span>
+<span class="fc" id="L175">		taskNoticeService.sendTaskCreatedNoticeByMail(taskForm, p);</span>
+<span class="fc" id="L176">		redirectAttributes.addFlashAttribute(&quot;successed&quot;, &quot;登録が完了しました&quot;);</span>
+<span class="fc" id="L177">		return &quot;redirect:/&quot;;</span>
 	}
 
 	@GetMapping(&quot;/readRequestedTask/{id}&quot;)
-	public String updateReceivedTask(@PathVariable int id, Model model) {
+	public String readRequestedTask(@PathVariable int id, Model model) {
 <span class="nc" id="L182">		TaskForm taskForm = taskService.findOne(id);</span>
 <span class="nc" id="L183">		int addresseeId = taskForm.getUserAddresseeId();</span>
 <span class="nc" id="L184">		Optional&lt;String&gt; addresseeOpt = user.getAddresseeById(addresseeId);</span>
@@ -192,106 +192,107 @@ import com.example.demo.service.userService.GetUserInfoService;
 	public String editRequestedTask(@PathVariable int id, Model model) throws ParseException {
 <span class="fc" id="L193">		TaskForm taskForm = taskService.findOne(id);</span>
 <span class="fc" id="L194">		Map&lt;String, String&gt; selectLabel = taskService.getSelectLabel();</span>
-<span class="fc" id="L195">		Optional&lt;String&gt; addresseeName = user.getAddresseeById((taskForm.getUserAddresseeId()));</span>
-<span class="nc" id="L196">		String str = taskForm.getDeadline().substring(0, 16);</span>
-<span class="nc" id="L197">		String ad = str.replaceAll(&quot; &quot;, &quot;&quot;);</span>
-<span class="nc" id="L198">		StringBuilder sb = new StringBuilder(ad);</span>
-<span class="nc" id="L199">		sb.insert(10, &quot;T&quot;);</span>
-<span class="nc" id="L200">		taskForm.setDeadline(sb.toString());</span>
-<span class="nc" id="L201">		model.addAttribute(&quot;addresseeName&quot;, addresseeName.get());</span>
-<span class="nc" id="L202">		model.addAttribute(&quot;selectLabel&quot;, selectLabel);</span>
-<span class="nc" id="L203">		model.addAttribute(&quot;taskForm&quot;, taskForm);</span>
-<span class="nc" id="L204">		return &quot;task/editRequestedTask&quot;;</span>
+<span class="nc" id="L195">		Optional&lt;String&gt; addresseeName = user.getAddresseeById((taskForm.getUserAddresseeId()));</span>
+		// TODO Formクラスで行う
+<span class="nc" id="L197">		String str = taskForm.getDeadline().substring(0, 16);</span>
+<span class="nc" id="L198">		String ad = str.replaceAll(&quot; &quot;, &quot;&quot;);</span>
+<span class="nc" id="L199">		StringBuilder sb = new StringBuilder(ad);</span>
+<span class="nc" id="L200">		sb.insert(10, &quot;T&quot;);</span>
+<span class="nc" id="L201">		taskForm.setDeadline(sb.toString());</span>
+<span class="nc" id="L202">		model.addAttribute(&quot;addresseeName&quot;, addresseeName.get());</span>
+<span class="nc" id="L203">		model.addAttribute(&quot;selectLabel&quot;, selectLabel);</span>
+<span class="nc" id="L204">		model.addAttribute(&quot;taskForm&quot;, taskForm);</span>
+<span class="nc" id="L205">		return &quot;task/editRequestedTask&quot;;</span>
 	}
 
 	@PostMapping(&quot;/edit/{id}&quot;)
 	public String editRequestedTask(@PathVariable int id, @ModelAttribute @Validated TaskForm taskForm,
 			BindingResult result, Model model, RedirectAttributes redirectAttributes, Principal p) {
-<span class="nc" id="L210">		OptionalInt addresseeIdOpt = user.getAddresseeId(taskForm.getAddresseeName());</span>
-<span class="nc bnc" id="L211" title="All 4 branches missed.">		if (result.hasErrors() || addresseeIdOpt.isEmpty()) {</span>
-<span class="nc" id="L212">			TaskForm form = taskService.findOne(id);</span>
-<span class="nc" id="L213">			Map&lt;String, String&gt; selectLabel = taskService.getSelectLabel();</span>
-<span class="nc" id="L214">			model.addAttribute(&quot;selectLabel&quot;, selectLabel);</span>
-<span class="nc" id="L215">			model.addAttribute(&quot;taskForm&quot;, form);</span>
-<span class="nc" id="L216">			model.addAttribute(&quot;failed&quot;, &quot;入力値に問題があります&quot;);</span>
-<span class="nc" id="L217">			return &quot;task/editRequestedTask&quot;;</span>
+<span class="fc" id="L211">		OptionalInt addresseeIdOpt = user.getAddresseeId(taskForm.getAddresseeName());</span>
+<span class="pc bpc" id="L212" title="1 of 4 branches missed.">		if (result.hasErrors() || addresseeIdOpt.isEmpty()) {</span>
+<span class="fc" id="L213">			TaskForm form = taskService.findOne(id);</span>
+<span class="fc" id="L214">			Map&lt;String, String&gt; selectLabel = taskService.getSelectLabel();</span>
+<span class="fc" id="L215">			model.addAttribute(&quot;selectLabel&quot;, selectLabel);</span>
+<span class="fc" id="L216">			model.addAttribute(&quot;taskForm&quot;, form);</span>
+<span class="fc" id="L217">			model.addAttribute(&quot;failed&quot;, &quot;入力値に問題があります&quot;);</span>
+<span class="fc" id="L218">			return &quot;task/editRequestedTask&quot;;</span>
 		}
-<span class="nc" id="L219">		int addresseeId = addresseeIdOpt.getAsInt();</span>
-<span class="nc" id="L220">		taskForm.setUserAddresseeId(addresseeId);</span>
-<span class="nc" id="L221">		taskForm.setId(id);</span>
-<span class="nc" id="L222">		taskForm.setUserId(user.getLoginUserId(p));</span>
+<span class="fc" id="L220">		int addresseeId = addresseeIdOpt.getAsInt();</span>
+<span class="fc" id="L221">		taskForm.setUserAddresseeId(addresseeId);</span>
+<span class="fc" id="L222">		taskForm.setId(id);</span>
+<span class="fc" id="L223">		taskForm.setUserId(user.getLoginUserId(p));</span>
 		// 削除しない限りタスクを完了扱いにはしない
-<span class="nc" id="L224">		taskForm.setStatus(&quot;未完&quot;);</span>
+<span class="fc" id="L225">		taskForm.setStatus(&quot;未完&quot;);</span>
 
-<span class="nc" id="L226">		taskService.update(taskForm);</span>
-<span class="nc" id="L227">		taskNoticeService.sendTaskEditedNoticeByMail(taskForm, p);</span>
-<span class="nc" id="L228">		redirectAttributes.addFlashAttribute(&quot;successed&quot;, &quot;更新が完了しました&quot;);</span>
-<span class="nc" id="L229">		return &quot;redirect:/&quot;;</span>
+<span class="fc" id="L227">		taskService.update(taskForm);</span>
+<span class="fc" id="L228">		taskNoticeService.sendTaskEditedNoticeByMail(taskForm, p);</span>
+<span class="fc" id="L229">		redirectAttributes.addFlashAttribute(&quot;successed&quot;, &quot;更新が完了しました&quot;);</span>
+<span class="fc" id="L230">		return &quot;redirect:/&quot;;</span>
 	}
 
 	@PostMapping(&quot;/delete/{id}&quot;)
 	public String deleteRequiredTask(@PathVariable int id, Model model, RedirectAttributes redirectAttributes) {
-<span class="nc" id="L234">		taskService.delete(id);</span>
-<span class="nc" id="L235">		redirectAttributes.addFlashAttribute(&quot;successed&quot;, &quot;削除が完了しました&quot;);</span>
-<span class="nc" id="L236">		return &quot;redirect:/&quot;;</span>
+<span class="fc" id="L235">		taskService.delete(id);</span>
+<span class="fc" id="L236">		redirectAttributes.addFlashAttribute(&quot;successed&quot;, &quot;削除が完了しました&quot;);</span>
+<span class="fc" id="L237">		return &quot;redirect:/&quot;;</span>
 	}
 
 	@GetMapping(&quot;/searchRequestedTask&quot;)
 	public String searchRequestedTask(Principal p, Model model, @ModelAttribute SearchForm form,
 			@RequestParam(&quot;page&quot;) Optional&lt;Integer&gt; page, @RequestParam(&quot;size&quot;) Optional&lt;Integer&gt; size) {
-<span class="nc" id="L242">		int userId = user.getLoginUserId(p);</span>
-<span class="nc" id="L243">		taskService.setRequestedTask(userId, form.getParam());</span>
-<span class="nc" id="L244">		int currentPage = page.orElse(1);</span>
-<span class="nc" id="L245">		int pageSize = size.orElse(2);</span>
+<span class="nc" id="L243">		int userId = user.getLoginUserId(p);</span>
+<span class="nc" id="L244">		taskService.setRequestedTask(userId, form.getParam());</span>
+<span class="nc" id="L245">		int currentPage = page.orElse(1);</span>
+<span class="nc" id="L246">		int pageSize = size.orElse(2);</span>
 
-<span class="nc" id="L247">		Page&lt;Task&gt; notExecutedTask = taskService.getNotExecutedTask(PageRequest.of(currentPage - 1, pageSize));</span>
-<span class="nc" id="L248">		Page&lt;Task&gt; completedTask = taskService.getCompletedTask(PageRequest.of(currentPage - 1, pageSize));</span>
+<span class="nc" id="L248">		Page&lt;Task&gt; notExecutedTask = taskService.getNotExecutedTask(PageRequest.of(currentPage - 1, pageSize));</span>
+<span class="nc" id="L249">		Page&lt;Task&gt; completedTask = taskService.getCompletedTask(PageRequest.of(currentPage - 1, pageSize));</span>
 
-<span class="nc" id="L250">		PageWrapper&lt;Task&gt; notExecTaskPageWrapper = new PageWrapper&lt;Task&gt;(notExecutedTask);</span>
-<span class="nc" id="L251">		PageWrapper&lt;Task&gt; completedTaskWrapper = new PageWrapper&lt;Task&gt;(completedTask);</span>
-<span class="nc" id="L252">		int totalNotExecutedTaskPages = notExecutedTask.getTotalPages();</span>
-<span class="nc" id="L253">		int totalCompletedTaskPages = completedTask.getTotalPages();</span>
+<span class="nc" id="L251">		PageWrapper&lt;Task&gt; notExecTaskPageWrapper = new PageWrapper&lt;Task&gt;(notExecutedTask);</span>
+<span class="nc" id="L252">		PageWrapper&lt;Task&gt; completedTaskWrapper = new PageWrapper&lt;Task&gt;(completedTask);</span>
+<span class="nc" id="L253">		int totalNotExecutedTaskPages = notExecutedTask.getTotalPages();</span>
+<span class="nc" id="L254">		int totalCompletedTaskPages = completedTask.getTotalPages();</span>
 
-<span class="nc" id="L255">		model.addAttribute(&quot;notExecutedTask&quot;, notExecutedTask);</span>
-<span class="nc" id="L256">		model.addAttribute(&quot;completedTask&quot;, completedTask);</span>
-<span class="nc bnc" id="L257" title="All 2 branches missed.">		if (totalNotExecutedTaskPages &gt; 0) {</span>
-<span class="nc" id="L258">			model.addAttribute(&quot;notExecTaskPage&quot;, notExecTaskPageWrapper);</span>
+<span class="nc" id="L256">		model.addAttribute(&quot;notExecutedTask&quot;, notExecutedTask);</span>
+<span class="nc" id="L257">		model.addAttribute(&quot;completedTask&quot;, completedTask);</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">		if (totalNotExecutedTaskPages &gt; 0) {</span>
+<span class="nc" id="L259">			model.addAttribute(&quot;notExecTaskPage&quot;, notExecTaskPageWrapper);</span>
 		}
-<span class="nc bnc" id="L260" title="All 2 branches missed.">		if (totalCompletedTaskPages &gt; 0) {</span>
-<span class="nc" id="L261">			model.addAttribute(&quot;completedTaskPage&quot;, completedTaskWrapper);</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">		if (totalCompletedTaskPages &gt; 0) {</span>
+<span class="nc" id="L262">			model.addAttribute(&quot;completedTaskPage&quot;, completedTaskWrapper);</span>
 		}
 
-<span class="nc" id="L264">		return &quot;task/requestedTask&quot;;</span>
+<span class="nc" id="L265">		return &quot;task/requestedTask&quot;;</span>
 	}
 
 	@GetMapping(&quot;/searchReceivedTask&quot;)
 	public String searchReceivedTask(Principal p, Model model, @ModelAttribute SearchForm form,
 			@RequestParam(&quot;page&quot;) Optional&lt;Integer&gt; page, @RequestParam(&quot;size&quot;) Optional&lt;Integer&gt; size) {
-<span class="nc" id="L270">		int userId = user.getLoginUserId(p);</span>
-<span class="nc" id="L271">		String param = form.getParam();</span>
-<span class="nc" id="L272">		taskService.setReceivedTask(userId, param);</span>
+<span class="nc" id="L271">		int userId = user.getLoginUserId(p);</span>
+<span class="nc" id="L272">		String param = form.getParam();</span>
+<span class="nc" id="L273">		taskService.setReceivedTask(userId, param);</span>
 
-<span class="nc" id="L274">		int currentPage = page.orElse(1);</span>
-<span class="nc" id="L275">		int pageSize = size.orElse(2);</span>
+<span class="nc" id="L275">		int currentPage = page.orElse(1);</span>
+<span class="nc" id="L276">		int pageSize = size.orElse(2);</span>
 
-<span class="nc" id="L277">		Page&lt;Task&gt; notExecutedTask = taskService.getNotExecutedTask(PageRequest.of(currentPage - 1, pageSize));</span>
-<span class="nc" id="L278">		Page&lt;Task&gt; completedTask = taskService.getCompletedTask(PageRequest.of(currentPage - 1, pageSize));</span>
+<span class="nc" id="L278">		Page&lt;Task&gt; notExecutedTask = taskService.getNotExecutedTask(PageRequest.of(currentPage - 1, pageSize));</span>
+<span class="nc" id="L279">		Page&lt;Task&gt; completedTask = taskService.getCompletedTask(PageRequest.of(currentPage - 1, pageSize));</span>
 
-<span class="nc" id="L280">		PageWrapper&lt;Task&gt; notExecTaskPageWrapper = new PageWrapper&lt;Task&gt;(notExecutedTask);</span>
-<span class="nc" id="L281">		PageWrapper&lt;Task&gt; completedTaskWrapper = new PageWrapper&lt;Task&gt;(completedTask);</span>
-<span class="nc" id="L282">		int totalNotExecutedTaskPages = notExecutedTask.getTotalPages();</span>
-<span class="nc" id="L283">		int totalCompletedTaskPages = completedTask.getTotalPages();</span>
+<span class="nc" id="L281">		PageWrapper&lt;Task&gt; notExecTaskPageWrapper = new PageWrapper&lt;Task&gt;(notExecutedTask);</span>
+<span class="nc" id="L282">		PageWrapper&lt;Task&gt; completedTaskWrapper = new PageWrapper&lt;Task&gt;(completedTask);</span>
+<span class="nc" id="L283">		int totalNotExecutedTaskPages = notExecutedTask.getTotalPages();</span>
+<span class="nc" id="L284">		int totalCompletedTaskPages = completedTask.getTotalPages();</span>
 
-<span class="nc" id="L285">		model.addAttribute(&quot;notExecutedTask&quot;, notExecutedTask);</span>
-<span class="nc" id="L286">		model.addAttribute(&quot;completedTask&quot;, completedTask);</span>
-<span class="nc bnc" id="L287" title="All 2 branches missed.">		if (totalNotExecutedTaskPages &gt; 0) {</span>
-<span class="nc" id="L288">			model.addAttribute(&quot;notExecTaskPage&quot;, notExecTaskPageWrapper);</span>
+<span class="nc" id="L286">		model.addAttribute(&quot;notExecutedTask&quot;, notExecutedTask);</span>
+<span class="nc" id="L287">		model.addAttribute(&quot;completedTask&quot;, completedTask);</span>
+<span class="nc bnc" id="L288" title="All 2 branches missed.">		if (totalNotExecutedTaskPages &gt; 0) {</span>
+<span class="nc" id="L289">			model.addAttribute(&quot;notExecTaskPage&quot;, notExecTaskPageWrapper);</span>
 		}
-<span class="nc bnc" id="L290" title="All 2 branches missed.">		if (totalCompletedTaskPages &gt; 0) {</span>
-<span class="nc" id="L291">			model.addAttribute(&quot;completedTaskPage&quot;, completedTaskWrapper);</span>
+<span class="nc bnc" id="L291" title="All 2 branches missed.">		if (totalCompletedTaskPages &gt; 0) {</span>
+<span class="nc" id="L292">			model.addAttribute(&quot;completedTaskPage&quot;, completedTaskWrapper);</span>
 		}
 
-<span class="nc" id="L294">		return &quot;task/receivedTask&quot;;</span>
+<span class="nc" id="L295">		return &quot;task/receivedTask&quot;;</span>
 	}
 
 }

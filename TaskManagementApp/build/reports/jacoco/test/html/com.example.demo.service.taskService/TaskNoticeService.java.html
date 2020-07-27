@@ -3,7 +3,6 @@
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,7 @@ import com.example.demo.service.mailService.SendMailService;
 import com.example.demo.service.userService.GetUserInfoService;
 
 @Service
-<span class="fc" id="L17">public class TaskNoticeService {</span>
+<span class="fc" id="L16">public class TaskNoticeService {</span>
 
 	@Autowired
 	MailPropConfig prop;
@@ -23,86 +22,99 @@ import com.example.demo.service.userService.GetUserInfoService;
 	GetUserInfoService user;
 
 	@Autowired
-	SendMailService sendingService;
+	SendMailService sendMailService;
 
 	// TODO フォームクラスを作成する
-	public boolean sendTaskCreatedNoticeByMail(TaskForm taskForm, Principal p) {
+	public void sendTaskCreatedNoticeByMail(TaskForm taskForm, Principal p) {
+		
 <span class="nc" id="L30">		String sender = p.getName();</span>
 <span class="nc" id="L31">		int id = taskForm.getUserAddresseeId();</span>
 <span class="nc" id="L32">		String addressee = user.getAddresseeById(id).get();</span>
-<span class="nc" id="L33">		String email = user.getAddreseeMailById(id);</span>
-<span class="nc" id="L34">		String taskTitle = taskForm.getTitle();</span>
-<span class="nc" id="L35">		String taskContent = taskForm.getContent();</span>
-
-<span class="nc" id="L37">		String port = prop.get(&quot;port&quot;);</span>
-<span class="nc" id="L38">		String from = prop.get(&quot;mailaddress&quot;);</span>
+<span class="nc" id="L33">		String taskTitle = taskForm.getTitle();</span>
+<span class="nc" id="L34">		String taskContent = taskForm.getContent();</span>
+<span class="nc" id="L35">		String port = prop.get(&quot;port&quot;);</span>
+		
+<span class="nc" id="L37">		String from = prop.get(&quot;mailaddress&quot;);</span>
+<span class="nc" id="L38">		String email = user.getAddreseeMailById(id);</span>
 <span class="nc" id="L39">		String title = sender + &quot;さんからの頼みごと「&quot; + taskTitle + &quot;」&quot;;</span>
+<span class="nc" id="L40">		String content = addressee + &quot;さん&quot; + </span>
+				&quot;\n&quot; + 
+				sender + &quot;さんからの頼みごとです。&quot; + 
+				&quot;\n&quot; + 
+				&quot;詳細: &quot; + taskContent +
+				&quot;\n&quot; + 
+				&quot;頼みごとが完了したら、以下のリンクから更新手続きを行ってください&quot; + 
+				&quot;\n&quot; + 
+				&quot;http://&quot; + port + &quot;/&quot;;
 
-<span class="nc" id="L41">		String content = addressee + &quot;さん&quot; + &quot;\n&quot; + sender + &quot;さんからの頼みごとです。&quot; + &quot;\n&quot; + &quot;詳細: &quot; + taskContent + &quot;\n&quot;</span>
-				+ &quot;頼みごとが完了したら、以下のリンクから更新手続きを行ってください&quot; + &quot;\n&quot; + &quot;http://&quot; + port + &quot;/&quot;;
-
-<span class="nc" id="L44">		Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L45">		map.put(&quot;from&quot;, from);</span>
-<span class="nc" id="L46">		map.put(&quot;email&quot;, email);</span>
-<span class="nc" id="L47">		map.put(&quot;title&quot;, title);</span>
-<span class="nc" id="L48">		map.put(&quot;content&quot;, content);</span>
-
-<span class="nc" id="L50">		sendingService.sendMail(map);</span>
-
-<span class="nc" id="L52">		return true;</span>
-	}
+<span class="nc" id="L50">		Map&lt;String, String&gt; mailMap = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L51">		mailMap.put(&quot;from&quot;, from);</span>
+<span class="nc" id="L52">		mailMap.put(&quot;email&quot;, email);</span>
+<span class="nc" id="L53">		mailMap.put(&quot;title&quot;, title);</span>
+<span class="nc" id="L54">		mailMap.put(&quot;content&quot;, content);</span>
+<span class="nc" id="L55">		sendMailService.sendMail(mailMap);</span>
+<span class="nc" id="L56">	}</span>
 
 	public void sendTaskCompletedNoticeByMail(TaskForm taskForm, Principal p) {
-<span class="nc" id="L56">		String sender = p.getName();</span>
+<span class="nc" id="L59">		String sender = p.getName();</span>
 		// 頼みごとを依頼したユーザー情報を取得
-<span class="nc" id="L58">		int id = taskForm.getUserId();</span>
-<span class="nc" id="L59">		Optional&lt;String&gt; addressee = user.getAddresseeById(id);</span>
-<span class="nc" id="L60">		String email = user.getAddreseeMailById(id);</span>
-<span class="nc" id="L61">		String taskTitle = taskForm.getTitle();</span>
-<span class="nc" id="L62">		String taskContent = taskForm.getContent();</span>
-
-<span class="nc" id="L64">		String address = prop.get(&quot;mailaddress&quot;);</span>
+<span class="nc" id="L61">		int id = taskForm.getUserId();</span>
+<span class="nc" id="L62">		String addressee = user.getAddresseeById(id).get();</span>
+<span class="nc" id="L63">		String taskTitle = taskForm.getTitle();</span>
+<span class="nc" id="L64">		String taskContent = taskForm.getContent();</span>
 <span class="nc" id="L65">		String port = prop.get(&quot;port&quot;);</span>
 
-<span class="nc" id="L67">		String title = sender + &quot;さんの「&quot; + taskTitle + &quot;」が終わりました!&quot;;</span>
+<span class="nc" id="L67">		String from = prop.get(&quot;mailaddress&quot;);</span>
+<span class="nc" id="L68">		String email = user.getAddreseeMailById(id);</span>
+<span class="nc" id="L69">		String title = sender + &quot;さんの「&quot; + taskTitle + &quot;」が終わりました!&quot;;</span>
+<span class="nc" id="L70">		String content = addressee + &quot;さん&quot; + </span>
+				&quot;\n&quot; + 
+				sender + &quot;さんの頼みごとが終わりました!&quot; + 
+				&quot;\n&quot; + 
+				&quot;詳細: &quot; + taskContent + 
+				&quot;\n&quot; + 
+				&quot;以下のリンクにアクセスして頼みごとを確認してください。&quot; + 
+				&quot;\n&quot; + 
+				&quot;http://&quot; + port;
 
-<span class="nc" id="L69">		String content = addressee + &quot;さん&quot; + &quot;\n&quot; + sender + &quot;さんの頼みごとが終わりました!&quot; + &quot;\n&quot; + &quot;詳細: &quot; + taskContent + &quot;\n&quot;</span>
-				+ &quot;以下のリンクにアクセスして頼みごとを確認してください。&quot; + &quot;\n&quot; + &quot;http://&quot; + port;
-
-<span class="nc" id="L72">		Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L73">		map.put(&quot;from&quot;, address);</span>
-<span class="nc" id="L74">		map.put(&quot;email&quot;, email);</span>
-<span class="nc" id="L75">		map.put(&quot;title&quot;, title);</span>
-<span class="nc" id="L76">		map.put(&quot;content&quot;, content);</span>
-
-<span class="nc" id="L78">		sendingService.sendMail(map);</span>
-<span class="nc" id="L79">	}</span>
+<span class="nc" id="L80">		Map&lt;String, String&gt; mailMap = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L81">		mailMap.put(&quot;from&quot;, from);</span>
+<span class="nc" id="L82">		mailMap.put(&quot;email&quot;, email);</span>
+<span class="nc" id="L83">		mailMap.put(&quot;title&quot;, title);</span>
+<span class="nc" id="L84">		mailMap.put(&quot;content&quot;, content);</span>
+<span class="nc" id="L85">		sendMailService.sendMail(mailMap);</span>
+<span class="nc" id="L86">	}</span>
 
 	public void sendTaskEditedNoticeByMail(TaskForm taskForm, Principal p) {
-<span class="nc" id="L82">		String sender = p.getName();</span>
-<span class="nc" id="L83">		int id = taskForm.getUserAddresseeId();</span>
-<span class="nc" id="L84">		Optional&lt;String&gt; addressee = user.getAddresseeById(id);</span>
-<span class="nc" id="L85">		String email = user.getAddreseeMailById(id);</span>
-<span class="nc" id="L86">		String taskTitle = taskForm.getTitle();</span>
-<span class="nc" id="L87">		String taskContent = taskForm.getContent();</span>
+<span class="nc" id="L89">		String sender = p.getName();</span>
+<span class="nc" id="L90">		int id = taskForm.getUserAddresseeId();</span>
+<span class="nc" id="L91">		String addressee = user.getAddresseeById(id).get();</span>
+<span class="nc" id="L92">		String taskTitle = taskForm.getTitle();</span>
+<span class="nc" id="L93">		String taskContent = taskForm.getContent();</span>
+<span class="nc" id="L94">		String port = prop.get(&quot;port&quot;);</span>
+		
+<span class="nc" id="L96">		String from = prop.get(&quot;mailaddress&quot;);</span>
+<span class="nc" id="L97">		String email = user.getAddreseeMailById(id);</span>
+<span class="nc" id="L98">		String title = sender + &quot;さんの「&quot; + taskTitle + &quot;」の内容が変更されました!&quot;;</span>
+<span class="nc" id="L99">		String content = addressee + &quot;さん&quot; </span>
+				+ &quot;\n&quot; + 
+				sender + &quot;さんからの頼みごとの内容が変更されました。&quot; + 
+				&quot;\n&quot; + 
+				&quot;詳細: &quot; + taskContent + 
+				&quot;\n&quot; + 
+				&quot;頼みごとが完了したら、以下のリンクから更新手続きを行ってください&quot; + 
+				&quot;\n&quot; + 
+				&quot;http://&quot; + port + &quot;/&quot; + 
+				&quot;\n&quot; + 
+				&quot;心当たりがない場合はお手数ですが、このメールを削除してください。&quot;;
 
-<span class="nc" id="L89">		String address = prop.get(&quot;mailaddress&quot;);</span>
-<span class="nc" id="L90">		String port = prop.get(&quot;port&quot;);</span>
-
-<span class="nc" id="L92">		String title = sender + &quot;さんの「&quot; + taskTitle + &quot;」の内容が変更されました!&quot;;</span>
-
-<span class="nc" id="L94">		String content = addressee + &quot;さん&quot; + &quot;\n&quot; + sender + &quot;さんからの頼みごとの内容が変更されました。&quot; + &quot;\n&quot; + &quot;詳細: &quot; + taskContent + &quot;\n&quot;</span>
-				+ &quot;頼みごとが完了したら、以下のリンクから更新手続きを行ってください&quot; + &quot;\n&quot; + &quot;心当たりがない場合はお手数ですが、このメールを削除してください。&quot; + &quot;\n&quot; + &quot;http://&quot;
-				+ port + &quot;/&quot;;
-
-<span class="nc" id="L98">		Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L99">		map.put(&quot;from&quot;, address);</span>
-<span class="nc" id="L100">		map.put(&quot;email&quot;, email);</span>
-<span class="nc" id="L101">		map.put(&quot;title&quot;, title);</span>
-<span class="nc" id="L102">		map.put(&quot;content&quot;, content);</span>
-
-<span class="nc" id="L104">		sendingService.sendMail(map);</span>
-<span class="nc" id="L105">	}</span>
+<span class="nc" id="L111">		Map&lt;String, String&gt; mailMap = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L112">		mailMap.put(&quot;from&quot;, from);</span>
+<span class="nc" id="L113">		mailMap.put(&quot;email&quot;, email);</span>
+<span class="nc" id="L114">		mailMap.put(&quot;title&quot;, title);</span>
+<span class="nc" id="L115">		mailMap.put(&quot;content&quot;, content);</span>
+<span class="nc" id="L116">		sendMailService.sendMail(mailMap);</span>
+<span class="nc" id="L117">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
