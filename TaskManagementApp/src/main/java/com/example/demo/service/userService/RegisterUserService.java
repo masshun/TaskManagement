@@ -15,10 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.config.MailPropConfig;
 import com.example.demo.domain.Account;
 import com.example.demo.domain.AccountForm;
-import com.example.demo.domain.object.ConfirmationToken;
 import com.example.demo.exception.MultipleException;
 import com.example.demo.repository.AccountMapper;
 import com.example.demo.service.mailService.SendMailService;
+import com.example.demo.utility.ConfirmationToken;
 
 @Service
 @Transactional

@@ -16,10 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.domain.Task;
 import com.example.demo.domain.TaskForm;
-import com.example.demo.domain.object.FormButton;
-import com.example.demo.domain.object.PageWrapper;
-import com.example.demo.domain.object.TaskList;
 import com.example.demo.repository.TaskMapper;
+import com.example.demo.utility.FormButton;
+import com.example.demo.utility.PageWrapper;
+import com.example.demo.utility.TaskList;
 
 @Service
 @Transactional

@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.domain.AccountForm;
-import com.example.demo.domain.object.ConfirmationToken;
 import com.example.demo.service.userService.RegisterUserService;
+import com.example.demo.utility.ConfirmationToken;
 
 @Controller
 @Transactional

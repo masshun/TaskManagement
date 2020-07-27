@@ -24,11 +24,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.demo.domain.AccountForm;
 import com.example.demo.domain.Task;
 import com.example.demo.domain.TaskForm;
-import com.example.demo.domain.object.PageWrapper;
-import com.example.demo.domain.object.SearchForm;
 import com.example.demo.service.taskService.TaskNoticeService;
 import com.example.demo.service.taskService.TaskService;
 import com.example.demo.service.userService.GetUserInfoService;
+import com.example.demo.utility.PageWrapper;
+import com.example.demo.utility.SearchForm;
 
 @Controller
 @RequestMapping("/")

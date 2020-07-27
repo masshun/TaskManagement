@@ -1,4 +1,4 @@
-package com.example.demo.domain.object;
+package com.example.demo.utility;
 
 import java.util.List;
 
@@ -6,9 +6,11 @@ import org.springframework.stereotype.Component;
 
 import com.example.demo.domain.Task;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Component
 public class TaskList {
 

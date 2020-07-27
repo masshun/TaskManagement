@@ -1,4 +1,4 @@
-package com.example.demo.domain.object;
+package com.example.demo.utility;
 
 public class Event {
 	private int id;

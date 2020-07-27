@@ -8,7 +8,6 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -41,10 +40,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.example.demo.domain.TaskForm;
-import com.example.demo.domain.object.PageWrapper;
 import com.example.demo.service.taskService.TaskNoticeService;
 import com.example.demo.service.taskService.TaskService;
 import com.example.demo.service.userService.GetUserInfoService;
+import com.example.demo.utility.PageWrapper;
 
 @Transactional
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -217,8 +216,7 @@ public class TaskControllerTest {
 		when(user.getAddresseeId(taskForm.getAddresseeName())).thenReturn(i);
 		mockMvc.perform(post("/edit/{id}", id).param("title", "").param("content", "hoge")
 				.param("addresseeName", "ユーザー1").param("deadline", "2020-09-09 12:00:00").param("label", "red")
-				.with(SecurityMockMvcRequestPostProcessors.csrf())).andDo(print())
-				.andExpect(view().name("task/editRequestedTask"));
+				.with(SecurityMockMvcRequestPostProcessors.csrf())).andExpect(view().name("task/editRequestedTask"));
 	}
 
 	public TaskForm getTaskForm() {
