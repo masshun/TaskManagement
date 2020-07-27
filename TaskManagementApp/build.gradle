@@ -38,7 +38,6 @@ bootJar {
 }
  
 jar {
-	enabled = true
     manifest {
         attributes('Main-Class': 'Application')
     }
