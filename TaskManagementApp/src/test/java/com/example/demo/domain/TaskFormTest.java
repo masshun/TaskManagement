@@ -69,6 +69,7 @@ public class TaskFormTest {
 	@ParameterizedTest
 	@ValueSource(strings = { "30文字以上のああああああああああああああああああああああああ" })
 	void addresseeNameの文字超過(String input) throws Exception {
+		taskForm.setTitle("hoge");
 		taskForm.setAddresseeName(input);
 		validator.validate(taskForm, bindingResult);
 		assertEquals("1文字以上30文字以内で入力してください", bindingResult.getFieldError().getDefaultMessage());
