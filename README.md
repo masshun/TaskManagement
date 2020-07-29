@@ -7,6 +7,7 @@
 - ページネーション
 - 認証
 - メール認証を用いたサインアップ
+- 頼みごとの新規登録・更新時に1色のラベルを設定し優先順位付けが行えるようにする。
 - 頼まれたことをカレンダーで確認する機能
 - 頼みごとの作成、更新時に依頼相手にメール通知を送る。
 - 頼まれたことの完了ボタンを押すと、依頼元にメール通知を送る。
@@ -46,14 +47,14 @@ URL:http://task-management-app:8080
 application.properties
 ```bash
 spring.datasource.url=jdbc:mysql://localhost:3306/task_management
-spring.datasource.username=spring1
-spring.datasource.password=spring1
+spring.datasource.username=任意のユーザー名
+spring.datasource.password=任意のパスワード名
 spring.session.store-type=jdbc
 
 server.port=9996
 spring.mail.host=smtp.gmail.com
 spring.mail.username=登録したメールアドレス
-spring.mail.password=二段階認証の際に設定したパスワード
+spring.mail.password=2段階認証の際に設定したパスワード
 spring.mail.port=587
 spring.mail.properties.mail.smtp.auth: true
 spring.mail.properties.mail.smtp.starttls.enable: true
