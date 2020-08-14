@@ -18,7 +18,7 @@
 ![Untitled Diagram (2)](https://user-images.githubusercontent.com/60130295/85918518-7d9ce800-b89e-11ea-9370-f922bc5026bb.png)
 
 ## ER図
-![Untitled Diagram (1)](https://user-images.githubusercontent.com/60130295/85918524-94dbd580-b89e-11ea-9d5f-a00cfbd6e7df.png)
+![Class Diagram](https://user-images.githubusercontent.com/60130295/90212228-cba98300-de2d-11ea-98a0-d652abbe7e3e.jpg)
 
 ## デモプレイ用ログインアカウント
 ```bash
