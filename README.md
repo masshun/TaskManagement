@@ -39,7 +39,6 @@ URL:http://task-management-app:8080
 - AWS(S3,CodePipeline,CodeDeploy,EC2,RDS,Route53)
 
 ## その他使用技術
-- 多対多のテーブル構造
 - 非同期処理を用いたメール送信
 - 定期実行と非同期を用いて、期限1時間前の頼みごと依頼先にメール通知
 
