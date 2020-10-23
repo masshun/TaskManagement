@@ -20,7 +20,7 @@
 ## ER図
 ![Class Diagram (1)](https://user-images.githubusercontent.com/60130295/90215018-593ca100-de35-11ea-8312-0100ed49b924.jpg)
 
-## デモプレイ用ログインアカウント
+## デモプレイ用ログインアカウント(現在は無効)
 ```bash
 URL:http://task-management-app:8080
 ユーザー名:hoge
